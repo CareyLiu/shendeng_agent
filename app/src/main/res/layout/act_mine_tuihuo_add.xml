@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/white_line"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收货人"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/ed_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入收货人姓名"
+            android:paddingLeft="14dp"
+            android:textColor="@color/text_color_6"
+            android:textColorHint="@color/text_color_6"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/white_line"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号码"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/ed_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入收货人姓名"
+            android:paddingLeft="14dp"
+            android:textColor="@color/text_color_6"
+            android:textColorHint="@color/text_color_6"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_diqu"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/white_line"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="14dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="所在地区"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_diqu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:hint="请选择地区"
+            android:paddingLeft="14dp"
+            android:textColor="@color/text_color_6"
+            android:textColorHint="@color/text_color_6"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/ed_adress"
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:background="@drawable/white_line"
+        android:gravity="top"
+        android:hint="详细地址：如道路，门牌号、小区、楼栋号、单元室等"
+        android:padding="14dp"
+        android:textColor="@color/text_color_6"
+        android:textColorHint="@color/text_color_6"
+        android:textSize="13sp" />
+</LinearLayout>
