@@ -1,11 +1,61 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!-- <item name="colorPrimary">@color/colorPrimary</item>
+         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+         <item name="colorAccent">@color/colorAccent</item>
+         <item name="android:windowBackground">@color/window_background</item>-->
+
+        <!--导航栏底色-->
+        <item name="colorPrimary">@color/white</item>
+        <!--状态栏底色-->
+        <item name="colorPrimaryDark">@color/white</item>
+        <!--状态栏上的文字颜色 这个方法API版本最低23 -->
+        <!--<item name="android:windowLightStatusBar">true</item>-->
+        <!--导航栏上的标题颜色-->
+        <item name="android:textColorPrimary">@color/text_black</item>
+        <!--Activity窗口的颜色-->
+        <item name="android:windowBackground">@color/window_background</item>
+        <!--按钮选中或者点击获得焦点后的颜色-->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!--和 colorAccent相反，正常状态下按钮的颜色
+        <item name="colorControlNormal">#ff0000</item>-->
+        <!--Button按钮正常状态颜色-->
+        <item name="colorButtonNormal">@color/accent_material_light</item>
+        <!--EditText 输入框中字体的颜色-->
+        <item name="editTextColor">@android:color/white</item>
+
+        <item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>
+        <!-- 设置activity切换动画 -->
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
+
+
+    </style>
+    <!--欢迎页面主题-->
+    <style name="Theme.AppLauncher" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <!--<item name="android:windowBackground">@drawable/welcome_consumer</item>-->
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="MenuTextStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@android:anim/slide_in_left</item>
+        <item name="android:activityOpenExitAnimation">@android:anim/fade_out</item>
+        <item name="android:activityCloseEnterAnimation">@android:anim/slide_out_right</item>
+        <item name="android:activityCloseExitAnimation">@android:anim/fade_in</item>
     </style>
 
 </resources>
