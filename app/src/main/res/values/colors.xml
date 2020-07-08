@@ -8,10 +8,6 @@
     <color name="app_bg">#FC5F20</color>
     <!--字体-->
     <color name="car_text_black7">#4e4e4e</color>
-    <!-- 透明 -->
-    <color name="white">#ffffff</color>
-    <!-- 海军色 -->
-    <color name="black">#313131</color>
     <!--暗红色 -->
     <color name="car_text_red">#EE5460</color>
     <!--红色-->
