@@ -35,6 +35,7 @@ import com.bumptech.glide.request.target.ViewTarget;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.AppConfig;
 import com.shendeng.agent.app.PreferenceHelper;
+import com.shendeng.agent.ui.activity.LoginActivity;
 import com.shendeng.agent.ui.widget.DoubleClickExitHelper;
 import com.shendeng.agent.util.NetworkUtils;
 import com.tbruyelle.rxpermissions.Permission;
@@ -92,7 +93,8 @@ public class AppStartActivity extends Activity {
         llSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HomeBasicActivity.actionStart(AppStartActivity.this);
+                Intent intent = new Intent(AppStartActivity.this, LoginActivity.class);
+                startActivity(intent);
                 overridePendingTransition(0, 0);
                 finish();
                 if (runnable != null) {
@@ -149,7 +151,8 @@ public class AppStartActivity extends Activity {
                     @Override
                     public void run() {
                         //从闪屏界面跳转到首界面
-                        HomeBasicActivity.actionStart(AppStartActivity.this);
+                        Intent intent = new Intent(AppStartActivity.this, LoginActivity.class);
+                        startActivity(intent);
                         overridePendingTransition(0, 0);
                         finish();
                     }
