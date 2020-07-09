@@ -1,4 +1,4 @@
-package com.shendeng.agent;
+package com.shendeng.agent.ui.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -7,9 +7,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.shendeng.agent.R;
+
 import androidx.annotation.Nullable;
 
-public class SelectTabView extends LinearLayout {
+public class SelectTabView extends LinearLayout {//选择的标题栏
 
     private Context context;
     private TextView tv_title;
@@ -45,10 +47,10 @@ public class SelectTabView extends LinearLayout {
 
     public void setSelect(boolean isSelect) {
         if (isSelect) {
-            tv_title.setTextColor(com.shendeng.agent.Y.getColor(R.color.text_red));
+            tv_title.setTextColor(com.shendeng.agent.util.Y.getColor(R.color.text_red));
             line.setVisibility(VISIBLE);
         } else {
-            tv_title.setTextColor(com.shendeng.agent.Y.getColor(R.color.text_color_6));
+            tv_title.setTextColor(com.shendeng.agent.util.Y.getColor(R.color.text_color_6));
             line.setVisibility(INVISIBLE);
         }
     }

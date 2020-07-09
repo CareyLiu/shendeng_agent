@@ -31,6 +31,12 @@
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="fullSensor"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <activity
+            android:name=".ui.activity.WodeQainbaoActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="fullSensor"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
     </application>
 
 </manifest>

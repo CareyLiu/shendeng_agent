@@ -1,5 +1,6 @@
 package com.shendeng.agent.basicmvp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,6 +88,25 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
      */
     public void sendRx(Notice msg) {
         RxBus.getDefault().sendRx(msg);
+    }
+
+
+    /**
+     * 通过类名启动Activity add
+     */
+    public void openActivity(Class<?> pClass) {
+        openActivity(pClass, null);
+    }
+
+    /**
+     * 通过类名启动Activity，并且含有Bundle数据
+     */
+    public void openActivity(Class<?> pClass, Bundle pBundle) {
+        Intent intent = new Intent(getActivity(), pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        startActivity(intent);
     }
 
 }

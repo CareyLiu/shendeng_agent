@@ -108,38 +108,38 @@ public class AppStartActivity extends Activity {
             e.printStackTrace(System.err);
         }
 
-        new RxPermissions(AppStartActivity.this).requestEach(AppConfig.BASIC_PERMISSIONS)
-                .subscribe(new Action1<Permission>() {
-                    @Override
-                    public void call(Permission permission) {
-                        if (permission.name.equals(Manifest.permission.READ_PHONE_STATE)) {
-                            if (permission.granted) {
-                                // 用户已经同意该权限
-                                boolean isConnected = NetworkUtils.isConnected(AppStartActivity.this);
-                                if (isConnected) {
-                                    if (savedInstanceState != null) {
-                                        setIntent(new Intent()); // 从堆栈恢复，不再重复解析之前的intent
-                                    } else {
-                                        parseNormalIntent(new Intent());
-
-                                    }
-                                } else {
-                                    Toast.makeText(AppStartActivity.this, "您的网络已断开！", Toast.LENGTH_LONG).show();
-                                    parseNormalIntent(new Intent());
-                                }
-                            } else if (permission.shouldShowRequestPermissionRationale) {
-                                // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                                Toast.makeText(AppStartActivity.this, "该应用需要赋予访问电话的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
-                                finish();
-                            } else {
-                                // 用户拒绝了该权限，并且选中『不再询问』
-                                Toast.makeText(AppStartActivity.this, "该应用需要赋予访问电话的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
-                                finish();
-                            }
-
-                        }
-                    }
-                });
+//        new RxPermissions(AppStartActivity.this).requestEach(AppConfig.BASIC_PERMISSIONS)
+//                .subscribe(new Action1<Permission>() {
+//                    @Override
+//                    public void call(Permission permission) {
+//                        if (permission.name.equals(Manifest.permission.READ_PHONE_STATE)) {
+//                            if (permission.granted) {
+//                                // 用户已经同意该权限
+//                                boolean isConnected = NetworkUtils.isConnected(AppStartActivity.this);
+//                                if (isConnected) {
+//                                    if (savedInstanceState != null) {
+//                                        setIntent(new Intent()); // 从堆栈恢复，不再重复解析之前的intent
+//                                    } else {
+//                                        parseNormalIntent(new Intent());
+//
+//                                    }
+//                                } else {
+//                                    Toast.makeText(AppStartActivity.this, "您的网络已断开！", Toast.LENGTH_LONG).show();
+//                                    parseNormalIntent(new Intent());
+//                                }
+//                            } else if (permission.shouldShowRequestPermissionRationale) {
+//                                // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
+//                                Toast.makeText(AppStartActivity.this, "该应用需要赋予访问电话的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
+//                                finish();
+//                            } else {
+//                                // 用户拒绝了该权限，并且选中『不再询问』
+//                                Toast.makeText(AppStartActivity.this, "该应用需要赋予访问电话的权限，不开启将无法正常工作！", Toast.LENGTH_LONG).show();
+//                                finish();
+//                            }
+//
+//                        }
+//                    }
+//                });
 
         llSkip.setVisibility(View.VISIBLE);
         timer.schedule(task, 1000, 1000);//等待时间一秒，停顿时间一秒

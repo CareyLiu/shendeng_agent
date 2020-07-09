@@ -11,35 +11,35 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_all"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_daifukuan"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_daifahuo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_daishouhuo"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_tuikuang"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
     </LinearLayout>
 
     <androidx.viewpager.widget.ViewPager

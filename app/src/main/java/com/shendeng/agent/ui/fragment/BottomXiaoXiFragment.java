@@ -39,7 +39,7 @@ public class BottomXiaoXiFragment extends BaseFragment {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.layout_bottom_xiaoxi;
+        return R.layout.frag_mian_msg;
     }
 
     @Override

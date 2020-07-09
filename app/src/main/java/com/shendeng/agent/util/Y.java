@@ -1,12 +1,11 @@
-package com.shendeng.agent;
+package com.shendeng.agent.util;
 
 import android.content.Context;
 import android.content.res.Resources;
 
-public class Y {
+public class Y {//资源工具类
 
     private static Context mContent;
-
 
     public static void init(Context context) {
         Y.mContent = context;
