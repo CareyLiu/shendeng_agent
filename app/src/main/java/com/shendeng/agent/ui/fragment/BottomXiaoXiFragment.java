@@ -25,6 +25,7 @@ public class BottomXiaoXiFragment extends BaseFragment {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
+
             }
         }));
 
@@ -53,9 +54,6 @@ public class BottomXiaoXiFragment extends BaseFragment {
 
     @Override
     protected void initLogic() {
-
-
-
 
     }
 

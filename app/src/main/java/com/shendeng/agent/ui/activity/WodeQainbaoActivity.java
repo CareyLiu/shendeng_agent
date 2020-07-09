@@ -1,5 +1,6 @@
 package com.shendeng.agent.ui.activity;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -35,12 +36,17 @@ public class WodeQainbaoActivity extends BaseActivity {
 
     @Override
     public boolean showToolBar() {
-        return false;
+        return true;
     }
 
     @Override
     protected void initToolbar() {
         super.initToolbar();
+        iv_leftTitle.setVisibility(View.VISIBLE);
+        tv_title.setText("我的钱包");
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(this.getResources().getColor(R.color.color_494949));
+        tv_title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
     }
 
     @Override

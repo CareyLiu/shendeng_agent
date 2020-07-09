@@ -37,8 +37,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 
-
-public class HomeBasicActivity extends BaseActivity  {
+public class HomeBasicActivity extends BaseActivity {
 
     private static final String tag = HomeBasicActivity.class.getSimpleName();
 
@@ -61,9 +60,6 @@ public class HomeBasicActivity extends BaseActivity  {
      *
      * @param context
      */
-
-
-
     public static void actionStart(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, HomeBasicActivity.class);

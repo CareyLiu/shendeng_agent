@@ -72,8 +72,6 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
     }
 
 
-
-
     @Override
     public int getContentViewResId() {
         return R.layout.basic_layout;
@@ -85,7 +83,6 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
         //手动页面埋点Activity基类
 
     }
-
 
 
     @Override
@@ -177,7 +174,6 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
         super.setRequestedOrientation(requestedOrientation);
     }
 
-
     /**
      *        Map<String, String> map = new HashMap<>();
      *                 map.put("code", "04154");
@@ -204,14 +200,14 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
 
 
     /**
-     * 通过类名启动Activity add
+     * 用于跳转到其他Activty
      */
     public void openActivity(Class<?> pClass) {
         openActivity(pClass, null);
     }
 
     /**
-     * 通过类名启动Activity，并且含有Bundle数据
+     * 用于跳转到其他Activty，并且含有Bundle数据
      */
     public void openActivity(Class<?> pClass, Bundle pBundle) {
         Intent intent = new Intent(this, pClass);

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="77dp"
+        android:layout_height="77dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="86dp"
+        android:background="@color/black"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:includeFontPadding="false"
+        android:text="聚易佳商家"
+        android:textColor="@color/text_color_1"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/ed_phone"
+        android:layout_width="269dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/login_bg"
+        android:hint="请输入手机号"
+        android:maxLines="1"
+        android:paddingLeft="19dp"
+        android:textColor="@color/text_color_6"
+        android:textColorHint="@color/text_color_6"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_pwd"
+        android:layout_width="269dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/ed_phone"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/login_bg"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/ed_pwd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:maxLines="1"
+            android:paddingLeft="19dp"
+            android:textColor="@color/text_color_6"
+            android:textColorHint="@color/text_color_6"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_yzm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingTop="5dp"
+            android:paddingRight="19dp"
+            android:paddingBottom="5dp"
+            android:text="获取验证码"
+            android:textColor="@color/text_red"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_qiehuan"
+        android:layout_width="269dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_pwd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_qiehuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="切换登录方式"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_zhaohui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:text="找回密码"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="269dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/ll_qiehuan"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/login_bt"
+        android:maxLines="1"
+        android:text="注册/登录"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_yinsi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/bt_login"
+        android:layout_centerHorizontal="true"
+        android:includeFontPadding="false"
+        android:padding="10dp"
+        android:text="登录即表示同意《隐私保护声明》和《用户使用协议》"
+        android:textColor="@color/text_color_9"
+        android:textSize="11sp" />
+</RelativeLayout>
+
+
+
+
+
