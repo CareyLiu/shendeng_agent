@@ -152,17 +152,17 @@ public class HomeBasicActivity extends BaseActivity  {
     @Override
     protected void onStart() {
         super.onStart();
-        RxPermissions rxPermissions = new RxPermissions(HomeBasicActivity.this);
-        rxPermissions.request(AppConfig.BASIC_PERMISSIONS).subscribe(new Action1<Boolean>() {
-            @Override
-            public void call(Boolean granted) {
-                if (granted) { // 在android 6.0之前会默认返回true
-
-                } else {
-
-                }
-            }
-        });
+//        RxPermissions rxPermissions = new RxPermissions(HomeBasicActivity.this);
+//        rxPermissions.request(AppConfig.BASIC_PERMISSIONS).subscribe(new Action1<Boolean>() {
+//            @Override
+//            public void call(Boolean granted) {
+//                if (granted) { // 在android 6.0之前会默认返回true
+//
+//                } else {
+//
+//                }
+//            }
+//        });
         app = App.getInstance();
 
     }
