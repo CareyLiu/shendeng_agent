@@ -44,6 +44,7 @@ public class BottomDingDanFragment extends BaseFragment {
     SelectTabView tab_guanbi;
     @BindView(R.id.vpg_content)
     ViewPager vpg_content;
+
     private int shop_pay_check;
 
     @Override
@@ -78,18 +79,7 @@ public class BottomDingDanFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
-        tab_all.setTitle("全部");
-        tab_daifukuan.setTitle("待付款");
-        tab_daifahuo.setTitle("待发货");
-        tab_daishouhuo.setTitle("待收货");
-        tab_xiaofei.setTitle("到店消费");
-        tab_daipingjia.setTitle("待评价");
-        tab_yipingjia.setTitle("已评价");
-        tab_tuikuanshenqing.setTitle("退款申请");
-        tab_tuikuanzhong.setTitle("退款中");
-        tab_guanbi.setTitle("已关闭");
 
-        selectTab(0);
     }
 
 
@@ -183,14 +173,28 @@ public class BottomDingDanFragment extends BaseFragment {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
+        initS();
         return rootView;
+    }
+
+    private void initS() {
+        tab_all.setTitle("全部");
+        tab_daifukuan.setTitle("待付款");
+        tab_daifahuo.setTitle("待发货");
+        tab_daishouhuo.setTitle("待收货");
+        tab_xiaofei.setTitle("到店消费");
+        tab_daipingjia.setTitle("待评价");
+        tab_yipingjia.setTitle("已评价");
+        tab_tuikuanshenqing.setTitle("退款申请");
+        tab_tuikuanzhong.setTitle("退款中");
+        tab_guanbi.setTitle("已关闭");
+
+        selectTab(0);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-
     }
 
     @Override
@@ -210,6 +214,4 @@ public class BottomDingDanFragment extends BaseFragment {
         super.onResume();
 
     }
-
-
 }
