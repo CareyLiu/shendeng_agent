@@ -36,7 +36,7 @@ public class BottomShangPinFragment extends BaseFragment {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.layout_bottom_shangpin;
+        return R.layout.frag_mian_shangpin;
     }
 
     @Override

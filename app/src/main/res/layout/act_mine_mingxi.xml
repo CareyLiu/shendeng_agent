@@ -11,29 +11,29 @@
         android:layout_height="40dp"
         android:orientation="horizontal">
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_all"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_shouru"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_zhifu"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
 
-        <com.shendeng.agent.SelectTabView
+        <com.shendeng.agent.ui.view.SelectTabView
             android:id="@+id/tab_tixian"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"></com.shendeng.agent.SelectTabView>
+            android:layout_weight="1"></com.shendeng.agent.ui.view.SelectTabView>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

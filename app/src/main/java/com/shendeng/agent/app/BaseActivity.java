@@ -1,6 +1,7 @@
 package com.shendeng.agent.app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.os.Build;
@@ -200,4 +201,24 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
      *                             }
      *                         });
      */
+
+
+    /**
+     * 通过类名启动Activity add
+     */
+    public void openActivity(Class<?> pClass) {
+        openActivity(pClass, null);
+    }
+
+    /**
+     * 通过类名启动Activity，并且含有Bundle数据
+     */
+    public void openActivity(Class<?> pClass, Bundle pBundle) {
+        Intent intent = new Intent(this, pClass);
+        if (pBundle != null) {
+            intent.putExtras(pBundle);
+        }
+        startActivity(intent);
+    }
+
 }

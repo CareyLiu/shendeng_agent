@@ -10,7 +10,7 @@
         android:layout_width="331dp"
         android:layout_height="154dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/mine_top_bg"
+        android:background="@drawable/mine_qianbao_bg"
         android:orientation="vertical"
         android:paddingLeft="20dp">
 
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
             android:layout_weight="1"
-            android:text="待结算金额"
+            android:text="提现账号设置"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
