@@ -1,15 +1,20 @@
 package com.shendeng.agent.ui.fragment;
 
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import com.gyf.barlibrary.ImmersionBar;
+import com.jakewharton.rxbinding.view.RxView;
 import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
+
+import java.util.concurrent.TimeUnit;
+
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -28,6 +33,7 @@ public class BottomDingDanFragment extends BaseFragment {
 
     }
 
+
     public static BottomDingDanFragment newInstance() {
         Bundle args = new Bundle();
         BottomDingDanFragment fragment = new BottomDingDanFragment();
@@ -42,7 +48,7 @@ public class BottomDingDanFragment extends BaseFragment {
 
     @Override
     public boolean showToolBar() {
-        return false;
+        return true;
     }
 
     @Override
@@ -52,12 +58,19 @@ public class BottomDingDanFragment extends BaseFragment {
     @Override
     protected void initLogic() {
 
-
-
-
     }
 
 
+    @Override
+    protected void initToolBar(View rootView) {
+        super.initToolBar(rootView);
+        super.initToolBar(rootView);
+        iv_rightTitle.setVisibility(View.VISIBLE);
+        tv_title.setText("订单");
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(this.getResources().getColor(R.color.color_494949));
+        tv_title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+    }
 
     @Override
     protected void immersionInit(ImmersionBar mImmersionBar) {
