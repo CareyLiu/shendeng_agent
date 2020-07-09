@@ -12,18 +12,14 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.lzy.okgo.OkGo;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.AppConfig;
 import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.ui.HomeBasicActivity;
-import com.shendeng.agent.util.UIHelper;
 import com.tbruyelle.rxpermissions.Permission;
 import com.tbruyelle.rxpermissions.RxPermissions;
-
 import java.lang.ref.WeakReference;
-
 import rx.functions.Action1;
 
 
@@ -63,7 +59,6 @@ public class SplashActivity extends Activity {
          * 进入主界面
          */
         private void SplashOverToGo() {
-
             SharedPreferences sharedPreferences = mWeakReference.get().getSharedPreferences("share", MODE_PRIVATE);
             boolean isFirstRun = sharedPreferences.getBoolean(AppConfig.IS_FIRST_RUN, true);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -74,12 +69,9 @@ public class SplashActivity extends Activity {
                 mWeakReference.get().finish();
             } else {
                 if (PreferenceHelper.getInstance(mWeakReference.get()).getString("app_token", "").equals("")) {
-                    // mWeakReference.get().startActivity(new Intent(mWeakReference.get(), LoginActivity.class));
-                    UIHelper.ToastMessage(mWeakReference.get(), "未登陆，弹出登陆");
+                    LoginActivity.actionStart(mWeakReference.get());
                 } else {
-                    //判断上次登录类型
                     HomeBasicActivity.actionStart(mWeakReference.get());
-                    //  mWeakReference.get().startActivity(new Intent(mWeakReference.get(), HomeBasicActivity.class));
                 }
                 mWeakReference.get().finish();
             }

@@ -92,7 +92,7 @@ public class BottomBarTab extends FrameLayout {
         mTvTitle.setText(title);
         LinearLayout.LayoutParams paramsTv = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsTv.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics());
-        mTvTitle.setTextSize(10);
+        mTvTitle.setTextSize(11);
         mTvTitle.setTextColor(ContextCompat.getColor(context, R.color.gray_444444));
         mTvTitle.setLayoutParams(paramsTv);
         lLContainer.addView(mTvTitle);
@@ -138,7 +138,7 @@ public class BottomBarTab extends FrameLayout {
                     mTvTitle.setVisibility(VISIBLE);
                 }
             }
-            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.pink));
+            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.FC0100));
         } else {
             if (select_flag) {
                 mIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.tab_unselect));
@@ -156,7 +156,7 @@ public class BottomBarTab extends FrameLayout {
                 }
 
             }
-            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.gray_444444));
+            mTvTitle.setTextColor(ContextCompat.getColor(mContext, R.color.text_color_3));
         }
     }
 

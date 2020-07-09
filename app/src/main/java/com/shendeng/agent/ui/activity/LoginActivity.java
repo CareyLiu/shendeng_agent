@@ -1,5 +1,6 @@
 package com.shendeng.agent.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -193,5 +194,13 @@ public class LoginActivity extends BaseActivity {
                         Y.t(response.getException().getMessage());
                     }
                 });
+    }
+    /**
+     * @param context 上下文
+     */
+    public static void actionStart(Context context) {
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

@@ -49,7 +49,8 @@ public class WelcomeActivity extends BaseActivity implements ViewPager.OnPageCha
                     finish();
                 } else {
                     //startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
-                    UIHelper.ToastMessage(mContext, "登陆页面");
+                    //UIHelper.ToastMessage(mContext, "登陆页面");
+                    LoginActivity.actionStart(mContext);
                     finish();
                 }
             }
