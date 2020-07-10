@@ -248,7 +248,7 @@ public class LoginActivity extends BaseActivity {
      */
     public static void actionStart(Context context) {
         Intent intent = new Intent();
-        intent.setClass(context, HomeBasicActivity.class);
+        intent.setClass(context, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         Bundle bundle = new Bundle();
         intent.putExtras(bundle);

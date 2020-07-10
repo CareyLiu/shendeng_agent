@@ -112,6 +112,7 @@ public class SplashActivity extends Activity {
         });
 
 
+        LoginActivity.actionStart(this);
     }
 
     private void shenQingQuanXian() {
