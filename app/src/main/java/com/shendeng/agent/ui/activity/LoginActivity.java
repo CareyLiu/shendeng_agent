@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -14,10 +15,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shendeng.agent.R;
+import com.shendeng.agent.app.AppConfig;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.bean.Notice;
@@ -43,6 +46,8 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 public class LoginActivity extends BaseActivity {
 
@@ -231,6 +236,13 @@ public class LoginActivity extends BaseActivity {
                         PreferenceHelper.getInstance(LoginActivity.this).putString("user_phone", ed_phone.getText().toString() + "");
                         UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
                         startActivity(new Intent(LoginActivity.this, HomeBasicActivity.class));
+                        String rongYunTouken = UserManager.getManager(mContext).getRongYun();
+
+                        if (!StringUtils.isEmpty(rongYunTouken)) {
+                            connectRongYun(response.body().data.get(0).getToken_rong());
+
+
+                        }
                     }
 
                     @Override
@@ -254,4 +266,50 @@ public class LoginActivity extends BaseActivity {
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
+
+
+    public void connectRongYun(String token) {
+
+        RongIM.connect(token, new RongIMClient.ConnectCallbackEx() {
+            /**
+             * 数据库回调.
+             * @param code 数据库打开状态. DATABASE_OPEN_SUCCESS 数据库打开成功; DATABASE_OPEN_ERROR 数据库打开失败
+             */
+            @Override
+            public void OnDatabaseOpened(RongIMClient.DatabaseOpenStatus code) {
+                Log.i("rongYun", "数据库打开失败");
+            }
+
+            /**
+             * token 无效
+             */
+            @Override
+            public void onTokenIncorrect() {
+                Log.i("rongYun", "token 无效");
+            }
+
+            /**
+             * 成功回调
+             * @param userId 当前用户 ID
+             */
+            @Override
+            public void onSuccess(String userId) {
+                //UIHelper.ToastMessage(mContext, "融云连接成功");
+                Log.i("rongYun", "融云连接成功");
+                PreferenceHelper.getInstance(mContext).putString(AppConfig.RONGYUN_TOKEN, token);
+            }
+
+            /**
+             * 错误回调
+             * @param errorCode 错误码
+             */
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                Log.i("rongYun", "融云连接失败");
+            }
+        });
+
+    }
+
+
 }

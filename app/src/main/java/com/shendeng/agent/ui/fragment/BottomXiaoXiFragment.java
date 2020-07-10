@@ -1,6 +1,8 @@
 package com.shendeng.agent.ui.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +10,22 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.jakewharton.rxbinding.view.RxView;
 import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 
+import java.util.concurrent.TimeUnit;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class BottomXiaoXiFragment extends BaseFragment {
     public static final String TAG = "BottomXiaoXiFragment";
+    @BindView(R.id.top_view)
+    View topView;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -28,7 +36,6 @@ public class BottomXiaoXiFragment extends BaseFragment {
 
             }
         }));
-
     }
 
     public static BottomXiaoXiFragment newInstance() {
@@ -44,11 +51,6 @@ public class BottomXiaoXiFragment extends BaseFragment {
     }
 
     @Override
-    public boolean showToolBar() {
-        return false;
-    }
-
-    @Override
     protected void initView(View view) {
     }
 
@@ -58,11 +60,32 @@ public class BottomXiaoXiFragment extends BaseFragment {
     }
 
 
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
 
     @Override
-    protected void immersionInit(ImmersionBar mImmersionBar) {
+    protected void initToolBar(View rootView) {
+        super.initToolBar(rootView);
+        iv_rightTitle.setVisibility(View.VISIBLE);
+        tv_title.setText("消息");
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(this.getResources().getColor(R.color.color_494949));
+        tv_title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        toolbar.setNavigationIcon(R.mipmap.backbutton);
+        toolbar.setBackgroundColor(this.getResources().getColor(R.color.white));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
+    }
+
+    private void immersionInit() {
         mImmersionBar
-                .titleBar(toolbar)
+                .statusBarView(toolbar)
                 .statusBarDarkFont(true)
                 .init();
     }
@@ -79,6 +102,24 @@ public class BottomXiaoXiFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mImmersionBar = ImmersionBar.with(this);
+        immersionInit();
+    }
+    private boolean islogic = false;
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        immersionInit();
+        Log.d("--3--", "333333");
+        if (islogic) {
+            initLogic();
+        }
+    }
+
 
     @Override
     public void onDestroyView() {

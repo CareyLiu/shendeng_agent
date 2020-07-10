@@ -103,5 +103,7 @@ dependencies {
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.0'
     implementation 'com.blankj:utilcode:1.29.0'
     implementation 'com.google.android.material:material:1.1.0'
+    implementation 'cn.rongcloud.sdk:im_lib:2.10.5'
+    implementation 'cn.rongcloud.sdk:im_kit:2.10.5'
 
 }

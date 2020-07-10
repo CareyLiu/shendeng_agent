@@ -27,9 +27,6 @@ import com.shendeng.agent.app.AppConfig;
 import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.ui.activity.LoginActivity;
 import com.shendeng.agent.ui.widget.DoubleClickExitHelper;
-import com.shendeng.agent.util.NetworkUtils;
-import com.tbruyelle.rxpermissions.Permission;
-import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.Timer;
 import java.util.TimerTask;
