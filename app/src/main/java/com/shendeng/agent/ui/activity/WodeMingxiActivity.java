@@ -172,10 +172,17 @@ public class WodeMingxiActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<MingxiModel.DataBean>> response) {
                         data = response.body().data;
-                        pay_cost_id = data.get(data.size() - 1).getPay_cost_id();
-
                         mingxiAdapter.setNewData(data);
                         mingxiAdapter.notifyDataSetChanged();
+
+                        if (data.size()>0){
+                            pay_cost_id = WodeMingxiActivity.this.data.get(WodeMingxiActivity.this.data.size() - 1).getPay_cost_id();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
                         smartRefreshLayout.finishRefresh();
                     }
                 });
@@ -198,10 +205,17 @@ public class WodeMingxiActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<MingxiModel.DataBean>> response) {
                         List<MingxiModel.DataBean> dataNew = response.body().data;
                         data.addAll(dataNew);
-                        pay_cost_id = WodeMingxiActivity.this.data.get(WodeMingxiActivity.this.data.size() - 1).getPay_cost_id();
-
                         mingxiAdapter.setNewData(WodeMingxiActivity.this.data);
                         mingxiAdapter.notifyDataSetChanged();
+
+                        if (data.size()>0){
+                            pay_cost_id = WodeMingxiActivity.this.data.get(WodeMingxiActivity.this.data.size() - 1).getPay_cost_id();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
                         smartRefreshLayout.finishLoadMore();
                     }
                 });
