@@ -13,7 +13,7 @@ import com.shendeng.agent.app.App;
 public class Y {
 
 
-    private static final boolean open = false;
+    private static final boolean open = true;
 
     public static void i(String str) {
         if (open)

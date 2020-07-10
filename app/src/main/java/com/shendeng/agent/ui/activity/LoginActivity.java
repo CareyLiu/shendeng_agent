@@ -1,9 +1,13 @@
 package com.shendeng.agent.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +25,8 @@ import com.shendeng.agent.callback.DialogCallback;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.BottomDialog;
+import com.shendeng.agent.dialog.BottomDialogView;
 import com.shendeng.agent.model.LoginUser;
 import com.shendeng.agent.model.Message;
 import com.shendeng.agent.ui.HomeBasicActivity;
@@ -29,7 +35,9 @@ import com.shendeng.agent.util.TimeCount;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -61,6 +69,8 @@ public class LoginActivity extends BaseActivity {
     Button bt_login;
     @BindView(R.id.tv_yinsi)
     TextView tv_yinsi;
+    @BindView(R.id.tv_yonghu)
+    TextView tv_yonghu;
 
 
     private TimeCount timeCount;
@@ -87,22 +97,57 @@ public class LoginActivity extends BaseActivity {
         ed_pwd.setText("123456");
     }
 
-    @OnClick({R.id.tv_yzm, R.id.tv_qiehuan, R.id.tv_zhaohui, R.id.bt_login, R.id.tv_yinsi})
+    @OnClick({R.id.tv_yzm, R.id.tv_qiehuan, R.id.tv_zhaohui, R.id.bt_login, R.id.tv_yinsi, R.id.tv_yonghu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_yzm:
                 get_code();
                 break;
             case R.id.tv_qiehuan:
+                qiehuan();
                 break;
             case R.id.tv_zhaohui:
+                LoginYzmActivity.actionStart(this);
                 break;
             case R.id.bt_login:
                 login();
                 break;
             case R.id.tv_yinsi:
+                DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/privacy_clause");
+                break;
+            case R.id.tv_yonghu:
+                DefaultX5WebViewActivity.actionStart(LoginActivity.this, "https://shop.hljsdkj.com/shop_new/user_agreement");
                 break;
         }
+    }
+
+    private void qiehuan() {
+        List<String> names = new ArrayList<>();
+        names.add("用短信验证码登录");
+        names.add("用车联网密码登录");
+        final BottomDialog bottomDialog = new BottomDialog(this);
+        bottomDialog.setModles(names);
+        bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
+            @Override
+            public void onClickItem(int pos) {
+                bottomDialog.dismiss();
+                if (pos == 0) {
+                    req_type = "2";
+                    ed_pwd.setHint("请输入验证码");
+                    tv_yzm.setVisibility(View.VISIBLE);
+                } else {
+                    req_type = "1";
+                    ed_pwd.setHint("请输入登录密码");
+                    tv_yzm.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onClickCancel(View v) {
+                bottomDialog.dismiss();
+            }
+        });
+        bottomDialog.showBottom();
     }
 
 
@@ -117,7 +162,7 @@ public class LoginActivity extends BaseActivity {
             map.put("code", "00001");
             map.put("key", Urls.KEY);
             map.put("user_phone", ed_phone.getText().toString());
-            map.put("mod_id", "0110");
+            map.put("mod_id", "0110");//登录注册
 
             Gson gson = new Gson();
             OkGo.<AppResponse<Message.DataBean>>post(Urls.SERVER_URL + "msg")
@@ -154,7 +199,7 @@ public class LoginActivity extends BaseActivity {
 
         if (TextUtils.isEmpty(ed_pwd.getText().toString())) {
             if (req_type.equals("1")) {
-                Y.t("请输入密码");
+                Y.t("请输入登录密码");
             } else {
                 Y.t("请输入验证码");
             }
@@ -193,5 +238,20 @@ public class LoginActivity extends BaseActivity {
                         Y.t(response.getException().getMessage());
                     }
                 });
+    }
+
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     *
+     * @param context
+     */
+    public static void actionStart(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, HomeBasicActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        Bundle bundle = new Bundle();
+        intent.putExtras(bundle);
+        context.startActivity(intent);
     }
 }

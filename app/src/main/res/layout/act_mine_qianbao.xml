@@ -65,8 +65,8 @@
                 <ImageView
                     android:layout_width="7dp"
                     android:layout_height="13dp"
-                    android:background="@color/white"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/push_white" />
             </LinearLayout>
         </LinearLayout>
 
@@ -111,7 +111,8 @@
             android:layout_width="8dp"
             android:layout_height="14dp"
             android:layout_marginRight="19dp"
-            android:background="@color/black" />
+            android:scaleType="centerCrop"
+            android:src="@mipmap/sd_push_grey" />
     </LinearLayout>
 
     <LinearLayout
@@ -135,6 +136,7 @@
             android:layout_width="8dp"
             android:layout_height="14dp"
             android:layout_marginRight="19dp"
-            android:background="@color/black" />
+            android:scaleType="centerCrop"
+            android:src="@mipmap/sd_push_grey" />
     </LinearLayout>
 </LinearLayout>

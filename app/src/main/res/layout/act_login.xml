@@ -124,17 +124,48 @@
         android:textColor="@color/white"
         android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/tv_yinsi"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/bt_login"
         android:layout_centerHorizontal="true"
-        android:includeFontPadding="false"
-        android:padding="10dp"
-        android:text="登录即表示同意《隐私保护声明》和《用户使用协议》"
-        android:textColor="@color/text_color_9"
-        android:textSize="11sp" />
+        android:gravity="center"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="登录即表示同意"
+            android:textColor="@color/text_color_9"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tv_yinsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="《隐私保护声明》"
+            android:textColor="@color/text_color_9"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="和"
+            android:textColor="@color/text_color_9"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tv_yonghu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="《用户使用协议》"
+            android:textColor="@color/text_color_9"
+            android:textSize="11sp" />
+    </LinearLayout>
 </RelativeLayout>
 
 

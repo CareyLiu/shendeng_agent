@@ -22,7 +22,6 @@
                     android:layout_height="150dp"
                     android:background="@drawable/mine_top_bg" />
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -33,6 +32,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="42dp"
+                        android:layout_marginBottom="12dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -70,13 +70,12 @@
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
-                            <ImageView
+                            <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/iv_head"
                                 android:layout_width="61dp"
                                 android:layout_height="61dp"
                                 android:layout_marginLeft="14dp"
-                                android:layout_marginRight="14dp"
-                                android:src="@mipmap/mine_pic_touxiang_tb" />
+                                android:layout_marginRight="14dp" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -90,7 +89,8 @@
                                     android:includeFontPadding="false"
                                     android:text="管理员账号："
                                     android:textColor="@color/text_color_3"
-                                    android:textSize="15sp" />
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/tv_admin"
@@ -100,7 +100,8 @@
                                     android:includeFontPadding="false"
                                     android:text="15112345678"
                                     android:textColor="@color/text_color_3"
-                                    android:textSize="15sp" />
+                                    android:textSize="15sp"
+                                    android:textStyle="bold" />
                             </LinearLayout>
 
                             <ImageView
@@ -111,6 +112,13 @@
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/mine_boss" />
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginLeft="22dp"
+                            android:layout_marginRight="22dp"
+                            android:background="@color/line" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -132,7 +140,8 @@
                                     android:includeFontPadding="false"
                                     android:text="1"
                                     android:textColor="@color/text_color_3"
-                                    android:textSize="13sp" />
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -158,7 +167,8 @@
                                     android:includeFontPadding="false"
                                     android:text="1"
                                     android:textColor="@color/text_color_3"
-                                    android:textSize="13sp" />
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -184,7 +194,8 @@
                                     android:includeFontPadding="false"
                                     android:text="1"
                                     android:textColor="@color/text_color_3"
-                                    android:textSize="13sp" />
+                                    android:textSize="13sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -220,13 +231,15 @@
                             android:layout_weight="1"
                             android:text="我的钱包"
                             android:textColor="@color/text_color_3"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="8dp"
                             android:layout_height="14dp"
                             android:layout_marginRight="21dp"
-                            android:background="@color/black" />
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/sd_push_grey" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -251,13 +264,15 @@
                             android:layout_weight="1"
                             android:text="关于我们"
                             android:textColor="@color/text_color_3"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="8dp"
                             android:layout_height="14dp"
                             android:layout_marginRight="21dp"
-                            android:background="@color/black" />
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/sd_push_grey" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -282,13 +297,15 @@
                             android:layout_weight="1"
                             android:text="退货地址"
                             android:textColor="@color/text_color_3"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="8dp"
                             android:layout_height="14dp"
                             android:layout_marginRight="21dp"
-                            android:background="@color/black" />
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/sd_push_grey" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -313,13 +330,15 @@
                             android:layout_weight="1"
                             android:text="员工管理"
                             android:textColor="@color/text_color_3"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="8dp"
                             android:layout_height="14dp"
                             android:layout_marginRight="21dp"
-                            android:background="@color/black" />
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/sd_push_grey" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -341,7 +360,8 @@
                             android:layout_height="wrap_content"
                             android:text="点击切换到至团购商家模式"
                             android:textColor="@color/text_color_3"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>

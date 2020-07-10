@@ -1,5 +1,6 @@
 package com.shendeng.agent.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,16 +9,35 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.shendeng.agent.R;
+import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.callback.DialogCallback;
+import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.LoginUser;
+import com.shendeng.agent.model.WodeModel;
+import com.shendeng.agent.ui.HomeBasicActivity;
+import com.shendeng.agent.ui.activity.LoginActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
+import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.hdodenhof.circleimageview.CircleImageView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -28,7 +48,7 @@ public class BottomWoDeFragment extends BaseFragment {
     @BindView(R.id.iv_set)
     ImageView iv_set;
     @BindView(R.id.iv_head)
-    ImageView iv_head;
+    CircleImageView iv_head;
     @BindView(R.id.tv_admin)
     TextView tv_admin;
     @BindView(R.id.iv_shenfen)
@@ -49,6 +69,7 @@ public class BottomWoDeFragment extends BaseFragment {
     LinearLayout ll_yuangong;
     @BindView(R.id.ll_qiehuan)
     LinearLayout ll_qiehuan;
+    private WodeModel.DataBean userMain;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,9 +127,49 @@ public class BottomWoDeFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
+        initStart();
         return rootView;
+    }
+
+    private void initStart() {
+        getNet();
+    }
+
+    private void getNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04331");
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(getContext()).getAppToken());
+        Gson gson = new Gson();
+        OkGo.<AppResponse<WodeModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<WodeModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<WodeModel.DataBean>> response) {
+                        userMain = response.body().data.get(0);
+                        tv_title.setText(userMain.getInst_name());
+                        String inst_owner = userMain.getInst_owner();
+                        if (inst_owner.equals("1")) {
+                            ll_yuangong.setVisibility(View.VISIBLE);
+                            iv_shenfen.setImageResource(R.mipmap.mine_boss);
+                        } else {
+                            ll_yuangong.setVisibility(View.GONE);
+                            iv_shenfen.setImageResource(R.mipmap.mine_yuangong);
+                        }
+
+                        tv_admin.setText(userMain.getUser_phone());
+                        tv_guanzhu.setText(userMain.getShop_collection_count());
+                        tv_shoucang.setText(userMain.getWares_collection_count());
+                        tv_kaquan.setText("0");
+
+                        Glide.with(getContext()).load(userMain.getWx_img_url())
+                                .error(R.mipmap.mine_pic_touxiang_tb)
+                                .into(iv_head);
+                    }
+                });
     }
 
     @Override
@@ -141,7 +202,7 @@ public class BottomWoDeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_qianbao:
-                openActivity(WodeQainbaoActivity.class);
+                WodeQainbaoActivity.actionStart(getContext());
                 break;
             case R.id.ll_about:
                 break;
