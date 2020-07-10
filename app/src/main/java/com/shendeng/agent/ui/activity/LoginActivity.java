@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity {
         ed_pwd.setText("123456");
     }
 
-    @OnClick({R.id.tv_yzm, R.id.tv_qiehuan, R.id.tv_zhaohui, R.id.bt_login, R.id.tv_yinsi, R.id.tv_yonghu})
+    @OnClick({R.id.tv_yzm, R.id.tv_qiehuan, R.id.tv_zhaohui, R.id.bt_login, R.id.tv_yinsi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_yzm:

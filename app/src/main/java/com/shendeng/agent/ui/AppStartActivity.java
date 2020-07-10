@@ -20,17 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-import com.blankj.utilcode.util.StringUtils;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.target.ViewTarget;
 
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.AppConfig;
@@ -44,6 +34,7 @@ import com.tbruyelle.rxpermissions.RxPermissions;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import rx.functions.Action1;
 
 
@@ -72,14 +63,14 @@ public class AppStartActivity extends Activity {
         setContentView(R.layout.activity_start);
         doubleClick = new DoubleClickExitHelper(this);
         welcome = PreferenceHelper.getInstance(AppStartActivity.this).getString(AppConfig.WELCOME_PAGE, "-1");
-        Glide.with(this).load(R.mipmap.welcome_page)
-                .into(new ViewTarget<View, GlideDrawable>(findViewById(R.id.ll_appstart)) {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation glideAnimation) {
-                        this.view.setBackground(resource.getCurrent());
-                    }
-
-                });
+//        Glide.with(this).load(R.mipmap.welcome_page)
+//                .into(new ViewTarget<View, GlideDrawable>(findViewById(R.id.ll_appstart)) {
+//                    @Override
+//                    public void onResourceReady(GlideDrawable resource, GlideAnimation glideAnimation) {
+//                        this.view.setBackground(resource.getCurrent());
+//                    }
+//
+//                });
 
         llSkip = (LinearLayout) findViewById(R.id.ll_skip);
         ad_layout = (RelativeLayout) findViewById(R.id.ad_layout);
