@@ -35,7 +35,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderModel.DataBean, BaseView
             helper.getView(R.id.ll_shouhuo).setVisibility(View.VISIBLE);
         }
 
-        helper.setText(R.id.tv_shouhuoren_name, "收货人:" + item.getReceiver_name());
+        helper.setText(R.id.tv_shouhuoren_name, "收货人：" + item.getReceiver_name());
 
         View tv_bt = helper.getView(R.id.tv_bt);
         if (shop_pay_check.equals("1")) {
@@ -64,9 +64,9 @@ public class OrderAdapter extends BaseQuickAdapter<OrderModel.DataBean, BaseView
         Glide.with(mContext).load(productBean.getIndex_photo_url()).into((ImageView) helper.getView(R.id.iv_img));
         helper.setText(R.id.tv_content, productBean.getShop_product_title());
         helper.setText(R.id.tv_taocan, productBean.getProduct_title());
-        helper.setText(R.id.tv_money, productBean.getForm_product_money());
+        helper.setText(R.id.tv_money, "¥" + productBean.getForm_product_money());
         helper.setText(R.id.tv_num, "×" + productBean.getPay_count());
-        helper.setText(R.id.tv_beizhu, "×" + productBean.getShop_form_text());
+        helper.setText(R.id.tv_beizhu, "订单备注：" + productBean.getShop_form_text());
 
     }
 }
