@@ -12,6 +12,8 @@ import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.AppConfig;
@@ -19,7 +21,9 @@ import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.ui.HomeBasicActivity;
 import com.tbruyelle.rxpermissions.Permission;
 import com.tbruyelle.rxpermissions.RxPermissions;
+
 import java.lang.ref.WeakReference;
+
 import rx.functions.Action1;
 
 
@@ -79,13 +83,18 @@ public class SplashActivity extends Activity {
         }
     }
 
+    ImmersionBar mImmersionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_splash);
         RelativeLayout logoView = findViewById(R.id.iv_welcome);
-
+        mImmersionBar = ImmersionBar.with(this);
+        mImmersionBar.statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .init();
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.1f, 1.0f);
         // 动画效果时间为2秒
         alphaAnimation.setDuration(2000);
@@ -111,6 +120,7 @@ public class SplashActivity extends Activity {
             }
         });
 
+
     }
 
     private void shenQingQuanXian() {
@@ -134,11 +144,12 @@ public class SplashActivity extends Activity {
                 });
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         OkGo.getInstance().cancelTag(this);
+        if (mImmersionBar != null)
+            mImmersionBar.destroy();  //必须调用该方法，防止内存泄漏，不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
     }
 
 
