@@ -2,12 +2,15 @@ package com.shendeng.agent.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.WodeJiesuanAdapter;
 import com.shendeng.agent.app.BaseActivity;
@@ -23,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
@@ -32,6 +36,9 @@ public class WodeJiesuanActivity extends BaseActivity {
 
     @BindView(R.id.rv_content)
     RecyclerView rv_content;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+
     private String shop_form_id;
     private List<JiesuanModel.DataBean> data = new ArrayList<>();
     private WodeJiesuanAdapter jiesuanAdapter;
@@ -74,7 +81,27 @@ public class WodeJiesuanActivity extends BaseActivity {
 
     private void init() {
         initAdapter();
+        initSM();
+
         getNet();
+    }
+
+    private void initSM() {
+        smartRefreshLayout.setEnableLoadMore(true);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
+
+
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getLoad();
+            }
+        });
     }
 
     private void initAdapter() {
@@ -84,6 +111,8 @@ public class WodeJiesuanActivity extends BaseActivity {
     }
 
     private void getNet() {
+        shop_form_id = "";
+
         Map<String, String> map = new HashMap<>();
         map.put("code", "04335");
         map.put("key", Urls.KEY);
@@ -99,8 +128,48 @@ public class WodeJiesuanActivity extends BaseActivity {
                         data = response.body().data;
                         jiesuanAdapter.setNewData(data);
                         jiesuanAdapter.notifyDataSetChanged();
+
+                        if (data.size() > 0) {
+                            shop_form_id = WodeJiesuanActivity.this.data.get(WodeJiesuanActivity.this.data.size() - 1).getShop_form_id();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        smartRefreshLayout.finishRefresh();
                     }
                 });
     }
 
+    private void getLoad() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04335");
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("shop_form_id", shop_form_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<JiesuanModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<JiesuanModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<JiesuanModel.DataBean>> response) {
+                        List<JiesuanModel.DataBean> dataNew = response.body().data;
+                        data.addAll(dataNew);
+                        jiesuanAdapter.setNewData(data);
+                        jiesuanAdapter.notifyDataSetChanged();
+
+                        if (data.size() > 0) {
+                            shop_form_id = WodeJiesuanActivity.this.data.get(WodeJiesuanActivity.this.data.size() - 1).getShop_form_id();
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        smartRefreshLayout.finishLoadMore();
+                    }
+                });
+    }
 }

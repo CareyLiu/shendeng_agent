@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="96dp"
+        android:background="@color/white">
+
+        <View
+            android:id="@+id/qiu_paixia"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginTop="57dp"
+            android:layout_marginRight="11dp"
+            android:layout_toStartOf="@+id/line1"
+            android:background="@color/order_red" />
+
+        <View
+            android:id="@+id/line1"
+            android:layout_width="35dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="61dp"
+            android:layout_toStartOf="@+id/qiu_fukuan"
+            android:background="@color/order_red" />
+
+
+        <View
+            android:id="@+id/qiu_fukuan"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="57dp"
+            android:layout_marginRight="11dp"
+            android:layout_toStartOf="@+id/line2"
+            android:background="@color/order_red" />
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="35dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="61dp"
+            android:layout_toStartOf="@+id/qiu_fahuo"
+            android:background="@color/order_red" />
+
+
+        <View
+            android:id="@+id/qiu_fahuo"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="57dp"
+            android:layout_marginRight="11dp"
+            android:background="@color/order_red" />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="35dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="61dp"
+            android:layout_toEndOf="@+id/qiu_fahuo"
+            android:background="@color/order_red" />
+
+        <View
+            android:id="@+id/qiu_chenggong"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="57dp"
+            android:layout_marginRight="11dp"
+            android:layout_toEndOf="@+id/line3"
+            android:background="@color/order_red" />
+
+        <View
+            android:id="@+id/line4"
+            android:layout_width="35dp"
+            android:layout_height="2dp"
+            android:layout_marginTop="61dp"
+            android:layout_toEndOf="@+id/qiu_chenggong"
+            android:background="@color/order_red" />
+
+        <View
+            android:id="@+id/qiu_pingjia"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_marginLeft="11dp"
+            android:layout_marginTop="57dp"
+            android:layout_toEndOf="@+id/line4"
+            android:background="@color/order_red" />
+
+        <TextView
+            android:id="@+id/tv_paixia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_toLeftOf="@id/tv_fukuan"
+            android:includeFontPadding="false"
+            android:text="已拍下"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_fukuan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="28dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="28dp"
+            android:layout_toLeftOf="@id/tv_fahuo"
+            android:includeFontPadding="false"
+            android:text="已付款"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_fahuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:includeFontPadding="false"
+            android:text="已发货"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_chenggong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="22dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="22dp"
+            android:layout_toRightOf="@id/tv_fahuo"
+            android:includeFontPadding="false"
+            android:text="交易成功"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_pingjia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/tv_chenggong"
+            android:includeFontPadding="false"
+            android:text="已评价"
+            android:textColor="@color/text_color_3"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</LinearLayout>

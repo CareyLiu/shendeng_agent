@@ -1,6 +1,7 @@
 package com.shendeng.agent.app;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
     protected Toolbar mToolbar;
     protected TextView tv_title, tv_rightTitle, tv_leftTitle;
     protected ImageView iv_rightTitle, iv_leftTitle;
+    protected View view_line;
 
 
     @Override
@@ -68,7 +70,7 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
      */
     protected void initToolbar() {
         mToolbar.setTitle("");
-     // mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
+        // mToolbar.setTitleTextColor(getResources().getColor(R.color.black));
         tv_title = (TextView) rootView.findViewById(R.id.toolbar_title);
         tv_title.setVisibility(View.VISIBLE);
         tv_rightTitle = (TextView) rootView.findViewById(R.id.tv_toolbar_right);
@@ -76,6 +78,13 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
         iv_rightTitle = (ImageView) rootView.findViewById(R.id.iv_toolbar_right);
         tv_leftTitle = (TextView) rootView.findViewById(R.id.tv_toolbar_left);
         iv_leftTitle = (ImageView) rootView.findViewById(R.id.iv_toolbar_left);
+        view_line = rootView.findViewById(R.id.view_line);
+        if (showToolBarLine()) {
+            view_line.setVisibility(View.VISIBLE);
+        } else {
+            view_line.setVisibility(View.GONE);
+        }
+
         mToolbar.collapseActionView();
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -83,7 +92,19 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             getSupportActionBar().setHomeAsUpIndicator(R.mipmap.navigationicon);
         }
+
+        tv_title.setTextSize(17);
+        tv_title.setTextColor(this.getResources().getColor(R.color.color_494949));
+        tv_title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mToolbar.setNavigationIcon(R.mipmap.backbutton);
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
+
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -123,6 +144,13 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
      */
     public boolean showToolBar() {
         return false;
+    }
+
+    /**
+     * 是否显示通用toolBar的底层线
+     */
+    public boolean showToolBarLine() {
+        return true;
     }
 
     //获取自定义toolbarview 资源id 默认为-1，showToolBar()方法必须返回true才有效
