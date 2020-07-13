@@ -14,8 +14,11 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shendeng.agent.R;
+import com.shendeng.agent.app.App;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.model.Message;
 import com.shendeng.agent.util.TimeCount;
@@ -43,7 +46,6 @@ public class LoginYzmActivity extends BaseActivity {
 
     private TimeCount timeCount;
     private String smsId;//短信验证码id
-    private String req_type;//登录场景:1.密码登陆2.手机验证码登陆
 
     @Override
     public int getContentViewResId() {
@@ -59,16 +61,6 @@ public class LoginYzmActivity extends BaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("手机验证");
-        tv_title.setTextSize(17);
-        tv_title.setTextColor(this.getResources().getColor(R.color.color_494949));
-        tv_title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     /**
@@ -81,6 +73,13 @@ public class LoginYzmActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         intent.putExtras(bundle);
         context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
     @OnClick({R.id.tv_yzm, R.id.bt_ok})
@@ -108,7 +107,7 @@ public class LoginYzmActivity extends BaseActivity {
         map.put("code", "00001");
         map.put("key", Urls.KEY);
         map.put("user_phone", ed_phone.getText().toString());
-        map.put("mod_id", "0007");
+        map.put("mod_id", AppCode.mod_login_pwd_zhaohui);
         Gson gson = new Gson();
         OkGo.<AppResponse<Message.DataBean>>post(Urls.MSG)
                 .tag(this)//
@@ -134,26 +133,20 @@ public class LoginYzmActivity extends BaseActivity {
      * 提交验证
      */
     private void requestData() {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "0006");
-        map.put("key", Urls.KEY);
-        map.put("sms_id", smsId);
-        map.put("sms_code", ed_phone.getText().toString());
-        Gson gson = new Gson();
-        OkGo.<AppResponse<Message.DataBean>>post(Urls.MSG)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
-                        LoginPwdActivity.actionStart(LoginYzmActivity.this);
-                        finish();
-                    }
+        String sms_code = ed_code.getText().toString();
+        if (TextUtils.isEmpty(sms_code)) {
+            Y.t("请输入验证码");
+            return;
+        }
 
-                    @Override
-                    public void onError(Response<AppResponse<Message.DataBean>> response) {
-                        Y.t(response.getException().getMessage());
-                    }
-                });
+        smsId = "00";
+        if (TextUtils.isEmpty(smsId)) {
+            Y.t("请发送验证码");
+            return;
+        }
+
+        PreferenceHelper.getInstance(mContext).putString(AppCode.SMS_ID, smsId);
+        PreferenceHelper.getInstance(mContext).putString(AppCode.SMS_CODE, sms_code);
+        LoginPwdActivity.actionStart(mContext, AppCode.mod_login_pwd_zhaohui);
     }
 }

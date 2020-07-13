@@ -17,6 +17,7 @@ import com.lzy.okgo.model.Response;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.TishiDialog;
@@ -132,11 +133,11 @@ public class TixianActivity extends BaseActivity {
         show_shui.setText("手续费：" + Y.getMoney(tixianfei) + "元");
         tv_zuiditixian.setText("最低提现金额：" + zuidiMoney + "元");
 
-        if (weiXinOrZhiFuBao.equals("2")) {
+        if (weiXinOrZhiFuBao.equals(AppCode.code_weixin)) {
             tv_msg.setText("提示:请仔细核对微信帐号信息，避免因为帐号错误导致无法及时到账");
             iv_icon.setBackgroundResource(R.mipmap.dingdan_icon_wexin);
             tv_zhifufangshi.setText("微信");
-        } else if (weiXinOrZhiFuBao.equals("1")) {
+        } else if (weiXinOrZhiFuBao.equals(AppCode.code_zhifubao)) {
             iv_icon.setBackgroundResource(R.mipmap.dingdan_icon_zhifubao);
             tv_zhifufangshi.setText("支付宝");
             tv_msg.setText("提示:请仔细核对支付宝帐号信息，避免因为帐号错误导致无法及时到账");
@@ -188,7 +189,6 @@ public class TixianActivity extends BaseActivity {
 
         String pay_pwd_check = UserManager.getManager(this).getPay_pwd_check();
 
-        Y.e("我电视剧可减肥的" + pay_pwd_check);
         if (pay_pwd_check.equals("1")) {
 //            getTixian();
 

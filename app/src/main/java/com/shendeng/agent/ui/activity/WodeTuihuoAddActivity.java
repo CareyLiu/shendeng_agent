@@ -17,16 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class WodeTuihuoActivity extends BaseActivity {
+public class WodeTuihuoAddActivity extends BaseActivity {
 
-    @BindView(R.id.rv_content)
-    RecyclerView rv_content;
-    @BindView(R.id.smartRefreshLayout)
-    SmartRefreshLayout smartRefreshLayout;
 
     @Override
     public int getContentViewResId() {
-        return R.layout.act_mine_tuihuo;
+        return R.layout.act_mine_tuihuo_add;
     }
 
     @Override
@@ -37,17 +33,21 @@ public class WodeTuihuoActivity extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("退货地址设置");
-        tv_rightTitle.setText("添加新地址");
+        tv_title.setText("新增退货地址");
+        tv_rightTitle.setText("保存");
         tv_rightTitle.setVisibility(View.VISIBLE);
         tv_rightTitle.setTextSize(17);
         tv_rightTitle.setTextColor(this.getResources().getColor(R.color.text_red));
         tv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WodeTuihuoAddActivity.actionStart(WodeTuihuoActivity.this);
+                saveAdress();
             }
         });
+    }
+
+    private void saveAdress() {
+
     }
 
     /**
@@ -55,7 +55,7 @@ public class WodeTuihuoActivity extends BaseActivity {
      */
     public static void actionStart(Context context) {
         Intent intent = new Intent();
-        intent.setClass(context, WodeTuihuoActivity.class);
+        intent.setClass(context, WodeTuihuoAddActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         Bundle bundle = new Bundle();
         intent.putExtras(bundle);
@@ -71,38 +71,11 @@ public class WodeTuihuoActivity extends BaseActivity {
     }
 
     private void init() {
-        initAdapter();
-        initSM();
-
         getNet();
     }
 
-    private void initAdapter() {
-    }
-
-    private void initSM() {
-        smartRefreshLayout.setEnableLoadMore(true);
-        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                getNet();
-            }
-        });
-
-
-        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                getLoad();
-            }
-        });
-    }
 
     private void getNet() {
-
-    }
-
-    private void getLoad() {
 
     }
 }
