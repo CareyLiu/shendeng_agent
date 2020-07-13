@@ -14,8 +14,8 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 
-public class WodeJiesuanAdapter extends BaseQuickAdapter<JiesuanModel.DataBean, BaseViewHolder> {
-    public WodeJiesuanAdapter(int layoutResId, @Nullable List<JiesuanModel.DataBean> data) {
+public class JiesuanAdapter extends BaseQuickAdapter<JiesuanModel.DataBean, BaseViewHolder> {
+    public JiesuanAdapter(int layoutResId, @Nullable List<JiesuanModel.DataBean> data) {
         super(layoutResId, data);
 
     }

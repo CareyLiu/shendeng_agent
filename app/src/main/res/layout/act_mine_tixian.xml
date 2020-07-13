@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_shuoming"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="17dp"
+        android:paddingBottom="17dp"
+        android:privateImeOptions="25dp"
+        android:text="提示：请仔细核对支付宝帐号信息，避免因为帐号错误 导致无法及时到账 " />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"></LinearLayout>
+
+</LinearLayout>

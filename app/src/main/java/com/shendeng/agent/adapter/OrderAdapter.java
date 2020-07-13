@@ -40,22 +40,22 @@ public class OrderAdapter extends BaseQuickAdapter<OrderModel.DataBean, BaseView
         View tv_bt = helper.getView(R.id.tv_bt);
         if (shop_pay_check.equals("1")) {
             tv_bt.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_shouhuoren_name, "退款申请");
+            helper.setText(R.id.tv_bt, "退款申请");
         } else if (shop_pay_check.equals("3")) {
             tv_bt.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_shouhuoren_name, "去发货");
+            helper.setText(R.id.tv_bt, "去发货");
         } else if (shop_pay_check.equals("4")) {
             tv_bt.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_shouhuoren_name, "查看物流");
+            helper.setText(R.id.tv_bt, "查看物流");
         } else if (shop_pay_check.equals("6")) {
             tv_bt.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_shouhuoren_name, "催评价");
+            helper.setText(R.id.tv_bt, "催评价");
         } else if (shop_pay_check.equals("7")) {
             tv_bt.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_shouhuoren_name, "查看评价");
+            helper.setText(R.id.tv_bt, "查看评价");
         } else if (shop_pay_check.equals("8")) {
             tv_bt.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_shouhuoren_name, "去处理");
+            helper.setText(R.id.tv_bt, "去处理");
         } else if (shop_pay_check.equals("9") || shop_pay_check.equals("10")) {
             tv_bt.setVisibility(View.GONE);
         }

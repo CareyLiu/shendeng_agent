@@ -12,13 +12,12 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
-import com.shendeng.agent.adapter.WodeJiesuanAdapter;
+import com.shendeng.agent.adapter.JiesuanAdapter;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.JiesuanModel;
-import com.shendeng.agent.model.MingxiModel;
 import com.shendeng.agent.util.Urls;
 
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public class WodeJiesuanActivity extends BaseActivity {
 
     private String shop_form_id;
     private List<JiesuanModel.DataBean> data = new ArrayList<>();
-    private WodeJiesuanAdapter jiesuanAdapter;
+    private JiesuanAdapter jiesuanAdapter;
 
     @Override
     public int getContentViewResId() {
@@ -105,7 +104,7 @@ public class WodeJiesuanActivity extends BaseActivity {
     }
 
     private void initAdapter() {
-        jiesuanAdapter = new WodeJiesuanAdapter(R.layout.item_mine_jiesuan, data);
+        jiesuanAdapter = new JiesuanAdapter(R.layout.item_mine_jiesuan, data);
         rv_content.setLayoutManager(new LinearLayoutManager(this));
         rv_content.setAdapter(jiesuanAdapter);
     }

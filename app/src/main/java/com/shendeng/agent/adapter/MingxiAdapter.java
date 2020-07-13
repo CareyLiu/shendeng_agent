@@ -10,8 +10,8 @@ import java.util.List;
 
 import androidx.annotation.Nullable;
 
-public class WodeMingxiAdapter extends BaseQuickAdapter<MingxiModel.DataBean, BaseViewHolder> {
-    public WodeMingxiAdapter(int layoutResId, @Nullable List<MingxiModel.DataBean> data) {
+public class MingxiAdapter extends BaseQuickAdapter<MingxiModel.DataBean, BaseViewHolder> {
+    public MingxiAdapter(int layoutResId, @Nullable List<MingxiModel.DataBean> data) {
         super(layoutResId, data);
 
     }

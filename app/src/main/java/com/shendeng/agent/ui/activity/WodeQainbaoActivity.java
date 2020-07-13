@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,11 +19,16 @@ import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.BottomDialog;
+import com.shendeng.agent.dialog.BottomDialogView;
 import com.shendeng.agent.model.QainbaoModel;
 import com.shendeng.agent.model.WodeModel;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -83,10 +89,11 @@ public class WodeQainbaoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-        init();
     }
 
-    private void init() {
+    @Override
+    protected void onResume() {
+        super.onResume();
         getNet();
     }
 
@@ -116,6 +123,7 @@ public class WodeQainbaoActivity extends BaseActivity {
                 WodeMingxiActivity.actionStart(this);
                 break;
             case R.id.bt_tixian:
+                tianxian();
                 break;
             case R.id.ll_jiesuan:
                 WodeJiesuanActivity.actionStart(this);
@@ -123,5 +131,70 @@ public class WodeQainbaoActivity extends BaseActivity {
             case R.id.ll_zhanghaoset:
                 break;
         }
+    }
+
+    private void tianxian() {
+        float inst_money_access = Y.getFloat(dataBean.getInst_money_access());
+        if (inst_money_access > 0) {
+            showWeiXinOrZhiFuBaoSelect();
+        } else {
+            Y.t("当前金额为0，不可提现");
+        }
+    }
+
+    private void showWeiXinOrZhiFuBaoSelect() {
+        List<String> names = new ArrayList<>();
+        names.add("微信提现");
+        names.add("支付宝提现");
+        final BottomDialog bottomDialog = new BottomDialog(this);
+        bottomDialog.setModles(names);
+        bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
+            @Override
+            public void onClickItem(int pos) {
+                bottomDialog.dismiss();
+                if (pos == 0) {
+                    if (UserManager.getManager(WodeQainbaoActivity.this).getWx_pay_check().equals("1")) {
+                        TixianActivity.actionStart(
+                                WodeQainbaoActivity.this,
+                                "2",
+                                dataBean.getInst_money_access(),
+                                dataBean.getScore_zd(),
+                                dataBean.getScore_tx());
+                    } else {
+                        Intent intent = new Intent(WodeQainbaoActivity.this, PhoneCheckActivity.class);
+                        intent.putExtra("mod_id", "0111");
+                        intent.putExtra("weixinOrZhiFuBao", "2");
+                        intent.putExtra("money_use", dataBean.getInst_money_access());
+                        intent.putExtra("zuidiMoney", dataBean.getScore_zd());
+                        intent.putExtra("shouxufei", dataBean.getScore_tx());
+                        startActivity(intent);
+                    }
+                } else {
+//                    if (UserManager.getManager(WodeQainbaoActivity.this).getAlipay_number_check().equals("1")) {
+                    if (false) {
+                        TixianActivity.actionStart(
+                                WodeQainbaoActivity.this,
+                                "1",
+                                dataBean.getInst_money_access(),
+                                dataBean.getScore_zd(),
+                                dataBean.getScore_tx());
+                    } else {
+                        Intent intent = new Intent(WodeQainbaoActivity.this, PhoneCheckActivity.class);
+                        intent.putExtra("mod_id", "0111");
+                        intent.putExtra("weixinOrZhiFuBao", "1");
+                        intent.putExtra("money_use", dataBean.getInst_money_access());
+                        intent.putExtra("zuidiMoney", dataBean.getScore_zd());
+                        intent.putExtra("shouxufei", dataBean.getScore_tx());
+                        startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onClickCancel(View v) {
+                bottomDialog.dismiss();
+            }
+        });
+        bottomDialog.showBottom();
     }
 }

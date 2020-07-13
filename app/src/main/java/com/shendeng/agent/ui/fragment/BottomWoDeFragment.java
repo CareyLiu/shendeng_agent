@@ -1,6 +1,5 @@
 package com.shendeng.agent.ui.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,25 +13,25 @@ import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
-import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
-import com.shendeng.agent.callback.DialogCallback;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
-import com.shendeng.agent.model.LoginUser;
 import com.shendeng.agent.model.WodeModel;
-import com.shendeng.agent.ui.HomeBasicActivity;
-import com.shendeng.agent.ui.activity.LoginActivity;
+import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
 import com.shendeng.agent.util.Urls;
-import com.shendeng.agent.util.Y;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,6 +68,8 @@ public class BottomWoDeFragment extends BaseFragment {
     LinearLayout ll_yuangong;
     @BindView(R.id.ll_qiehuan)
     LinearLayout ll_qiehuan;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     private WodeModel.DataBean userMain;
 
     @Override
@@ -135,6 +136,17 @@ public class BottomWoDeFragment extends BaseFragment {
 
     private void initStart() {
         getNet();
+        initSM();
+    }
+
+    private void initSM() {
+        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
     }
 
     private void getNet() {
@@ -168,6 +180,14 @@ public class BottomWoDeFragment extends BaseFragment {
                         Glide.with(getContext()).load(userMain.getWx_img_url())
                                 .error(R.mipmap.mine_pic_touxiang_tb)
                                 .into(iv_head);
+
+                        UserManager.getManager(getActivity()).saveUserInfo(userMain);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        smartRefreshLayout.finishRefresh();
                     }
                 });
     }
@@ -198,7 +218,7 @@ public class BottomWoDeFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.ll_qianbao, R.id.ll_about, R.id.ll_dizhi, R.id.ll_yuangong, R.id.ll_qiehuan})
+    @OnClick({R.id.iv_set, R.id.ll_qianbao, R.id.ll_about, R.id.ll_dizhi, R.id.ll_yuangong, R.id.ll_qiehuan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_qianbao:
@@ -211,6 +231,9 @@ public class BottomWoDeFragment extends BaseFragment {
             case R.id.ll_yuangong:
                 break;
             case R.id.ll_qiehuan:
+                break;
+            case R.id.iv_set:
+                SettingActivity.actionStart(getContext());
                 break;
         }
     }

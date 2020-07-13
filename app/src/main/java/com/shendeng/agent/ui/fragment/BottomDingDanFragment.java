@@ -223,7 +223,12 @@ public class BottomDingDanFragment extends BaseFragment {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                OrderDetailsActivity.actionStart(getContext());
+                if (data != null && data.size() > 0) {
+                    String shop_form_id = data.get(position).getProduct().get(0).getShop_form_id();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("shop_form_id", shop_form_id);
+                    OrderDetailsActivity.actionStart(getContext(), bundle);
+                }
             }
         });
     }

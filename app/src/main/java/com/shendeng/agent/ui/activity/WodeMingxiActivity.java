@@ -2,10 +2,10 @@ package com.shendeng.agent.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -14,7 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
-import com.shendeng.agent.adapter.WodeMingxiAdapter;
+import com.shendeng.agent.adapter.MingxiAdapter;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
@@ -53,7 +53,7 @@ public class WodeMingxiActivity extends BaseActivity {
     private String pay_cost_id;
 
     private List<MingxiModel.DataBean> data = new ArrayList<>();
-    private WodeMingxiAdapter mingxiAdapter;
+    private MingxiAdapter mingxiAdapter;
 
     @Override
     public int getContentViewResId() {
@@ -122,9 +122,20 @@ public class WodeMingxiActivity extends BaseActivity {
     }
 
     private void initAdapter() {
-        mingxiAdapter = new WodeMingxiAdapter(R.layout.item_mine_mingxi, data);
+        mingxiAdapter = new MingxiAdapter(R.layout.item_mine_mingxi, data);
         rv_content.setAdapter(mingxiAdapter);
         rv_content.setLayoutManager(new LinearLayoutManager(this));
+        mingxiAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (data != null && data.size() > position) {
+                    String pay_cost_id = data.get(position).getPay_cost_id();
+                    Intent intent = new Intent(WodeMingxiActivity.this, WodeMingxiDetailsActivity.class);
+                    intent.putExtra("pay_cost_id", pay_cost_id);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 
 
@@ -175,7 +186,7 @@ public class WodeMingxiActivity extends BaseActivity {
                         mingxiAdapter.setNewData(data);
                         mingxiAdapter.notifyDataSetChanged();
 
-                        if (data.size()>0){
+                        if (data.size() > 0) {
                             pay_cost_id = WodeMingxiActivity.this.data.get(WodeMingxiActivity.this.data.size() - 1).getPay_cost_id();
                         }
                     }
@@ -208,7 +219,7 @@ public class WodeMingxiActivity extends BaseActivity {
                         mingxiAdapter.setNewData(WodeMingxiActivity.this.data);
                         mingxiAdapter.notifyDataSetChanged();
 
-                        if (data.size()>0){
+                        if (data.size() > 0) {
                             pay_cost_id = WodeMingxiActivity.this.data.get(WodeMingxiActivity.this.data.size() - 1).getPay_cost_id();
                         }
                     }

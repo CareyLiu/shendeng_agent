@@ -1,6 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'release'
+            keyPassword 'sdkj001'
+            storeFile file('C:/keystore/shangjiaduan.jks')
+            storePassword 'sdkj001'
+        }
+        release {
+            keyAlias 'release'
+            keyPassword 'sdkj001'
+            storeFile file('C:/keystore/shangjiaduan.jks')
+            storePassword 'sdkj001'
+        }
+    }
+
+
+
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
@@ -106,4 +123,6 @@ dependencies {
     implementation 'cn.rongcloud.sdk:im_lib:2.10.5'
     implementation 'cn.rongcloud.sdk:im_kit:2.10.5'
 
+
+    implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 }

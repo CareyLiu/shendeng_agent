@@ -7,6 +7,7 @@ import android.content.Context;
 
 import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.model.LoginUser;
+import com.shendeng.agent.model.WodeModel;
 
 
 /**
@@ -70,6 +71,19 @@ public class UserManager {
         }
     }
 
+    //保存用户信息
+    public void saveUserInfoMine(WodeModel.DataBean user) {
+        if (user != null) {
+            PreferenceHelper.getInstance(mContext).putString("alipay_uname", user.getAlipay_uname());
+            PreferenceHelper.getInstance(mContext).putString("alipay_number", user.getAlipay_number());
+            PreferenceHelper.getInstance(mContext).putString("alipay_number_check", user.getAlipay_number_check());
+            PreferenceHelper.getInstance(mContext).putString("user_phone", user.getUser_phone());
+            PreferenceHelper.getInstance(mContext).putString("pay_pwd_check", user.getPay_pwd_check());
+            PreferenceHelper.getInstance(mContext).putString("wx_pay_check", user.getWx_pay_check());
+            PreferenceHelper.getInstance(mContext).putString("inst_owner", user.getInst_owner());
+        }
+    }
+
     /**
      * 删除用户信息
      */
@@ -81,6 +95,91 @@ public class UserManager {
         PreferenceHelper.getInstance(mContext).removeKey("accid");
         PreferenceHelper.getInstance(mContext).removeKey("enter_type");
         PreferenceHelper.getInstance(mContext).removeKey("user_img");
+
+
+        PreferenceHelper.getInstance(mContext).removeKey("alipay_uname");
+        PreferenceHelper.getInstance(mContext).removeKey("alipay_number");
+        PreferenceHelper.getInstance(mContext).removeKey("alipay_number_check");
+        PreferenceHelper.getInstance(mContext).removeKey("user_phone");
+        PreferenceHelper.getInstance(mContext).removeKey("pay_pwd_check");
+        PreferenceHelper.getInstance(mContext).removeKey("wx_pay_check");
+        PreferenceHelper.getInstance(mContext).removeKey("inst_owner");
     }
 
+    public String getWx_user_name() {//获取微信名称
+        return PreferenceHelper.getInstance(mContext).getString("wx_user_name", "");
+    }
+
+    public String getAlipay_uname() {//获取支付宝真实姓名
+        return PreferenceHelper.getInstance(mContext).getString("alipay_uname", "");
+    }
+
+    public String getAlipay_number() {//获取支付宝真实姓名
+        return PreferenceHelper.getInstance(mContext).getString("alipay_number", "");
+    }
+
+    public String getAlipay_number_check() {//判断是否绑定了支付宝 1绑定 0未绑定
+        return PreferenceHelper.getInstance(mContext).getString("alipay_number_check", "");
+    }
+
+    public String getUser_phone() {//获取用户手机号
+        return PreferenceHelper.getInstance(mContext).getString("user_phone", "");
+    }
+
+    public String getPay_pwd_check() {//判断是否绑定了支付密码 1绑定 0未绑定
+        return PreferenceHelper.getInstance(mContext).getString("pay_pwd_check", "");
+    }
+
+    public String getWx_pay_check() {//判断是否绑定了微信 1绑定 0未绑定
+        return PreferenceHelper.getInstance(mContext).getString("wx_pay_check", "");
+    }
+
+    public String getInst_owner() {//是否是店主  1是  2否
+        return PreferenceHelper.getInstance(mContext).getString("inst_owner", "");
+    }
+
+    //保存用户信息
+    public void saveUserInfo(WodeModel.DataBean user) {
+        if (user != null) {
+            PreferenceHelper.getInstance(mContext).putString("alipay_uname", user.getAlipay_uname());
+            PreferenceHelper.getInstance(mContext).putString("alipay_number", user.getAlipay_number());
+            PreferenceHelper.getInstance(mContext).putString("alipay_number_check", user.getAlipay_number_check());
+            PreferenceHelper.getInstance(mContext).putString("user_phone", user.getUser_phone());
+            PreferenceHelper.getInstance(mContext).putString("pay_pwd_check", user.getPay_pwd_check());
+            PreferenceHelper.getInstance(mContext).putString("wx_pay_check", user.getWx_pay_check());
+            PreferenceHelper.getInstance(mContext).putString("inst_owner", user.getInst_owner());
+            PreferenceHelper.getInstance(mContext).putString("wx_user_name", user.getWx_user_name());
+        }
+    }
+
+    //设置是否绑定微信
+    public void setWx_pay_check(String wx_pay_check) {
+        PreferenceHelper.getInstance(mContext).putString("wx_pay_check", wx_pay_check);
+    }
+
+    //设置微信名称
+    public void setWx_user_name(String wx_user_name) {
+        PreferenceHelper.getInstance(mContext).putString("wx_user_name", wx_user_name);
+    }
+
+    //设置是否绑定支付宝
+    public void setAlipay_number_check(String alipay_number_check) {
+        PreferenceHelper.getInstance(mContext).putString("alipay_number_check", alipay_number_check);
+    }
+
+    //设置支付宝账户
+    public void setAlipay_number(String alipay_number) {
+        PreferenceHelper.getInstance(mContext).putString("alipay_number", alipay_number);
+    }
+
+    //设置支付宝真实姓名
+    public void setAlipay_name(String alipay_uname) {
+        PreferenceHelper.getInstance(mContext).putString("alipay_uname", alipay_uname);
+    }
+
+
+    //设置是否绑定支付密码
+    public void setPay_pwd_check(String pay_pwd_check) {
+        PreferenceHelper.getInstance(mContext).putString("pay_pwd_check", pay_pwd_check);
+    }
 }
