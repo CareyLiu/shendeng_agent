@@ -1,8 +1,9 @@
 package com.shendeng.agent.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OrderDetailsModel {
+public class OrderDetailsModel implements Serializable {
 
     /**
      * msg_code : 0000
@@ -48,7 +49,7 @@ public class OrderDetailsModel {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable {
         /**
          * shop_form_id : 3124
          * form_no : 20200708092056000001
@@ -313,7 +314,7 @@ public class OrderDetailsModel {
             this.product = product;
         }
 
-        public static class ProductBean {
+        public static class ProductBean implements Serializable{
             /**
              * shop_form_id : 3124
              * shop_product_title : 横版数码按键开关

@@ -2,7 +2,9 @@ package com.shendeng.agent.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,14 +13,17 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.TishiDialog;
 import com.shendeng.agent.model.OrderDetailsModel;
-import com.shendeng.agent.model.OrderModel;
-import com.shendeng.agent.ui.fragment.BottomDingDanFragment;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 
@@ -26,40 +31,42 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OrderDetailsActivity extends BaseActivity {
 
-    @BindView(R.id.qiu_paixia)
-    View qiu_paixia;
+    @BindView(R.id.tv1)
+    TextView tv1;
+    @BindView(R.id.tv2)
+    TextView tv2;
+    @BindView(R.id.tv3)
+    TextView tv3;
+    @BindView(R.id.tv4)
+    TextView tv4;
+    @BindView(R.id.tv5)
+    TextView tv5;
+    @BindView(R.id.qiu1)
+    View qiu1;
     @BindView(R.id.line1)
     View line1;
-    @BindView(R.id.qiu_fukuan)
-    View qiu_fukuan;
+    @BindView(R.id.qiu2)
+    View qiu2;
     @BindView(R.id.line2)
     View line2;
-    @BindView(R.id.qiu_fahuo)
-    View qiu_fahuo;
+    @BindView(R.id.qiu3)
+    View qiu3;
     @BindView(R.id.line3)
     View line3;
-    @BindView(R.id.qiu_chenggong)
-    View qiu_chenggong;
+    @BindView(R.id.qiu4)
+    View qiu4;
     @BindView(R.id.line4)
     View line4;
-    @BindView(R.id.qiu_pingjia)
-    View qiu_pingjia;
-    @BindView(R.id.tv_paixia)
-    TextView tv_paixia;
-    @BindView(R.id.tv_fukuan)
-    TextView tv_fukuan;
-    @BindView(R.id.tv_fahuo)
-    TextView tv_fahuo;
-    @BindView(R.id.tv_chenggong)
-    TextView tv_chenggong;
-    @BindView(R.id.tv_pingjia)
-    TextView tv_pingjia;
+    @BindView(R.id.qiu5)
+    View qiu5;
+
     @BindView(R.id.tv_money)
     TextView tv_money;
     @BindView(R.id.tv_adress)
@@ -94,9 +101,13 @@ public class OrderDetailsActivity extends BaseActivity {
     TextView bt1;
     @BindView(R.id.bt2)
     TextView bt2;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
+
     private String shop_form_id;
     private OrderDetailsModel.DataBean dataBean;
     private String pay_check_index;
+    private List<String> pay_check_arr;
 
     @Override
     public int getContentViewResId() {
@@ -149,6 +160,18 @@ public class OrderDetailsActivity extends BaseActivity {
         shop_form_id = getIntent().getExtras().getString("shop_form_id");
 
         gerOrtherDetails();
+
+        initSM();
+    }
+
+    private void initSM() {
+        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                gerOrtherDetails();
+            }
+        });
     }
 
     private void gerOrtherDetails() {
@@ -166,12 +189,34 @@ public class OrderDetailsActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<OrderDetailsModel.DataBean>> response) {
                         dataBean = response.body().data.get(0);
 
-                        List<String> pay_check_arr = dataBean.getPay_check_arr();
-                        tv_paixia.setText(pay_check_arr.get(0));
-                        tv_fukuan.setText(pay_check_arr.get(1));
-                        tv_fahuo.setText(pay_check_arr.get(2));
-                        tv_chenggong.setText(pay_check_arr.get(3));
-                        tv_pingjia.setText(pay_check_arr.get(4));
+                        pay_check_arr = dataBean.getPay_check_arr();
+
+                        if (pay_check_arr.size() == 5) {
+                            tv1.setText(pay_check_arr.get(0));
+                            tv2.setText(pay_check_arr.get(1));
+                            tv3.setText(pay_check_arr.get(2));
+                            tv4.setText(pay_check_arr.get(3));
+                            tv5.setText(pay_check_arr.get(4));
+                        } else if (pay_check_arr.size() == 4) {
+                            tv1.setText(pay_check_arr.get(0));
+                            tv2.setText(pay_check_arr.get(1));
+                            tv3.setText(pay_check_arr.get(2));
+                            tv4.setText(pay_check_arr.get(3));
+                            tv5.setVisibility(View.GONE);
+                            qiu5.setVisibility(View.GONE);
+                            line4.setVisibility(View.GONE);
+                        } else if (pay_check_arr.size() == 3) {
+                            tv1.setText(pay_check_arr.get(0));
+                            tv2.setText(pay_check_arr.get(1));
+                            tv3.setText(pay_check_arr.get(2));
+                            tv4.setVisibility(View.GONE);
+                            tv5.setVisibility(View.GONE);
+                            qiu4.setVisibility(View.GONE);
+                            qiu5.setVisibility(View.GONE);
+                            line3.setVisibility(View.GONE);
+                            line4.setVisibility(View.GONE);
+                        }
+
                         pay_check_index = dataBean.getPay_check_index();
                         if (pay_check_index.equals("0")) {
                             bt1.setText("修改快递费");
@@ -183,42 +228,47 @@ public class OrderDetailsActivity extends BaseActivity {
                             bt2.setText("去发货");
                             bt2.setTextColor(Y.getColor(R.color.text_red));
 
-                            qiu_fukuan.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu2.setBackgroundResource(R.drawable.order_qiu_s);
                             line1.setBackgroundColor(Y.getColor(R.color.order_red));
                         } else if (pay_check_index.equals("2")) {
                             bt1.setVisibility(View.GONE);
                             bt2.setVisibility(View.GONE);
 
-                            qiu_fukuan.setBackgroundResource(R.drawable.order_qiu_s);
-                            qiu_fahuo.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu2.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu3.setBackgroundResource(R.drawable.order_qiu_s);
                             line1.setBackgroundColor(Y.getColor(R.color.order_red));
                             line2.setBackgroundColor(Y.getColor(R.color.order_red));
                         } else if (pay_check_index.equals("3")) {
                             bt1.setText("查看欠款去向");
                             bt1.setTextColor(Y.getColor(R.color.text_color_3));
-                            bt2.setText("催评价");
+                            bt2.setText("去评价");
                             bt2.setTextColor(Y.getColor(R.color.text_red));
 
-                            qiu_fukuan.setBackgroundResource(R.drawable.order_qiu_s);
-                            qiu_fahuo.setBackgroundResource(R.drawable.order_qiu_s);
-                            qiu_chenggong.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu2.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu3.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu4.setBackgroundResource(R.drawable.order_qiu_s);
                             line1.setBackgroundColor(Y.getColor(R.color.order_red));
                             line2.setBackgroundColor(Y.getColor(R.color.order_red));
                             line3.setBackgroundColor(Y.getColor(R.color.order_red));
                         } else if (pay_check_index.equals("4")) {
                             bt1.setText("查看欠款去向");
                             bt1.setTextColor(Y.getColor(R.color.text_color_3));
-                            bt2.setText("已评价");
+                            bt2.setText("查看评价");
                             bt2.setTextColor(Y.getColor(R.color.text_red));
 
-                            qiu_fukuan.setBackgroundResource(R.drawable.order_qiu_s);
-                            qiu_fahuo.setBackgroundResource(R.drawable.order_qiu_s);
-                            qiu_chenggong.setBackgroundResource(R.drawable.order_qiu_s);
-                            qiu_pingjia.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu2.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu3.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu4.setBackgroundResource(R.drawable.order_qiu_s);
+                            qiu5.setBackgroundResource(R.drawable.order_qiu_s);
                             line1.setBackgroundColor(Y.getColor(R.color.order_red));
                             line2.setBackgroundColor(Y.getColor(R.color.order_red));
                             line3.setBackgroundColor(Y.getColor(R.color.order_red));
                             line4.setBackgroundColor(Y.getColor(R.color.order_red));
+                        }
+
+                        if (pay_check_arr.size() == 4) {
+                            bt1.setVisibility(View.GONE);
+                            bt2.setVisibility(View.GONE);
                         }
 
                         Glide.with(OrderDetailsActivity.this).load(dataBean.getIndex_photo_url()).into(iv_img);
@@ -240,6 +290,7 @@ public class OrderDetailsActivity extends BaseActivity {
                     @Override
                     public void onFinish() {
                         super.onFinish();
+                        smartRefreshLayout.finishRefresh();
                     }
                 });
     }
@@ -248,8 +299,10 @@ public class OrderDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_wuliu:
+                Y.t("暂无物流信息");
                 break;
             case R.id.tv_lianxi:
+                clickLianxi();
                 break;
             case R.id.bt1:
                 clickBt1();
@@ -260,36 +313,73 @@ public class OrderDetailsActivity extends BaseActivity {
         }
     }
 
+    private void clickLianxi() {
+        String receiver_phone = dataBean.getReceiver_phone();
+        if (TextUtils.isEmpty(receiver_phone)) {
+            Y.t("暂无买家联系方式");
+            return;
+        }
+
+        TishiDialog dialog = new TishiDialog(this, new TishiDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, TishiDialog dialog) {
+
+            }
+
+            @Override
+            public void onClickConfirm(View v, TishiDialog dialog) {
+                callPhone(receiver_phone);
+            }
+
+            @Override
+            public void onDismiss(TishiDialog dialog) {
+
+            }
+        });
+        dialog.setTextTitle("联系买家");
+        dialog.setTextCont(receiver_phone);
+        dialog.setTextConfirm("呼叫");
+        dialog.show();
+    }
+
+    /**
+     * 拨打电话（跳转到拨号界面，用户手动点击拨打） * * @param phoneNum 电话号码
+     */
+    public void callPhone(String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        startActivity(intent);
+    }
+
+
     private void clickBt1() {
-        if (pay_check_index.equals("0")) {//修改快递费
-            Y.t("修改快递费");
+        String title = pay_check_arr.get(Y.getInt(pay_check_index));
+        if (title.equals("已拍下")) {//修改快递费
+            OrderKuaidiActivity.actionStart(mContext,  dataBean.getForm_money_go(),shop_form_id);
+        } else if (title.equals("已付款")) {
 
-        } else if (pay_check_index.equals("1")) {
+        } else if (title.equals("已发货")) {
 
-        } else if (pay_check_index.equals("2")) {
-
-
-        } else if (pay_check_index.equals("3")) {//查看欠款去向
+        } else if (title.equals("交易成功")) {//查看欠款去向
             Y.t("查看欠款去向");
-        } else if (pay_check_index.equals("4")) {//查看欠款去向
+        } else if (title.equals("已评价")) {//查看欠款去向
             Y.t("查看欠款去向");
         }
     }
 
     private void clickBt2() {
-        if (pay_check_index.equals("0")) {//修改快递费
-            Y.t("修改快递费");
-
-        } else if (pay_check_index.equals("1")) {//去发货
+        String title = pay_check_arr.get(Y.getInt(pay_check_index));
+        if (title.equals("已拍下")) {//关闭此交易
+            Y.t("关闭此交易");
+        } else if (title.equals("已付款")) {//去发货
             OrderFahuoActivity.actionStart(this);
+        } else if (title.equals("已发货")) {
 
-        } else if (pay_check_index.equals("2")) {
-
-
-        } else if (pay_check_index.equals("3")) {//催评价
-            Y.t("催评价");
-        } else if (pay_check_index.equals("4")) {// 查看评价
-            Y.t("查看评价");
+        } else if (title.equals("交易成功")) {//去评价
+            OrderPingjiaActivity.actionStart(mContext, shop_form_id);
+        } else if (title.equals("已评价")) {//查看评价
+            OrderPingjiaActivity.actionStart(mContext, shop_form_id);
         }
     }
 }

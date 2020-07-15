@@ -75,12 +75,34 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
+        <!--    退款订单详情    -->
+        <activity
+            android:name=".ui.activity.OrderTuikuanActivity"
+            android:configChanges="locale|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+
         <!--    发货    -->
         <activity
             android:name=".ui.activity.OrderFahuoActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!--    修改快递费    -->
+        <activity
+            android:name=".ui.activity.OrderKuaidiActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!--    订单评价    -->
+        <activity
+            android:name=".ui.activity.OrderPingjiaActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    设置    -->
         <activity
@@ -92,16 +114,16 @@
         <!--    我的钱包    -->
         <activity
             android:name=".ui.activity.WodeQainbaoActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    绑定支付宝    -->
         <activity
             android:name=".ui.activity.SetAlipayActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    提现    -->
         <activity
@@ -113,51 +135,51 @@
         <!--    我的退货地址    -->
         <activity
             android:name=".ui.activity.WodeTuihuoActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    新增退货地址    -->
         <activity
             android:name=".ui.activity.WodeTuihuoAddActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    我的明细    -->
         <activity
             android:name=".ui.activity.WodeMingxiActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    明细详情    -->
         <activity
             android:name=".ui.activity.WodeMingxiDetailsActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    我的结算    -->
         <activity
             android:name=".ui.activity.WodeJiesuanActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    关于我们    -->
         <activity
             android:name=".ui.activity.AboutActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!--    各种webView页面    -->
         <activity
             android:name=".ui.activity.DefaultX5WebViewActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
         <!-- 微信 -->
         <activity

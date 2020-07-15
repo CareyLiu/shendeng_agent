@@ -35,7 +35,6 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
     protected ImageView iv_rightTitle, iv_leftTitle;
     protected View view_line;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,6 +163,7 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
      * @param extras
      */
     protected void getBundleExtras(Bundle extras) {
+
     }
 
     /**
@@ -197,6 +197,7 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
      * 简单页面无需mvp就不用管此方法即可,完美兼容各种实际场景的变通
      */
     public void initPresenter() {
+
     }
 
 }

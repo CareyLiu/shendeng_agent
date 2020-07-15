@@ -214,12 +214,6 @@ public class BottomDingDanFragment extends BaseFragment {
         adapter = new OrderAdapter(R.layout.item_order_mian, data);
         rv_content.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_content.setAdapter(adapter);
-//        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-//            @Override
-//            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-//                OrderDetailsActivity.actionStart(getContext());
-//            }
-//        });
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {

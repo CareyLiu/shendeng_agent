@@ -17,7 +17,6 @@ android {
     }
 
 
-
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
 
@@ -123,6 +122,8 @@ dependencies {
     implementation 'cn.rongcloud.sdk:im_lib:2.10.5'
     implementation 'cn.rongcloud.sdk:im_kit:2.10.5'
 
-
+    //微信sdk
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //选择器
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
 }

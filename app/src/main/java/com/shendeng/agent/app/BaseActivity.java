@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 
@@ -15,8 +16,11 @@ import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BasicModel;
 import com.shendeng.agent.basicmvp.BasicPresenter;
 import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.dialog.ProgressDialog;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.RxUtils;
+import com.shendeng.agent.util.SDSizeListener;
+import com.shendeng.agent.util.SDWindowSizeListener;
 
 
 import java.lang.reflect.Field;
@@ -108,6 +112,7 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
         ButterKnife.bind(this);
         AppManager.getAppManager().addActivity(this);
         _subscriptions = RxUtils.getNewCompositeSubIfUnsubscribed(_subscriptions);
+        initWindowSizeListener();//小键盘监控
     }
 
     @Override
@@ -217,4 +222,60 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
         startActivity(intent);
     }
 
+
+    //小键盘监控
+    private SDWindowSizeListener windowSizeListener = new SDWindowSizeListener();
+
+    private void initWindowSizeListener() {//小键盘监控
+        windowSizeListener.listen(this, new SDSizeListener<View>() {
+            @Override
+            public void onWidthChanged(int newWidth, int oldWidth, int differ, View view) {
+
+            }
+
+            @Override
+            public void onHeightChanged(int newHeight, int oldHeight, int differ, View view) {
+                if (oldHeight > 0 && newHeight > 0) {
+                    int absDiffer = Math.abs(differ);
+                    if (absDiffer > 400) {
+                        if (differ > 0) {
+                            //键盘收起
+                            onKeyboardVisibilityChange(false, absDiffer);
+                        } else {
+                            // 键盘弹出
+                            onKeyboardVisibilityChange(true, absDiffer);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    protected void onKeyboardVisibilityChange(boolean visible, int height) {//小键盘监控
+
+    }
+
+
+    private ProgressDialog progressDialog;
+
+
+    public void showProgressDialog(String msg) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(mContext);
+        }
+        progressDialog.setTextMsg(msg);
+
+        if (!progressDialog.isShowing()) {
+            progressDialog.show();
+        }
+    }
+
+    public void dismissProgressDialog() {
+        if (progressDialog != null) {
+            try {
+                progressDialog.dismiss();
+            } catch (Exception e) {
+            }
+        }
+    }
 }

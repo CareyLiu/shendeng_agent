@@ -137,7 +137,6 @@ public class PhoneCheckActivity extends BaseActivity {
         }
     }
 
-
     /**
      * 获取短信验证码
      */
@@ -219,7 +218,6 @@ public class PhoneCheckActivity extends BaseActivity {
             Y.t("请输入支付密码");
             return;
         }
-
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "04337");

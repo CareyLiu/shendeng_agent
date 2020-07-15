@@ -2,6 +2,7 @@ package com.shendeng.agent.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -30,14 +31,13 @@ public class TishiDialog extends Dialog implements View.OnClickListener {
         return this;
     }
 
-    public TishiDialog(Activity activity,TishiDialogListener mListener) {
-        this(activity, R.style.dialogBaseBlur);
+    public TishiDialog(Context context, TishiDialogListener mListener) {
+        this(context, R.style.dialogBaseBlur);
         this.mListener = mListener;
     }
 
-    public TishiDialog(Activity activity, int theme) {
-        super(activity, theme);
-        setOwnerActivity(activity);
+    public TishiDialog(Context context, int theme) {
+        super(context, theme);
         init();
     }
 

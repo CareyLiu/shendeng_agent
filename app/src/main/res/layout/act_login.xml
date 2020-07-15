@@ -118,7 +118,7 @@
         android:layout_below="@+id/ll_qiehuan"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:background="@drawable/login_bt"
+        android:background="@drawable/bt_radius24_s"
         android:maxLines="1"
         android:text="注册/登录"
         android:textColor="@color/white"
