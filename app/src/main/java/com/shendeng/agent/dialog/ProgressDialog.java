@@ -49,8 +49,6 @@ public class ProgressDialog extends Dialog {
         progress.setIndeterminateDrawable(getContext().getResources().getDrawable(R.drawable.dialog_progress_rotate));
 //        SDDrawable drawable = new SDDrawable().color(Color.parseColor("#55000000")).cornerAll(SDViewUtil.dp2px(5));
 //        SDViewUtil.setBackgroundDrawable(getContentView(), drawable);
-
-
         setCancelable(true);
         setCanceledOnTouchOutside(false);
     }

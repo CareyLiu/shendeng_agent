@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp"
+                    android:background="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_title_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="14dp"
+                    android:text="FIN体育 Pharrell x NERD x Adidas NMD Human Race Trail EF2682菲董联名黄色初代跑鞋"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_taocan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="42dp"
+                        android:background="@drawable/wihte_line_05"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="14dp"
+                        android:text="套餐"
+                        android:textColor="@color/text_color_3"
+                        android:textSize="13sp"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_taocan"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"></androidx.recyclerview.widget.RecyclerView>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ll_xianshiquanbu"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:background="@drawable/wihte_line_05"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:text="显示全部"
+                            android:textColor="#1C9AF1"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="12dp"
+                            android:layout_height="12dp"
+                            android:scaleType="centerCrop"
+                            android:src="@mipmap/down_blue" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_tuwen_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="商品图文详情"
+                        android:textColor="@color/text_color_3"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/sd_push_grey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_pingjia"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="50dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="商品评价"
+                        android:textColor="@color/text_color_3"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/sd_push_grey" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/bg"
+            android:gravity="right"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:id="@+id/bt_edit"
+                android:layout_width="72dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="14dp"
+                android:background="@drawable/white_line_radius_8"
+                android:gravity="center"
+                android:text="编辑详情"
+                android:textColor="@color/text_color_3"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bt_add"
+                android:layout_width="72dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="14dp"
+                android:background="@drawable/white_line_radius_8"
+                android:gravity="center"
+                android:text="上/下架"
+                android:textColor="@color/text_color_3"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/bt_delete"
+                android:layout_width="72dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="14dp"
+                android:background="@drawable/bt_radius8_s"
+                android:gravity="center"
+                android:text="删除"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>
