@@ -3,7 +3,9 @@ package com.shendeng.agent.ui.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
@@ -18,21 +21,30 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.Message;
 import com.shendeng.agent.model.OrderDetailsModel;
 import com.shendeng.agent.model.WuliuModel;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,6 +83,7 @@ public class OrderFahuoActivity extends BaseActivity {
     private String express_name;
     private String express_code;
     private String express_id;
+    private String express_no;
     private OrderDetailsModel.DataBean dataBean;
 
     @Override
@@ -87,6 +100,22 @@ public class OrderFahuoActivity extends BaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("发货");
+
+
+        tv_rightTitle.setTextSize(17);
+        tv_rightTitle.setTextColor(this.getResources().getColor(R.color.text_red));
+        tv_rightTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tv_rightTitle.setVisibility(View.VISIBLE);
+        tv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    fahuo();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -119,7 +148,6 @@ public class OrderFahuoActivity extends BaseActivity {
         tv_money.setText(dataBean.getPay_money());
         tv_time.setText(dataBean.getCreate_time());
         tv_xl_kc.setText("数量 " + dataBean.getPay_count());
-
 
         getWuliu();
     }
@@ -191,11 +219,84 @@ public class OrderFahuoActivity extends BaseActivity {
             @Override
             public void call(Boolean granted) {
                 if (granted) { // 在android 6.0之前会默认返回true
-                    OrderEwmActivity.actionStart(mContext);
+                    OrderEwmActivity.actionStartForResult(OrderFahuoActivity.this, 100);
                 } else {
                     Y.tLong("该应用需要赋予访问相机的权限，不开启将无法正常工作！");
                 }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+            String express_no = data.getStringExtra("dingdan");
+            ed_danhao.setText(express_no);
+        }
+    }
+
+    private class Shop_form_id {
+        private String shop_form_id;
+
+        public Shop_form_id(String shop_form_id) {
+            this.shop_form_id = shop_form_id;
+        }
+    }
+
+
+    private void fahuo() throws JSONException {
+        if (TextUtils.isEmpty(express_name)) {
+            Y.t("请选择快递公司");
+            return;
+        }
+
+        express_no = ed_danhao.getText().toString();
+        express_no = "SF1081723448107";
+        if (TextUtils.isEmpty(express_no)) {
+            Y.t("请输入快递单号");
+            return;
+        }
+
+        List<Shop_form_id> list = new ArrayList<>();
+        list.add(new Shop_form_id(dataBean.getShop_form_id()));
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", Urls.code_04316);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("shop_form_ids", list);
+        map.put("express_id", express_id);
+        map.put("express_code", express_code);
+        map.put("express_name", express_name);
+        map.put("express_no", express_no);
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<Message.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<Message.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<Message.DataBean>> response) {
+                        Y.t("发货成功");
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<Message.DataBean>> response) {
+                        Y.tError(response);
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<Message.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog("");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+                });
     }
 }

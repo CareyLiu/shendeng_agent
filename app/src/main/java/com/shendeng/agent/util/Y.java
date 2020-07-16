@@ -6,7 +6,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.lzy.okgo.model.Response;
 import com.shendeng.agent.app.App;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.model.Message;
 
 import java.text.DecimalFormat;
 
@@ -47,6 +50,14 @@ public class Y {
 
     public static void tLong(String str) {
         Toast.makeText(App.getInstance().getApplicationContext(), str, Toast.LENGTH_LONG).show();
+    }
+
+    public static void tError(Response response) {
+        String msg = response.getException().getMessage();
+        String[] msgToast = msg.split("：");
+        if (msgToast.length == 3) {
+            Y.t(msgToast[2]);
+        }
     }
 
     public static Resources getResources() {

@@ -4,13 +4,13 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="20dp">
 
     <ProgressBar
         android:id="@+id/progress"
         style="@android:style/Widget.ProgressBar.Small"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
     <TextView
         android:id="@+id/dialog_progress_tv_msg"

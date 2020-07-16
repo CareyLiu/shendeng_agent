@@ -54,7 +54,7 @@ public class LordingDialog extends Dialog {
 
     public void setContentView(int layoutResID, ViewGroup.LayoutParams params) {
         View view = LayoutInflater.from(getContext()).inflate(layoutResID, null);
-        view.setBackgroundColor(Color.parseColor("#55000000"));
+        view.setBackgroundColor(Color.parseColor("#000000"));
         this.setContentView(view, params);
     }
 

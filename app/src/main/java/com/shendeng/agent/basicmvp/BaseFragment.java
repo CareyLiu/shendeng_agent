@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.billy.android.loading.Gloading;
 import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.dialog.LordingDialog;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.RxUtils;
 
@@ -88,5 +89,30 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
      */
     public void sendRx(Notice msg) {
         RxBus.getDefault().sendRx(msg);
+    }
+
+    /**
+     * 加载弹窗
+     */
+    private LordingDialog lordingDialog;
+
+    public void showProgressDialog(String msg) {
+        if (lordingDialog == null) {
+            lordingDialog = new LordingDialog(getContext());
+        }
+        lordingDialog.setTextMsg(msg);
+
+        if (!lordingDialog.isShowing()) {
+            lordingDialog.show();
+        }
+    }
+
+    public void dismissProgressDialog() {
+        if (lordingDialog != null) {
+            try {
+                lordingDialog.dismiss();
+            } catch (Exception e) {
+            }
+        }
     }
 }

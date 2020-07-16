@@ -258,7 +258,6 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
 
     private LordingDialog lordingDialog;
 
-
     public void showProgressDialog(String msg) {
         if (lordingDialog == null) {
             lordingDialog = new LordingDialog(mContext);

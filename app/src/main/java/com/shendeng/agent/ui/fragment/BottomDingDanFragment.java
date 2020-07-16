@@ -144,7 +144,7 @@ public class BottomDingDanFragment extends BaseFragment {
         tab_daifukuan.setTitle("待付款");
         tab_daifahuo.setTitle("待发货");
         tab_daishouhuo.setTitle("待收货");
-        tab_xiaofei.setTitle("到店消费");
+        tab_xiaofei.setTitle("到店订单");
         tab_daipingjia.setTitle("待评价");
         tab_yipingjia.setTitle("已评价");
         tab_tuikuanshenqing.setTitle("退款申请");
@@ -207,6 +207,7 @@ public class BottomDingDanFragment extends BaseFragment {
                 break;
         }
 
+        showProgressDialog("");
         getOrder(shop_pay_check);
     }
 
@@ -272,6 +273,7 @@ public class BottomDingDanFragment extends BaseFragment {
                     @Override
                     public void onFinish() {
                         super.onFinish();
+                        dismissProgressDialog();
                         smartRefreshLayout.finishRefresh();
                     }
                 });

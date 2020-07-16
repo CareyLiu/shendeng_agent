@@ -1,6 +1,7 @@
 package com.shendeng.agent.ui.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -41,10 +42,7 @@ public class OrderEwmActivity extends BaseActivity implements QRCodeView.Delegat
     ImageView captureFlash;
     @BindView(R.id.ll)
     LinearLayout ll;
-
     boolean flag = true;
-    private String myCode;
-    private ProgressDialog waitdialog;
 
     @Override
     public int getContentViewResId() {
@@ -69,6 +67,15 @@ public class OrderEwmActivity extends BaseActivity implements QRCodeView.Delegat
         Intent intent = new Intent(context, OrderEwmActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     */
+    public static void actionStartForResult(Activity activity,int result) {
+        Intent intent = new Intent(activity, OrderEwmActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivityForResult(intent,result);
     }
 
     @Override
@@ -104,32 +111,17 @@ public class OrderEwmActivity extends BaseActivity implements QRCodeView.Delegat
     @Override
     public void onScanQRCodeSuccess(String result) {
         Y.e("扫描结果" + result);
-        myCode = result;
-
-//        waitdialog = ProgressDialog.show(mContext, null, "已扫描，正在处理···", true, true);
-//        waitdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//            public void onDismiss(DialogInterface dialog) {
-//
-//            }
-//        });
-        waitdialog.dismiss();
-
         vibrate();
-        if (result.length() == 24) {
-            requestData(result);
-        } else {
-            Y.tLong("您的单号码不正确");
-            mQRCodeView.startSpot();
-        }
+        mQRCodeView.startSpot();
+        Intent intent = new Intent();
+        intent.putExtra("dingdan", result);
+        setResult(100, intent);
+        finish();
     }
 
     private void vibrate() {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate(200);
-    }
-
-    public void requestData(String ccid) {
-
     }
 
     @Override

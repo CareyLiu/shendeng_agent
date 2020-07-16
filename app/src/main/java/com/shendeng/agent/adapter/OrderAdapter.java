@@ -52,10 +52,10 @@ public class OrderAdapter extends BaseQuickAdapter<OrderModel.DataBean, BaseView
             helper.setText(R.id.tv_bt, "去评价");
         } else if (shop_pay_check.equals("7")) {
             tv_bt.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_bt, "退款审核");
+            helper.setText(R.id.tv_bt, "查看评价");
         } else if (shop_pay_check.equals("8")) {
             tv_bt.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_bt, "去处理");
+            helper.setText(R.id.tv_bt, "退款审核");
         } else if (shop_pay_check.equals("9") || shop_pay_check.equals("10")) {
             tv_bt.setVisibility(View.GONE);
         }
