@@ -176,7 +176,7 @@ public class OrderDetailsActivity extends BaseActivity {
 
     private void gerOrtherDetails() {
         Map<String, String> map = new HashMap<>();
-        map.put("code",  Urls.code_04313);
+        map.put("code", Urls.code_04313);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);
@@ -299,7 +299,7 @@ public class OrderDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_wuliu:
-                Y.t("暂无物流信息");
+                wuliu();
                 break;
             case R.id.tv_lianxi:
                 clickLianxi();
@@ -310,6 +310,15 @@ public class OrderDetailsActivity extends BaseActivity {
             case R.id.bt2:
                 clickBt2();
                 break;
+        }
+    }
+
+    private void wuliu() {
+        String express_url = dataBean.getExpress_url();
+        if (TextUtils.isEmpty(express_url)) {
+            Y.t("暂无物流详情");
+        } else {
+            DefaultX5WebViewActivity.actionStart(mContext, express_url);
         }
     }
 
@@ -356,7 +365,7 @@ public class OrderDetailsActivity extends BaseActivity {
     private void clickBt1() {
         String title = pay_check_arr.get(Y.getInt(pay_check_index));
         if (title.equals("已拍下")) {//修改快递费
-            OrderKuaidiActivity.actionStart(mContext,  dataBean.getForm_money_go(),shop_form_id);
+            OrderKuaidiActivity.actionStart(mContext, dataBean.getForm_money_go(), shop_form_id);
         } else if (title.equals("已付款")) {
 
         } else if (title.equals("已发货")) {
@@ -373,7 +382,7 @@ public class OrderDetailsActivity extends BaseActivity {
         if (title.equals("已拍下")) {//关闭此交易
             Y.t("关闭此交易");
         } else if (title.equals("已付款")) {//去发货
-            OrderFahuoActivity.actionStart(this,dataBean);
+            OrderFahuoActivity.actionStart(this, shop_form_id);
         } else if (title.equals("已发货")) {
 
         } else if (title.equals("交易成功")) {//去评价

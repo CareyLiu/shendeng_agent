@@ -1,39 +1,24 @@
 package com.shendeng.agent.ui.activity;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Vibrator;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.gson.Gson;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.model.Response;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
-import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.util.Y;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zbar.ZBarView;
 
-public class OrderEwmActivity extends BaseActivity implements QRCodeView.Delegate {
+public class OrderFahuoEwmActivity extends BaseActivity implements QRCodeView.Delegate {
 
 
     @BindView(R.id.zxingview)
@@ -64,7 +49,7 @@ public class OrderEwmActivity extends BaseActivity implements QRCodeView.Delegat
      * 用于其他Activty跳转到该Activity
      */
     public static void actionStart(Context context) {
-        Intent intent = new Intent(context, OrderEwmActivity.class);
+        Intent intent = new Intent(context, OrderFahuoEwmActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
@@ -73,7 +58,7 @@ public class OrderEwmActivity extends BaseActivity implements QRCodeView.Delegat
      * 用于其他Activty跳转到该Activity
      */
     public static void actionStartForResult(Activity activity,int result) {
-        Intent intent = new Intent(activity, OrderEwmActivity.class);
+        Intent intent = new Intent(activity, OrderFahuoEwmActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivityForResult(intent,result);
     }

@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -34,9 +33,7 @@ import com.shendeng.agent.util.Y;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -84,6 +81,7 @@ public class OrderFahuoActivity extends BaseActivity {
     private String express_id;
     private String express_no;
     private OrderDetailsModel.DataBean dataBean;
+    private String shop_form_id;
 
     @Override
     public int getContentViewResId() {
@@ -120,11 +118,11 @@ public class OrderFahuoActivity extends BaseActivity {
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context, OrderDetailsModel.DataBean dataBean) {
+    public static void actionStart(Context context, String shop_form_id) {
         Intent intent = new Intent();
         intent.setClass(context, OrderFahuoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.putExtra("model", dataBean);
+        intent.putExtra("shop_form_id", shop_form_id);
         context.startActivity(intent);
     }
 
@@ -138,17 +136,49 @@ public class OrderFahuoActivity extends BaseActivity {
     }
 
     private void init() {
-        dataBean = (OrderDetailsModel.DataBean) getIntent().getSerializableExtra("model");
-        tv_name.setText("收件人：" + dataBean.getReceiver_name());
-        tv_phone.setText(dataBean.getReceiver_phone());
-        tv_adress.setText(dataBean.getUser_addr_all());
-        Glide.with(mContext).load(dataBean.getIndex_photo_url()).into(iv_img);
-        tv_title_name.setText(dataBean.getShop_product_title());
-        tv_money.setText(dataBean.getPay_money());
-        tv_time.setText(dataBean.getCreate_time());
-        tv_xl_kc.setText("数量 " + dataBean.getPay_count());
+        shop_form_id = getIntent().getStringExtra("shop_form_id");
 
+        getDetails();
         getWuliu();
+    }
+
+    private void getDetails() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04313);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("shop_form_id", shop_form_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<OrderDetailsModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<OrderDetailsModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<OrderDetailsModel.DataBean>> response) {
+                        dataBean = response.body().data.get(0);
+
+                        tv_name.setText("收件人：" + dataBean.getReceiver_name());
+                        tv_phone.setText(dataBean.getReceiver_phone());
+                        tv_adress.setText(dataBean.getUser_addr_all());
+                        Glide.with(mContext).load(dataBean.getIndex_photo_url()).into(iv_img);
+                        tv_title_name.setText(dataBean.getShop_product_title());
+                        tv_money.setText(dataBean.getPay_money());
+                        tv_time.setText(dataBean.getCreate_time());
+                        tv_xl_kc.setText("数量 " + dataBean.getPay_count());
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<OrderDetailsModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showLoading();
+                    }
+                });
     }
 
     private void getWuliu() {
@@ -218,7 +248,7 @@ public class OrderFahuoActivity extends BaseActivity {
             @Override
             public void call(Boolean granted) {
                 if (granted) { // 在android 6.0之前会默认返回true
-                    OrderEwmActivity.actionStartForResult(OrderFahuoActivity.this, 100);
+                    OrderFahuoEwmActivity.actionStartForResult(OrderFahuoActivity.this, 100);
                 } else {
                     Y.tLong("该应用需要赋予访问相机的权限，不开启将无法正常工作！");
                 }

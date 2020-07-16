@@ -68,6 +68,13 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
+        <!--    到店扫码    -->
+        <activity
+            android:name=".ui.activity.OrderSaoyisaoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
         <!--    订单详情    -->
         <activity
             android:name=".ui.activity.OrderDetailsActivity"
@@ -82,7 +89,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
-
         <!--    发货    -->
         <activity
             android:name=".ui.activity.OrderFahuoActivity"
@@ -92,7 +98,7 @@
 
         <!--    发货扫描单号    -->
         <activity
-            android:name=".ui.activity.OrderEwmActivity"
+            android:name=".ui.activity.OrderFahuoEwmActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />

@@ -2,11 +2,12 @@ package com.shendeng.agent.ui.fragment;
 
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
@@ -24,10 +25,15 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.OrderModel;
-import com.shendeng.agent.model.WodeModel;
+import com.shendeng.agent.ui.activity.DefaultX5WebViewActivity;
 import com.shendeng.agent.ui.activity.OrderDetailsActivity;
+import com.shendeng.agent.ui.activity.OrderFahuoActivity;
+import com.shendeng.agent.ui.activity.OrderPingjiaActivity;
+import com.shendeng.agent.ui.activity.OrderSaoyisaoActivity;
+import com.shendeng.agent.ui.activity.OrderTuikuanActivity;
 import com.shendeng.agent.ui.view.SelectTabView;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +76,8 @@ public class BottomDingDanFragment extends BaseFragment {
     RecyclerView rv_content;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.iv_saoyisao)
+    ImageView iv_saoyisao;
 
     private int shop_pay_check;
     private String form_id;
@@ -151,7 +159,6 @@ public class BottomDingDanFragment extends BaseFragment {
         tab_tuikuanzhong.setTitle("退款中");
         tab_guanbi.setTitle("已关闭");
 
-
         initAdapter();
         initSM();
 
@@ -215,14 +222,53 @@ public class BottomDingDanFragment extends BaseFragment {
         adapter = new OrderAdapter(R.layout.item_order_mian, data);
         rv_content.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_content.setAdapter(adapter);
+
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.tv_bt:
+                        if (data != null && data.size() > 0) {
+                            OrderModel.DataBean dataBean = data.get(position);
+                            String shop_form_id = dataBean.getProduct().get(0).getShop_form_id();
+                            String shop_pay_check = dataBean.getShop_pay_check();
+
+                            if (shop_pay_check.equals("3")) {//去发货
+                                OrderFahuoActivity.actionStart(getContext(), shop_form_id);
+                            } else if (shop_pay_check.equals("4")) {//查看物流
+                                String express_url = dataBean.getExpress_url();
+                                if (TextUtils.isEmpty(express_url)) {
+                                    Y.t("暂无物流详情");
+                                } else {
+                                    DefaultX5WebViewActivity.actionStart(getContext(), express_url);
+                                }
+                            } else if (shop_pay_check.equals("6")) {//去评价
+                                OrderPingjiaActivity.actionStart(getContext(), shop_form_id);
+                            } else if (shop_pay_check.equals("7")) {//查看详情
+                                OrderPingjiaActivity.actionStart(getContext(), shop_form_id);
+                            } else if (shop_pay_check.equals("8")) {//退款审核
+
+                            }
+                        }
+                        break;
+                }
+            }
+        });
+
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (data != null && data.size() > 0) {
-                    String shop_form_id = data.get(position).getProduct().get(0).getShop_form_id();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("shop_form_id", shop_form_id);
-                    OrderDetailsActivity.actionStart(getContext(), bundle);
+                    OrderModel.DataBean dataBean = data.get(position);
+                    String shop_form_id = dataBean.getProduct().get(0).getShop_form_id();
+                    String shop_pay_check = dataBean.getShop_pay_check();
+                    if (shop_pay_check.equals("8")||shop_pay_check.equals("9")||shop_pay_check.equals("10")) {//退款审核
+                        OrderTuikuanActivity.actionStart(getContext(),shop_form_id);
+                    }else {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("shop_form_id", shop_form_id);
+                        OrderDetailsActivity.actionStart(getContext(), bundle);
+                    }
                 }
             }
         });
@@ -335,9 +381,12 @@ public class BottomDingDanFragment extends BaseFragment {
 
     }
 
-    @OnClick({R.id.tab_all, R.id.tab_daifukuan, R.id.tab_daifahuo, R.id.tab_daishouhuo, R.id.tab_xiaofei, R.id.tab_daipingjia, R.id.tab_yipingjia, R.id.tab_tuikuanshenqing, R.id.tab_tuikuanzhong, R.id.tab_guanbi})
+    @OnClick({R.id.iv_saoyisao, R.id.tab_all, R.id.tab_daifukuan, R.id.tab_daifahuo, R.id.tab_daishouhuo, R.id.tab_xiaofei, R.id.tab_daipingjia, R.id.tab_yipingjia, R.id.tab_tuikuanshenqing, R.id.tab_tuikuanzhong, R.id.tab_guanbi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.iv_saoyisao:
+                OrderSaoyisaoActivity.actionStart(getContext());
+                break;
             case R.id.tab_all:
                 selectTab(0);
                 break;
