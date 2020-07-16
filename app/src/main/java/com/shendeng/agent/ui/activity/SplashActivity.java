@@ -91,10 +91,7 @@ public class SplashActivity extends Activity {
 
         setContentView(R.layout.activity_splash);
         RelativeLayout logoView = findViewById(R.id.iv_welcome);
-        mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.statusBarColor(R.color.white)
-                .statusBarDarkFont(true)
-                .init();
+        ImmersionBar.with(this) .statusBarColor(R.color.colorPrimary) .init();
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.1f, 1.0f);
         // 动画效果时间为2秒
         alphaAnimation.setDuration(2000);
