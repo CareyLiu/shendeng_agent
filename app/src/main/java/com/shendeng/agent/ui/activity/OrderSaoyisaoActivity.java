@@ -137,7 +137,8 @@ public class OrderSaoyisaoActivity extends BaseActivity implements QRCodeView.De
                 .execute(new JsonCallback<AppResponse<OrderModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<OrderModel.DataBean>> response) {
-
+                        Y.t("扫码验证成功");
+                        finish();
                     }
 
                     @Override
