@@ -16,7 +16,7 @@ import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BasicModel;
 import com.shendeng.agent.basicmvp.BasicPresenter;
 import com.shendeng.agent.bean.Notice;
-import com.shendeng.agent.dialog.ProgressDialog;
+import com.shendeng.agent.dialog.LordingDialog;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.RxUtils;
 import com.shendeng.agent.util.SDSizeListener;
@@ -256,24 +256,24 @@ public abstract class BaseActivity<T extends BasicPresenter, E extends BasicMode
     }
 
 
-    private ProgressDialog progressDialog;
+    private LordingDialog lordingDialog;
 
 
     public void showProgressDialog(String msg) {
-        if (progressDialog == null) {
-            progressDialog = new ProgressDialog(mContext);
+        if (lordingDialog == null) {
+            lordingDialog = new LordingDialog(mContext);
         }
-        progressDialog.setTextMsg(msg);
+        lordingDialog.setTextMsg(msg);
 
-        if (!progressDialog.isShowing()) {
-            progressDialog.show();
+        if (!lordingDialog.isShowing()) {
+            lordingDialog.show();
         }
     }
 
     public void dismissProgressDialog() {
-        if (progressDialog != null) {
+        if (lordingDialog != null) {
             try {
-                progressDialog.dismiss();
+                lordingDialog.dismiss();
             } catch (Exception e) {
             }
         }

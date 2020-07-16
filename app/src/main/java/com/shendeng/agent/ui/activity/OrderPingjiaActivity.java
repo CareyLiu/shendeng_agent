@@ -117,7 +117,7 @@ public class OrderPingjiaActivity extends BaseActivity {
 
     private void getNet() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04320");
+        map.put("code", Urls.code_04320);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);

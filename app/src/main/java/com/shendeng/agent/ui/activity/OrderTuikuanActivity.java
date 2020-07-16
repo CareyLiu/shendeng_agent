@@ -160,7 +160,7 @@ public class OrderTuikuanActivity extends BaseActivity {
 
     private void gerOrderTuikuan() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04313");
+        map.put("code", Urls.code_04313);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);
@@ -182,7 +182,7 @@ public class OrderTuikuanActivity extends BaseActivity {
                 });
     }
 
-    @OnClick({ R.id.bt1, R.id.bt2})
+    @OnClick({R.id.bt1, R.id.bt2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt1:
@@ -193,9 +193,6 @@ public class OrderTuikuanActivity extends BaseActivity {
                 break;
         }
     }
-
-
-
 
 
     private void clickBt1() {

@@ -176,7 +176,7 @@ public class OrderDetailsActivity extends BaseActivity {
 
     private void gerOrtherDetails() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04313");
+        map.put("code",  Urls.code_04313);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);
@@ -373,7 +373,7 @@ public class OrderDetailsActivity extends BaseActivity {
         if (title.equals("已拍下")) {//关闭此交易
             Y.t("关闭此交易");
         } else if (title.equals("已付款")) {//去发货
-            OrderFahuoActivity.actionStart(this);
+            OrderFahuoActivity.actionStart(this,dataBean);
         } else if (title.equals("已发货")) {
 
         } else if (title.equals("交易成功")) {//去评价

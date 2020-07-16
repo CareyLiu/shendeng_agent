@@ -248,7 +248,7 @@ public class BottomDingDanFragment extends BaseFragment {
     private void getOrder(int shop_pay_check) {
         form_id = "";
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04311");
+        map.put("code", Urls.code_04311);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("shop_pay_check", shop_pay_check + "");
@@ -280,7 +280,7 @@ public class BottomDingDanFragment extends BaseFragment {
 
     private void getLoad(int shop_pay_check) {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04311");
+        map.put("code", Urls.code_04311);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("shop_pay_check", shop_pay_check + "");

@@ -104,7 +104,7 @@ public class LoginYzmActivity extends BaseActivity {
             return;
         }
         Map<String, String> map = new HashMap<>();
-        map.put("code", "00001");
+        map.put("code", Urls.code_00001);
         map.put("key", Urls.KEY);
         map.put("user_phone", ed_phone.getText().toString());
         map.put("mod_id", AppCode.mod_login_pwd_zhaohui);

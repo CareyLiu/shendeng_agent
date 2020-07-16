@@ -1,6 +1,5 @@
 package com.shendeng.agent.dialog;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -17,12 +16,12 @@ import com.shendeng.agent.R;
 /**
  * 带环形进度条，和信息提示的窗口
  */
-public class ProgressDialog extends Dialog {
+public class LordingDialog extends Dialog {
 
     private TextView tv_msg;
     private ProgressBar progress;
 
-    public ProgressDialog setTextMsg(String msg) {
+    public LordingDialog setTextMsg(String msg) {
         if (TextUtils.isEmpty(msg)) {
             tv_msg.setVisibility(View.GONE);
         } else {
@@ -32,12 +31,12 @@ public class ProgressDialog extends Dialog {
         return this;
     }
 
-    public ProgressDialog(Context context) {
+    public LordingDialog(Context context) {
         super(context);
         init();
     }
 
-    public ProgressDialog(Context context, int type) {
+    public LordingDialog(Context context, int type) {
         super(context);
         init();
     }

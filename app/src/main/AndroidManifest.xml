@@ -86,9 +86,17 @@
         <!--    发货    -->
         <activity
             android:name=".ui.activity.OrderFahuoActivity"
-            android:configChanges="locale|keyboardHidden|orientation"
+            android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!--    发货扫描单号    -->
+        <activity
+            android:name=".ui.activity.OrderEwmActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
 
         <!--    修改快递费    -->
         <activity

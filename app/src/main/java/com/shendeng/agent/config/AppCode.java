@@ -19,4 +19,8 @@ public class AppCode {
     public final static String mod_zhifu_pwd = "0113";//修改支付密码
     public final static String mod_login_pwd_zhaohui = "0001";//找回登录密码
 
+
+    public static final int CAMERA_PERMISSIONS_REQUEST_CODE = 0x01;//相机权限
+    public static final int STORAGE_PERMISSIONS_REQUEST_CODE = 0x02;//相册权限
+
 }

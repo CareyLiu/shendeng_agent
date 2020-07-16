@@ -104,7 +104,7 @@ public class OrderKuaidiActivity extends BaseActivity {
     @OnClick(R.id.tv_ok)
     public void onViewClicked() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04314");
+        map.put("code", Urls.code_04314);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);
