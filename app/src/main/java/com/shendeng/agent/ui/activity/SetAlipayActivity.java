@@ -14,13 +14,12 @@ import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.callback.JsonCallback;
-import com.shendeng.agent.config.AppConfig;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.JiesuanModel;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
-import com.shendeng.agent.wxapi.WXEntryActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,6 +42,7 @@ public class SetAlipayActivity extends BaseActivity {
     private String money_use;
     private String zuidiMoney;
     private String shouxufei;
+    private String weixinOrZhiFuBao;
 
     @Override
     public int getContentViewResId() {
@@ -78,11 +78,8 @@ public class SetAlipayActivity extends BaseActivity {
     }
 
     private void init() {
-        sms_id = PreferenceHelper.getInstance(this).getString(AppConfig.SMS_ID, "");
-        sms_code = PreferenceHelper.getInstance(this).getString(AppConfig.SMS_CODE, "");
-        money_use = getIntent().getStringExtra("money_use");
-        zuidiMoney = getIntent().getStringExtra("zuidiMoney");
-        shouxufei = getIntent().getStringExtra("shouxufei");
+        sms_id = PreferenceHelper.getInstance(this).getString(AppCode.SMS_ID, "");
+        sms_code = PreferenceHelper.getInstance(this).getString(AppCode.SMS_CODE, "");
     }
 
     @OnClick(R.id.btn_save)
@@ -119,13 +116,6 @@ public class SetAlipayActivity extends BaseActivity {
                         UserManager.getManager(SetAlipayActivity.this).setAlipay_number(pay_num);
                         UserManager.getManager(SetAlipayActivity.this).setAlipay_name(pay_name);
                         Y.t("设置成功");
-
-                        TixianActivity.actionStart(
-                                SetAlipayActivity.this,
-                                "1",
-                                money_use,
-                                zuidiMoney,
-                                shouxufei);
 
                         finish();
                     }

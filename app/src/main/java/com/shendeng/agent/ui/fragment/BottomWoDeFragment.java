@@ -24,8 +24,10 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.WodeModel;
+import com.shendeng.agent.ui.activity.AboutActivity;
 import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
+import com.shendeng.agent.ui.activity.WodeTuihuoActivity;
 import com.shendeng.agent.util.Urls;
 
 import java.util.HashMap;
@@ -225,8 +227,10 @@ public class BottomWoDeFragment extends BaseFragment {
                 WodeQainbaoActivity.actionStart(getContext());
                 break;
             case R.id.ll_about:
+                AboutActivity.actionStart(getContext());
                 break;
             case R.id.ll_dizhi:
+                WodeTuihuoActivity.actionStart(getContext());
                 break;
             case R.id.ll_yuangong:
                 break;

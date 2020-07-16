@@ -48,6 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import retrofit2.http.Url;
 
 public class LoginActivity extends BaseActivity {
 
@@ -99,6 +100,7 @@ public class LoginActivity extends BaseActivity {
         req_type = "1";
         timeCount = new TimeCount(60000, 1000, tv_yzm);
         ed_phone.setText("18249030297");
+//        ed_phone.setText("15244772616");
         ed_pwd.setText("123456");
     }
 
@@ -164,7 +166,7 @@ public class LoginActivity extends BaseActivity {
             Y.t("请输入手机号码");
         } else {
             Map<String, String> map = new HashMap<>();
-            map.put("code", "00001");
+            map.put("code", Urls.code_00001);
             map.put("key", Urls.KEY);
             map.put("user_phone", ed_phone.getText().toString());
             map.put("mod_id", "0110");//登录注册
@@ -213,7 +215,7 @@ public class LoginActivity extends BaseActivity {
 
 
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04310");
+        map.put("code", Urls.code_04310);
         map.put("key", Urls.KEY);
         map.put("req_type", req_type);
         map.put("user_phone", ed_phone.getText().toString());

@@ -3,6 +3,7 @@ package com.shendeng.agent.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -37,6 +38,16 @@ public class WodeTuihuoActivity extends BaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("退货地址设置");
+        tv_rightTitle.setText("添加新地址");
+        tv_rightTitle.setVisibility(View.VISIBLE);
+        tv_rightTitle.setTextSize(17);
+        tv_rightTitle.setTextColor(this.getResources().getColor(R.color.text_red));
+        tv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                WodeTuihuoAddActivity.actionStart(WodeTuihuoActivity.this);
+            }
+        });
     }
 
     /**

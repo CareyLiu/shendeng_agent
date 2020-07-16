@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -14,7 +13,7 @@ import com.shendeng.agent.app.ConstanceValue;
 import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
-import com.shendeng.agent.config.AppConfig;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.util.RxBus;
@@ -63,7 +62,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         SendAuth.Resp resp = (SendAuth.Resp) baseResp;
 
 
-        wx_type = PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppConfig.WX_TYPE, "");
+        wx_type = PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppCode.WX_TYPE, "");
         if (TextUtils.isEmpty(resp.code)) {
             shibai("微信授权被拒");
         } else {
@@ -97,8 +96,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             map.put("code", "04186");
         }
         map.put("js_code", sendAuth_code);
-        map.put("sms_id", PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppConfig.SMS_ID, ""));
-        map.put("sms_code", PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppConfig.SMS_CODE, ""));
+        map.put("sms_id", PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppCode.SMS_ID, ""));
+        map.put("sms_code", PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppCode.SMS_CODE, ""));
         Gson gson = new Gson();
         OkGo.<AppResponse>post(Urls.WORKER)
                 .tag(WXEntryActivity.this)//

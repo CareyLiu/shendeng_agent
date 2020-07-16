@@ -7,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -19,7 +18,7 @@ import com.shendeng.agent.app.ConstanceValue;
 import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
-import com.shendeng.agent.config.AppConfig;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.JiesuanModel;
@@ -27,7 +26,6 @@ import com.shendeng.agent.model.Message;
 import com.shendeng.agent.util.TimeCount;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
-import com.shendeng.agent.wxapi.WXEntryActivity;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -51,20 +49,12 @@ public class PhoneCheckActivity extends BaseActivity {
     TextView tvYzm;
     @BindView(R.id.bt_ok)
     Button btOk;
-    @BindView(R.id.ed_pay_pwd)
-    EditText ed_pay_pwd;
-    @BindView(R.id.ll_pay_pwd)
-    LinearLayout ll_pay_pwd;
     private String mod_id;
-    private String weixinOrZhiFuBao;
-    private String user_phone;
+    private String weixinOrZhiFuBao;//1支付宝 5.支付宝提现账号修改 2微信 3微信解绑 4修改支付密码 5修改蜜蜜
     private TimeCount timeCount;
     private String smsId;
-    private IWXAPI api;
     private String sms_code;
-    private String money_use;
-    private String zuidiMoney;
-    private String shouxufei;
+    private IWXAPI api;
 
     @Override
     public int getContentViewResId() {
@@ -94,13 +84,13 @@ public class PhoneCheckActivity extends BaseActivity {
     /**
      * 用于其他Activty跳转到该Activity
      *
-     * @param weixinOrZhiFuBao 1支付宝 2微信 3微信解绑 4修改支付密码
+     * @param weixinOrZhiFuBao 1支付宝 5.支付宝提现账号修改 2微信 3微信解绑 4修改支付密码 5修改蜜蜜
      */
     public static void actionStart(Context context, String mod_id, String weixinOrZhiFuBao) {
         Intent intent = new Intent(context, PhoneCheckActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("mod_id", mod_id);
-        intent.putExtra("weixinOrZhiFuBao", weixinOrZhiFuBao);
+        intent.putExtra(AppCode.weixinOrZhiFuBao, weixinOrZhiFuBao);
         context.startActivity(intent);
     }
 
@@ -114,25 +104,14 @@ public class PhoneCheckActivity extends BaseActivity {
 
     private void init() {
         mod_id = getIntent().getStringExtra("mod_id");
-        weixinOrZhiFuBao = getIntent().getStringExtra("weixinOrZhiFuBao");
-        money_use = getIntent().getStringExtra("money_use");
-        zuidiMoney = getIntent().getStringExtra("zuidiMoney");
-        shouxufei = getIntent().getStringExtra("shouxufei");
-
-        user_phone = UserManager.getManager(this).getUser_phone();
-        tvPhone.setText(user_phone);
+        weixinOrZhiFuBao = getIntent().getStringExtra(AppCode.weixinOrZhiFuBao);
+        tvPhone.setText(UserManager.getManager(this).getUser_phone());
         timeCount = new TimeCount(60000, 1000, tvYzm);
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
                 if (message.type == ConstanceValue.WX_SET_S) {
                     Y.t("微信绑定成功");
-                    TixianActivity.actionStart(
-                            PhoneCheckActivity.this,
-                            "2",
-                            money_use,
-                            zuidiMoney,
-                            shouxufei);
                     finish();
                 } else if (message.type == ConstanceValue.WX_JIECHU_S) {
                     Y.t("微信解绑成功");
@@ -145,19 +124,18 @@ public class PhoneCheckActivity extends BaseActivity {
             }
         }));
 
-        if (weixinOrZhiFuBao.equals("4")) {
+        if (weixinOrZhiFuBao.equals(AppCode.code_pwd_zhifu)) {
             tv_title.setText("设置支付密码");
-            btOk.setText("确定");
-            ll_pay_pwd.setVisibility(View.VISIBLE);
-        } else if (weixinOrZhiFuBao.equals("3")) {
+        } else if (weixinOrZhiFuBao.equals(AppCode.code_weixin_jie)) {
             tv_title.setText("解绑微信");
-        } else if (weixinOrZhiFuBao.equals("2")) {
+        } else if (weixinOrZhiFuBao.equals(AppCode.code_weixin)) {
             tv_title.setText("绑定微信");
-        } else if (weixinOrZhiFuBao.equals("1")) {
+        } else if (weixinOrZhiFuBao.equals(AppCode.code_zhifubao)) {
             tv_title.setText("绑定支付宝");
+        } else if (weixinOrZhiFuBao.equals(AppCode.code_pwd_login)) {
+            tv_title.setText("设置登录密码");
         }
     }
-
 
     /**
      * 获取短信验证码
@@ -167,7 +145,7 @@ public class PhoneCheckActivity extends BaseActivity {
         map.put("code", "00001");
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
-        map.put("mod_id", mod_id);//微信支付宝0111, 0006修改登录密码
+        map.put("mod_id", mod_id);//微信支付宝0111, 修改登录密码0112，修改支付密码0113
         Gson gson = new Gson();
         Y.e("接口数据是是呢 " + gson.toJson(map));
         OkGo.<AppResponse<Message.DataBean>>post(Urls.MSG)
@@ -202,49 +180,44 @@ public class PhoneCheckActivity extends BaseActivity {
             return;
         }
 
-        smsId = "1213";
+        smsId = "24214";
+
         if (TextUtils.isEmpty(smsId)) {
-            Y.t("请发生验证码");
+            Y.t("请发送验证码");
             return;
         }
 
-        if (weixinOrZhiFuBao.equals("4")) {
-            setPayPwd();
-        } else {
-            PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_ID, smsId);
-            PreferenceHelper.getInstance(mContext).putString(AppConfig.SMS_CODE, sms_code);
+        PreferenceHelper.getInstance(mContext).putString(AppCode.SMS_ID, smsId);
+        PreferenceHelper.getInstance(mContext).putString(AppCode.SMS_CODE, sms_code);
 
-            if (weixinOrZhiFuBao.equals("3")) {
-                PreferenceHelper.getInstance(mContext).putString(AppConfig.WX_TYPE, "2");
-                api = WXAPIFactory.createWXAPI(mContext, Y.getString(R.string.wx_app_id));
-                SendAuth.Req req = new SendAuth.Req();
-                req.scope = "snsapi_userinfo";
-                req.state = "wechat_sdk_demo_test";
-                api.sendReq(req);
-            } else if (weixinOrZhiFuBao.equals("2")) {
-                PreferenceHelper.getInstance(mContext).putString(AppConfig.WX_TYPE, "1");
-                api = WXAPIFactory.createWXAPI(mContext, Y.getString(R.string.wx_app_id));
-                SendAuth.Req req = new SendAuth.Req();
-                req.scope = "snsapi_userinfo";
-                req.state = "wechat_sdk_demo_test";
-                api.sendReq(req);
-            } else if (weixinOrZhiFuBao.equals("1")) {
-                Intent intent = new Intent(PhoneCheckActivity.this, SetAlipayActivity.class);
-                intent.putExtra("money_use", money_use);
-                intent.putExtra("zuidiMoney", zuidiMoney);
-                intent.putExtra("shouxufei", shouxufei);
-                startActivity(intent);
-            }
+        if (weixinOrZhiFuBao.equals(AppCode.code_pwd_zhifu) || weixinOrZhiFuBao.equals(AppCode.code_pwd_login)) {
+            LoginPwdActivity.actionStart(this, mod_id);
+        } else if (weixinOrZhiFuBao.equals(AppCode.code_weixin_jie)) {
+            PreferenceHelper.getInstance(mContext).putString(AppCode.WX_TYPE, "2");
+            api = WXAPIFactory.createWXAPI(mContext, Y.getString(R.string.wx_app_id));
+            SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo";
+            req.state = "wechat_sdk_demo_test";
+            api.sendReq(req);
+        } else if (weixinOrZhiFuBao.equals(AppCode.code_weixin)) {
+            PreferenceHelper.getInstance(mContext).putString(AppCode.WX_TYPE, "1");
+            api = WXAPIFactory.createWXAPI(mContext, Y.getString(R.string.wx_app_id));
+            SendAuth.Req req = new SendAuth.Req();
+            req.scope = "snsapi_userinfo";
+            req.state = "wechat_sdk_demo_test";
+            api.sendReq(req);
+        } else if (weixinOrZhiFuBao.equals(AppCode.code_zhifubao)) {
+            SetAlipayActivity.actionStart(this);
         }
     }
 
     private void setPayPwd() {
-        String payPwd = ed_pay_pwd.getText().toString();
+//        String payPwd = ed_pay_pwd.getText().toString();
+        String payPwd = "fff";
         if (TextUtils.isEmpty(payPwd)) {
             Y.t("请输入支付密码");
             return;
         }
-
 
         Map<String, String> map = new HashMap<>();
         map.put("code", "04337");
