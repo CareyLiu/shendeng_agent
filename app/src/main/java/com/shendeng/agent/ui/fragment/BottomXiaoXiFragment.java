@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
+import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -90,6 +91,18 @@ public class BottomXiaoXiFragment extends BaseFragment {
 
     }
 
+    @Override
+    protected void immersionInit(ImmersionBar mImmersionBar) {
+        mImmersionBar
+                .titleBar(toolbar).fitsSystemWindows(true)
+                .statusBarDarkFont(true)
+                .init();
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

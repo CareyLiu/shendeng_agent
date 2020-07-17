@@ -389,6 +389,20 @@ public class BottomDingDanFragment extends BaseFragment {
         });
     }
 
+    @Override
+    protected void immersionInit(ImmersionBar mImmersionBar) {
+        mImmersionBar
+                .titleBar(toolbar).fitsSystemWindows(true)
+                .statusBarDarkFont(true)
+                .init();
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
+
+
     @OnClick({R.id.iv_saoyisao, R.id.tab_all, R.id.tab_daifukuan, R.id.tab_daifahuo, R.id.tab_daishouhuo, R.id.tab_xiaofei, R.id.tab_daipingjia, R.id.tab_yipingjia, R.id.tab_tuikuanshenqing, R.id.tab_tuikuanzhong, R.id.tab_guanbi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
