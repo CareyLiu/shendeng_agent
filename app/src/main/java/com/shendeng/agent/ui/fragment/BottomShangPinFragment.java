@@ -81,5 +81,17 @@ public class BottomShangPinFragment extends BaseFragment {
 
     }
 
+    @Override
+    protected void immersionInit(ImmersionBar mImmersionBar) {
+        mImmersionBar
+                .titleBar(toolbar).fitsSystemWindows(true)
+                .statusBarDarkFont(true)
+                .init();
+    }
+
+    @Override
+    protected boolean immersionEnabled() {
+        return true;
+    }
 
 }

@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
@@ -30,13 +33,10 @@ import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
 import com.shendeng.agent.ui.activity.WodeTuihuoActivity;
 import com.shendeng.agent.util.Urls;
-import com.shendeng.agent.util.Y;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,6 +76,8 @@ public class BottomWoDeFragment extends BaseFragment {
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.ll_main)
     LinearLayout llMain;
+    @BindView(R.id.view_top)
+    View viewTop;
     private WodeModel.DataBean userMain;
 
     @Override
@@ -122,7 +124,6 @@ public class BottomWoDeFragment extends BaseFragment {
     protected void immersionInit(ImmersionBar mImmersionBar) {
         mImmersionBar
                 .titleBar(toolbar)
-                .statusBarDarkFont(true)
                 .init();
     }
 
@@ -130,7 +131,6 @@ public class BottomWoDeFragment extends BaseFragment {
     protected boolean immersionEnabled() {
         return true;
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view

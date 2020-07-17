@@ -132,7 +132,7 @@ public class LoginActivity extends BaseActivity {
     private void qiehuan() {
         List<String> names = new ArrayList<>();
         names.add("用短信验证码登录");
-        names.add("用车联网密码登录");
+        names.add("用聚易佳密码登录");
         final BottomDialog bottomDialog = new BottomDialog(this);
         bottomDialog.setModles(names);
         bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
