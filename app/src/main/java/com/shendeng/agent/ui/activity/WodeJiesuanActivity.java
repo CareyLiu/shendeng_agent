@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.http.Url;
 
 public class WodeJiesuanActivity extends BaseActivity {
 
@@ -113,7 +114,7 @@ public class WodeJiesuanActivity extends BaseActivity {
         shop_form_id = "";
 
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04335");
+        map.put("code", Urls.code_04335);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);
@@ -143,7 +144,7 @@ public class WodeJiesuanActivity extends BaseActivity {
 
     private void getLoad() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04335");
+        map.put("code", Urls.code_04335);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);

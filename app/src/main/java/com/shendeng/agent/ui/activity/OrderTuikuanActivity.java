@@ -24,6 +24,7 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.TishiDialog;
+import com.shendeng.agent.model.OrderDetailsModel;
 import com.shendeng.agent.model.OrderTuikuanModel;
 import com.shendeng.agent.util.FullyLinearLayoutManager;
 import com.shendeng.agent.util.Urls;
@@ -306,9 +307,27 @@ public class OrderTuikuanActivity extends BaseActivity {
     private void clickBt1() {
         String title = bt1.getText().toString();
         if (title.equals("确认收货")) {//确认收货
-            Y.t("确认收货");
+            tuihuoSure();
         } else if (title.equals("拒绝申请")) {//拒绝申请
-            Y.t("拒绝申请");
+            TishiDialog dialog = new TishiDialog(mContext, new TishiDialog.TishiDialogListener() {
+                @Override
+                public void onClickCancel(View v, TishiDialog dialog) {
+
+                }
+
+                @Override
+                public void onClickConfirm(View v, TishiDialog dialog) {
+                    tuikuanshenhe("6");
+                }
+
+                @Override
+                public void onDismiss(TishiDialog dialog) {
+
+                }
+            });
+            dialog.setTextCont("是否拒绝退款申请");
+            dialog.setTextConfirm("拒绝");
+            dialog.show();
         } else if (title.equals("已发货")) {
 
         } else if (title.equals("交易成功")) {//去评价
@@ -318,12 +337,105 @@ public class OrderTuikuanActivity extends BaseActivity {
         }
     }
 
+    private void tuihuoSure() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04315);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("shop_form_id", shop_form_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse> response) {
+                        Y.t(response.body().msg);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
+    }
+
+    private void tuikuanshenhe(String refund_rate) {//refund_rate  审核结果：2同意6拒绝
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04315);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("shop_form_id", shop_form_id);
+        map.put("refund_rate", refund_rate);
+        Gson gson = new Gson();
+        OkGo.<AppResponse>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse> response) {
+                        Y.t(response.body().msg);
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
+    }
+
     private void clickBt2() {
         String title = bt2.getText().toString();
         if (title.equals("查看物流")) {//查看物流
             wuliu();
         } else if (title.equals("同意申请")) {//同意申请
-            Y.t("同意申请");
+            TishiDialog dialog = new TishiDialog(mContext, new TishiDialog.TishiDialogListener() {
+                @Override
+                public void onClickCancel(View v, TishiDialog dialog) {
+
+                }
+
+                @Override
+                public void onClickConfirm(View v, TishiDialog dialog) {
+                    tuikuanshenhe("2");
+                }
+
+                @Override
+                public void onDismiss(TishiDialog dialog) {
+
+                }
+            });
+            dialog.setTextCont("是否同意退款申请");
+            dialog.setTextConfirm("同意");
+            dialog.show();
         } else if (title.equals("已发货")) {
 
         } else if (title.equals("交易成功")) {//去评价

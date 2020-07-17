@@ -236,7 +236,7 @@ public class TixianActivity extends BaseActivity {
 
     private void getTixian() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04338");
+        map.put("code", Urls.code_04338);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
 //        map.put("pay_pwd", pay_pwd);

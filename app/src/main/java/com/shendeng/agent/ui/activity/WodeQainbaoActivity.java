@@ -98,7 +98,7 @@ public class WodeQainbaoActivity extends BaseActivity {
 
     private void getNet() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04332");
+        map.put("code", Urls.code_04332);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         Gson gson = new Gson();

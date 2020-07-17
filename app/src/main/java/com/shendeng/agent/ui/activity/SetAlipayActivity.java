@@ -98,7 +98,7 @@ public class SetAlipayActivity extends BaseActivity {
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04334");
+        map.put("code", Urls.code_04334);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("pay_num", pay_num);//支付宝账号

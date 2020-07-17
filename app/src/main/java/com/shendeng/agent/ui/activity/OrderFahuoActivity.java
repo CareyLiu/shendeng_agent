@@ -183,7 +183,7 @@ public class OrderFahuoActivity extends BaseActivity {
 
     private void getWuliu() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "00005");
+        map.put("code", Urls.code_00005);
         map.put("key", Urls.KEY);
         map.put("type_id", "express");//物流公司
         Gson gson = new Gson();

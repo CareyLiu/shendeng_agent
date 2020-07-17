@@ -113,4 +113,17 @@ public class OrderFahuoEwmActivity extends BaseActivity implements QRCodeView.De
     public void onScanQRCodeOpenCameraError() {
         mQRCodeView.startCamera();
     }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mQRCodeView.stopCamera();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mQRCodeView.stopSpot();
+    }
 }

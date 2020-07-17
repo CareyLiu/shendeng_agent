@@ -26,6 +26,11 @@ public class Urls {
     public final static String code_04318 = "04318";//到店消费验证（扫一扫）
     public final static String code_04319 = "04319";//退货确认收货
     public final static String code_04320 = "04320";//订单评价详情
+    public final static String code_04332 = "04332";//我的钱包
     public final static String code_04333 = "04333";//收支明細
     public final static String code_04189 = "04189";//收支明細詳情
+    public final static String code_04335 = "04335";//待结算列表
+    public final static String code_04334 = "04334";//支付宝：提现账号设置
+    public final static String code_04338 = "04338";//提现
+    public final static String code_00005 = "00005";//参数查询
 }

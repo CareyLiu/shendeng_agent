@@ -142,7 +142,7 @@ public class PhoneCheckActivity extends BaseActivity {
      */
     private void get_code() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "00001");
+        map.put("code", Urls.code_00001);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("mod_id", mod_id);//微信支付宝0111, 修改登录密码0112，修改支付密码0113
