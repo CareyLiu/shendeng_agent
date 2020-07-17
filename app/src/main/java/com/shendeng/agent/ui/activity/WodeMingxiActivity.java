@@ -170,7 +170,7 @@ public class WodeMingxiActivity extends BaseActivity {
     private void getNet() {
         pay_cost_id = "";
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04333");
+        map.put("code", Urls.code_04333);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("pay_cost_type", pay_cost_type + "");
@@ -202,7 +202,7 @@ public class WodeMingxiActivity extends BaseActivity {
 
     private void getLoad() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04333");
+        map.put("code",Urls.code_04333);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("pay_cost_type", pay_cost_type + "");

@@ -85,7 +85,7 @@ public class WodeMingxiDetailsActivity extends BaseActivity {
 
     private void getNet() {
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04189");
+        map.put("code", Urls.code_04189);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("pay_cost_id", pay_cost_id);

@@ -25,4 +25,6 @@ public class Urls {
     public final static String code_04318 = "04318";//到店消费验证（扫一扫）
     public final static String code_04319 = "04319";//退货确认收货
     public final static String code_04320 = "04320";//订单评价详情
+    public final static String code_04333 = "04333";//收支明細
+    public final static String code_04189 = "04189";//收支明細詳情
 }

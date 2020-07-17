@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
-import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -29,7 +29,6 @@ import com.shendeng.agent.model.OrderModel;
 import com.shendeng.agent.ui.activity.DefaultX5WebViewActivity;
 import com.shendeng.agent.ui.activity.OrderDetailsActivity;
 import com.shendeng.agent.ui.activity.OrderFahuoActivity;
-import com.shendeng.agent.ui.activity.OrderFahuoEwmActivity;
 import com.shendeng.agent.ui.activity.OrderPingjiaActivity;
 import com.shendeng.agent.ui.activity.OrderSaoyisaoActivity;
 import com.shendeng.agent.ui.activity.OrderTuikuanActivity;
@@ -81,6 +80,8 @@ public class BottomDingDanFragment extends BaseFragment {
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.iv_saoyisao)
     ImageView iv_saoyisao;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
 
     private int shop_pay_check;
     private String form_id;
@@ -247,9 +248,9 @@ public class BottomDingDanFragment extends BaseFragment {
                     OrderModel.DataBean dataBean = data.get(position);
                     String shop_form_id = dataBean.getProduct().get(0).getShop_form_id();
                     String shop_pay_check = dataBean.getShop_pay_check();
-                    if (shop_pay_check.equals("8")||shop_pay_check.equals("9")||shop_pay_check.equals("10")) {//退款审核
-                        OrderTuikuanActivity.actionStart(getContext(),shop_form_id);
-                    }else {
+                    if (shop_pay_check.equals("8") || shop_pay_check.equals("9") || shop_pay_check.equals("10")) {//退款审核
+                        OrderTuikuanActivity.actionStart(getContext(), shop_form_id);
+                    } else {
                         Bundle bundle = new Bundle();
                         bundle.putString("shop_form_id", shop_form_id);
                         OrderDetailsActivity.actionStart(getContext(), bundle);
@@ -295,15 +296,19 @@ public class BottomDingDanFragment extends BaseFragment {
                         data = response.body().data;
                         adapter.setNewData(data);
                         adapter.notifyDataSetChanged();
-
-                        if (data.size() > 0) {
-                            form_id = BottomDingDanFragment.this.data.get(BottomDingDanFragment.this.data.size() - 1).getForm_id();
-                        }
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
+
+                        if (data.size() > 0) {
+                            form_id = BottomDingDanFragment.this.data.get(BottomDingDanFragment.this.data.size() - 1).getForm_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        }else {
+                            ll_no_data.setVisibility(View.VISIBLE);
+                        }
+
                         dismissProgressDialog();
                         smartRefreshLayout.finishRefresh();
                     }
@@ -329,15 +334,19 @@ public class BottomDingDanFragment extends BaseFragment {
                         data.addAll(dataNew);
                         adapter.setNewData(BottomDingDanFragment.this.data);
                         adapter.notifyDataSetChanged();
-
-                        if (data.size() > 0) {
-                            form_id = BottomDingDanFragment.this.data.get(BottomDingDanFragment.this.data.size() - 1).getForm_id();
-                        }
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
+
+                        if (data.size() > 0) {
+                            form_id = BottomDingDanFragment.this.data.get(BottomDingDanFragment.this.data.size() - 1).getForm_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        }else {
+                            ll_no_data.setVisibility(View.VISIBLE);
+                        }
+
                         smartRefreshLayout.finishLoadMore();
                     }
                 });
@@ -363,7 +372,6 @@ public class BottomDingDanFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
 

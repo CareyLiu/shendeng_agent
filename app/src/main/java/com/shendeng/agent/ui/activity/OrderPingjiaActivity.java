@@ -191,7 +191,7 @@ public class OrderPingjiaActivity extends BaseActivity {
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04317");
+        map.put("code", Urls.code_04317);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);

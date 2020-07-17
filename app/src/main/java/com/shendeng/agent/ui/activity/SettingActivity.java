@@ -35,7 +35,7 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.ll_dianpu)
     LinearLayout ll_dianpu;
     @BindView(R.id.bt_login_out)
-    Button bt_login_out;
+    TextView bt_login_out;
     private String pay_pwd_check;
     private String wx_pay_check;
     private String alipay_number_check;
