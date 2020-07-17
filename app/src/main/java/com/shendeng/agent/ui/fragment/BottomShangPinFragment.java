@@ -40,35 +40,12 @@ public class BottomShangPinFragment extends BaseFragment {
     }
 
     @Override
-    public boolean showToolBar() {
-        return false;
-    }
-
-    @Override
     protected void initView(View view) {
     }
 
     @Override
     protected void initLogic() {
 
-
-
-
-    }
-
-
-
-    @Override
-    protected void immersionInit(ImmersionBar mImmersionBar) {
-        mImmersionBar
-                .titleBar(toolbar)
-                .statusBarDarkFont(true)
-                .init();
-    }
-
-    @Override
-    protected boolean immersionEnabled() {
-        return true;
     }
 
     @Override

@@ -4,16 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <View
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:background="@color/white" />
+        android:background="@color/white"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/white">
 
         <ImageView
@@ -32,7 +34,7 @@
             android:background="@color/white"
             android:text="订单"
             android:textColor="@color/color_494949"
-            android:textSize="17sp"
+            android:textSize="16sp"
             android:textStyle="bold"></TextView>
     </RelativeLayout>
 

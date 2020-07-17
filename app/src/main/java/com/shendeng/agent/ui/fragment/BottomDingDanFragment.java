@@ -1,6 +1,7 @@
 package com.shendeng.agent.ui.fragment;
 
 
+import android.Manifest;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -28,12 +29,14 @@ import com.shendeng.agent.model.OrderModel;
 import com.shendeng.agent.ui.activity.DefaultX5WebViewActivity;
 import com.shendeng.agent.ui.activity.OrderDetailsActivity;
 import com.shendeng.agent.ui.activity.OrderFahuoActivity;
+import com.shendeng.agent.ui.activity.OrderFahuoEwmActivity;
 import com.shendeng.agent.ui.activity.OrderPingjiaActivity;
 import com.shendeng.agent.ui.activity.OrderSaoyisaoActivity;
 import com.shendeng.agent.ui.activity.OrderTuikuanActivity;
 import com.shendeng.agent.ui.view.SelectTabView;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -108,11 +111,6 @@ public class BottomDingDanFragment extends BaseFragment {
         return R.layout.frag_mian_order;
     }
 
-    @Override
-    public boolean showToolBar() {
-        return false;
-    }
-
 
     @Override
     protected void initView(View view) {
@@ -123,19 +121,6 @@ public class BottomDingDanFragment extends BaseFragment {
     protected void initLogic() {
 
 
-    }
-
-    @Override
-    protected void immersionInit(ImmersionBar mImmersionBar) {
-        mImmersionBar
-                .titleBar(toolbar)
-                .statusBarDarkFont(true)
-                .init();
-    }
-
-    @Override
-    protected boolean immersionEnabled() {
-        return true;
     }
 
     @Override
@@ -381,11 +366,26 @@ public class BottomDingDanFragment extends BaseFragment {
 
     }
 
+
+    private void ewm() {
+        RxPermissions rxPermissions = new RxPermissions(getActivity());
+        rxPermissions.request(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean granted) {
+                if (granted) { // 在android 6.0之前会默认返回true
+                    OrderSaoyisaoActivity.actionStartForResult(getActivity(), 100);
+                } else {
+                    Y.tLong("该应用需要赋予访问相机的权限，不开启将无法正常工作！");
+                }
+            }
+        });
+    }
+
     @OnClick({R.id.iv_saoyisao, R.id.tab_all, R.id.tab_daifukuan, R.id.tab_daifahuo, R.id.tab_daishouhuo, R.id.tab_xiaofei, R.id.tab_daipingjia, R.id.tab_yipingjia, R.id.tab_tuikuanshenqing, R.id.tab_tuikuanzhong, R.id.tab_guanbi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_saoyisao:
-                OrderSaoyisaoActivity.actionStart(getContext());
+                ewm();
                 break;
             case R.id.tab_all:
                 selectTab(0);

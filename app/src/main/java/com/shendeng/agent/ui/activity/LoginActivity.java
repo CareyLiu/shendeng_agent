@@ -102,6 +102,7 @@ public class LoginActivity extends BaseActivity {
         ed_phone.setText("18249030297");
 //        ed_phone.setText("15244772616");
         ed_pwd.setText("123456");
+//        ed_pwd.setText("15244772616");
     }
 
     @OnClick({R.id.tv_yzm, R.id.tv_qiehuan, R.id.tv_zhaohui, R.id.bt_login, R.id.tv_yinsi})

@@ -185,5 +185,4 @@ public class HomeBasicActivity extends BaseActivity {
         }
         return super.dispatchKeyEvent(event);
     }
-
 }

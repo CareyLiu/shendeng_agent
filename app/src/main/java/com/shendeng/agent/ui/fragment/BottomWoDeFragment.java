@@ -1,5 +1,7 @@
 package com.shendeng.agent.ui.fragment;
 
+import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +17,6 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BaseFragment;
@@ -29,6 +30,7 @@ import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
 import com.shendeng.agent.ui.activity.WodeTuihuoActivity;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -72,6 +74,8 @@ public class BottomWoDeFragment extends BaseFragment {
     LinearLayout ll_qiehuan;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
     private WodeModel.DataBean userMain;
 
     @Override
@@ -135,6 +139,14 @@ public class BottomWoDeFragment extends BaseFragment {
         initStart();
         return rootView;
     }
+
+    public static int getStatusBarHeight(Activity activity) {
+        Resources resources = activity.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen", "android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        return height;
+    }
+
 
     private void initStart() {
         getNet();
