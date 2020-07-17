@@ -176,7 +176,7 @@ public class OrderFahuoActivity extends BaseActivity {
                     @Override
                     public void onStart(Request<AppResponse<OrderDetailsModel.DataBean>, ? extends Request> request) {
                         super.onStart(request);
-                        showLoading();
+                        showProgressDialog("");
                     }
                 });
     }

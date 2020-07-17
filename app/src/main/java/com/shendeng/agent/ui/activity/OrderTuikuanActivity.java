@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -41,7 +42,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OrderTuikuanActivity extends BaseActivity {
-
 
     @BindView(R.id.tv_danhao_tuihuo)
     TextView tv_danhao_tuihuo;
@@ -107,6 +107,7 @@ public class OrderTuikuanActivity extends BaseActivity {
     private OrderTuikuanModel.DataBean dataBean;
     private List<String> order_info_arr = new ArrayList<>();
     private OrderTuikuanAdapter adapter;
+    private List<String> pay_check_arr;
 
     @Override
     public int getContentViewResId() {
@@ -191,7 +192,7 @@ public class OrderTuikuanActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Response<AppResponse<OrderTuikuanModel.DataBean>> response) {
                         dataBean = response.body().data.get(0);
-                        List<String> pay_check_arr = dataBean.getRefund_arr();
+                        pay_check_arr = dataBean.getRefund_arr();
                         if (pay_check_arr.size() == 5) {
                             tv1.setText(pay_check_arr.get(0));
                             tv2.setText(pay_check_arr.get(1));
@@ -218,7 +219,6 @@ public class OrderTuikuanActivity extends BaseActivity {
                             line4.setVisibility(View.GONE);
                         }
 
-
                         pay_check_index = dataBean.getRefund_index();
                         if (pay_check_index.equals("0")) {
                             bt1.setText("拒绝申请");
@@ -232,13 +232,15 @@ public class OrderTuikuanActivity extends BaseActivity {
                             line1.setBackgroundColor(Y.getColor(R.color.order_red));
                         } else if (pay_check_index.equals("2")) {
                             if (pay_check_arr.size() == 5) {
-                                bt2.setText("确认收货");
+                                bt1.setText("确认收货");
+                                bt1.setVisibility(View.VISIBLE);
+                                bt2.setText("查看物流");
                                 bt2.setVisibility(View.VISIBLE);
                             } else {
-                                bt2.setVisibility(View.INVISIBLE);
+                                bt1.setVisibility(View.GONE);
+                                bt2.setVisibility(View.GONE);
                             }
-                            bt1.setText("查看物流");
-                            bt1.setVisibility(View.VISIBLE);
+
 
                             qiu2.setBackgroundResource(R.drawable.order_qiu_s);
                             qiu3.setBackgroundResource(R.drawable.order_qiu_s);
@@ -278,7 +280,7 @@ public class OrderTuikuanActivity extends BaseActivity {
                         Glide.with(mContext).load(dataBean.getIndex_photo_url()).into(iv_img);
                         tv_title_name.setText(dataBean.getShop_product_title());
                         tv_num.setText(dataBean.getProduct_title());
-                        tv_money.setText("退款金额：¥" + dataBean.getPay_money());
+                        tv_money.setText("¥" + dataBean.getPay_money());
 
 
                         order_info_arr = dataBean.getOrder_info_arr();
@@ -289,39 +291,46 @@ public class OrderTuikuanActivity extends BaseActivity {
                     @Override
                     public void onFinish() {
                         super.onFinish();
+                        dismissProgressDialog();
                         smartRefreshLayout.finishRefresh();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<OrderTuikuanModel.DataBean>, ? extends Request> request) {
+                        showProgressDialog("");
+                        super.onStart(request);
                     }
                 });
     }
 
     private void clickBt1() {
-//        String title = pay_check_arr.get(Y.getInt(pay_check_index));
-//        if (title.equals("已拍下")) {//修改快递费
-//            OrderKuaidiActivity.actionStart(mContext, dataBean.getForm_money_go(), shop_form_id);
-//        } else if (title.equals("已付款")) {
-//
-//        } else if (title.equals("已发货")) {
-//
-//        } else if (title.equals("交易成功")) {//查看欠款去向
-//            Y.t("查看欠款去向");
-//        } else if (title.equals("已评价")) {//查看欠款去向
-//            Y.t("查看欠款去向");
-//        }
+        String title = bt1.getText().toString();
+        if (title.equals("确认收货")) {//确认收货
+            Y.t("确认收货");
+        } else if (title.equals("拒绝申请")) {//拒绝申请
+            Y.t("拒绝申请");
+        } else if (title.equals("已发货")) {
+
+        } else if (title.equals("交易成功")) {//去评价
+
+        } else if (title.equals("已评价")) {//查看评价
+
+        }
     }
 
     private void clickBt2() {
-//        String title = pay_check_arr.get(Y.getInt(pay_check_index));
-//        if (title.equals("已拍下")) {//关闭此交易
-//            Y.t("关闭此交易");
-//        } else if (title.equals("已付款")) {//去发货
-//            OrderFahuoActivity.actionStart(this);
-//        } else if (title.equals("已发货")) {
-//
-//        } else if (title.equals("交易成功")) {//去评价
-//            OrderPingjiaActivity.actionStart(mContext, shop_form_id);
-//        } else if (title.equals("已评价")) {//查看评价
-//            OrderPingjiaActivity.actionStart(mContext, shop_form_id);
-//        }
+        String title = bt2.getText().toString();
+        if (title.equals("查看物流")) {//查看物流
+            wuliu();
+        } else if (title.equals("同意申请")) {//同意申请
+            Y.t("同意申请");
+        } else if (title.equals("已发货")) {
+
+        } else if (title.equals("交易成功")) {//去评价
+
+        } else if (title.equals("已评价")) {//查看评价
+
+        }
     }
 
     @OnClick({R.id.tv_wuliu, R.id.bt1, R.id.bt2})

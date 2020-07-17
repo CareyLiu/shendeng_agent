@@ -249,7 +249,7 @@ public class BottomDingDanFragment extends BaseFragment {
                     OrderModel.DataBean dataBean = data.get(position);
                     String shop_form_id = dataBean.getProduct().get(0).getShop_form_id();
                     String shop_pay_check = dataBean.getShop_pay_check();
-                    if (shop_pay_check.equals("8") || shop_pay_check.equals("9") || shop_pay_check.equals("10")) {//退款审核
+                    if (shop_pay_check.equals("8") || shop_pay_check.equals("9") || shop_pay_check.equals("10")|| shop_pay_check.equals("12")) {//退款
                         OrderTuikuanActivity.actionStart(getContext(), shop_form_id);
                     } else {
                         Bundle bundle = new Bundle();

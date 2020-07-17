@@ -3,15 +3,32 @@ package com.shendeng.agent.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
+import com.shendeng.agent.adapter.MingxiDetailsAdapter;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.app.PreferenceHelper;
+import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppCode;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.MingxiDetailsModel;
+import com.shendeng.agent.ui.widget.DoubleClickExitHelper;
+import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,8 +63,6 @@ public class LoginPwdActivity extends BaseActivity {
 
     /**
      * 用于其他Activty跳转到该Activity
-     *
-     * @param context
      */
     public static void actionStart(Context context, String mod_id) {
         Intent intent = new Intent();
@@ -82,6 +97,66 @@ public class LoginPwdActivity extends BaseActivity {
 
     @OnClick(R.id.bt_ok)
     public void onViewClicked() {
+        String pwd = ed_pwd.getText().toString();
+        String pwd_two = ed_pwd_two.getText().toString();
 
+        if (TextUtils.isEmpty(pwd)) {
+            if (mod_id.equals(AppCode.mod_login_pwd) || mod_id.equals(AppCode.mod_login_pwd_zhaohui)) {
+                Y.t("请输入登录密码");
+            } else if (mod_id.equals(AppCode.mod_zhifu_pwd)) {
+                Y.t("请输入支付密码");
+            }
+            return;
+        }
+
+        if (TextUtils.isEmpty(pwd_two)) {
+            if (mod_id.equals(AppCode.mod_login_pwd) || mod_id.equals(AppCode.mod_login_pwd_zhaohui)) {
+                Y.t("请确认登录密码");
+            } else if (mod_id.equals(AppCode.mod_zhifu_pwd)) {
+                Y.t("请确认支付密码");
+            }
+            return;
+        }
+
+        if (!pwd.equals(pwd_two)) {
+            Y.t("两次密码输入不一致");
+            return;
+        }
+
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04336);
+        map.put("key", Urls.KEY);
+        map.put("password", pwd);
+        map.put("sms_code", sms_code);
+        map.put("sms_id", sms_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<MingxiDetailsModel.DataBean>>post(Urls.LOGIN)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<MingxiDetailsModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<MingxiDetailsModel.DataBean>> response) {
+                        Y.t("修改成功");
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<MingxiDetailsModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<MingxiDetailsModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog("");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+                });
     }
 }

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -33,6 +34,7 @@ import com.shendeng.agent.dialog.BottomDialogView;
 import com.shendeng.agent.model.LoginUser;
 import com.shendeng.agent.model.Message;
 import com.shendeng.agent.ui.HomeBasicActivity;
+import com.shendeng.agent.ui.widget.DoubleClickExitHelper;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.TimeCount;
 import com.shendeng.agent.util.Urls;
@@ -78,10 +80,11 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.tv_yonghu)
     TextView tv_yonghu;
 
-
     private TimeCount timeCount;
     private String smsId;//短信验证码id
     private String req_type;//登录场景:1.密码登陆2.手机验证码登陆
+
+    DoubleClickExitHelper doubleClick;
 
     @Override
     public int getContentViewResId() {
@@ -103,6 +106,9 @@ public class LoginActivity extends BaseActivity {
 //        ed_phone.setText("15244772616");
         ed_pwd.setText("123456");
 //        ed_pwd.setText("15244772616");
+
+
+        doubleClick = new DoubleClickExitHelper(this);
     }
 
     @OnClick({R.id.tv_yzm, R.id.tv_qiehuan, R.id.tv_zhaohui, R.id.bt_login, R.id.tv_yinsi})
@@ -314,5 +320,25 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            /*
+             * 注意在if判断中要加一个event.getAction() == KeyEvent.ACTION_DOWN判断，
+             * 因为按键有两个事件ACTION_DOWN和ACTION_UP，也就是按下和松开，
+             * 如果不加这个判断，代码会执行两遍
+             */
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                //exitApp();
+                doubleClick.onKeyDown(event.getKeyCode(), event);
+            }
+            //实现只在冷启动时显示启动页，即点击返回键与点击HOME键退出效果一致
+//            Intent intent = new Intent(Intent.ACTION_MAIN);
+//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            intent.addCategory(Intent.CATEGORY_HOME);
+//            startActivity(intent);
+            return true;
+        }
+        return super.dispatchKeyEvent(event);
+    }
 }

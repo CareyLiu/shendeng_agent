@@ -20,7 +20,6 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="@dimen/sp_12" />
 
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -35,7 +34,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="12dp"
                     android:background="@color/white"
-                    android:minHeight="90dp"
                     android:orientation="vertical"
                     android:paddingLeft="14dp">
 
@@ -64,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="14dp"
                         android:includeFontPadding="false"
                         android:text="退款原因："
                         android:textColor="@color/text_red"
@@ -124,63 +122,63 @@
                         <View
                             android:id="@+id/qiu1"
                             android:layout_width="12dp"
-                            android:layout_height="12dp"
+                            android:layout_height="match_parent"
                             android:background="@drawable/order_qiu_s" />
 
                         <View
                             android:id="@+id/line1"
-                            android:layout_width="35dp"
+                            android:layout_width="34dp"
                             android:layout_height="2dp"
-                            android:layout_marginLeft="11dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@color/order_gray" />
 
                         <View
                             android:id="@+id/qiu2"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:layout_marginLeft="11dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@drawable/order_qiu_n" />
 
                         <View
                             android:id="@+id/line2"
-                            android:layout_width="35dp"
+                            android:layout_width="34dp"
                             android:layout_height="2dp"
-                            android:layout_marginLeft="11dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@color/order_gray" />
 
                         <View
                             android:id="@+id/qiu3"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:layout_marginLeft="11dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@drawable/order_qiu_n" />
 
                         <View
                             android:id="@+id/line3"
-                            android:layout_width="35dp"
+                            android:layout_width="34dp"
                             android:layout_height="2dp"
-                            android:layout_marginLeft="11dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@color/order_gray" />
 
                         <View
                             android:id="@+id/qiu4"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:layout_marginLeft="11dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@drawable/order_qiu_n" />
 
                         <View
                             android:id="@+id/line4"
-                            android:layout_width="35dp"
+                            android:layout_width="34dp"
                             android:layout_height="2dp"
-                            android:layout_marginLeft="11dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@color/order_gray" />
 
                         <View
                             android:id="@+id/qiu5"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
-                            android:layout_marginLeft="11dp"
+                            android:layout_marginLeft="10dp"
                             android:background="@drawable/order_qiu_n" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -279,17 +277,33 @@
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tv_money"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="bottom"
-                            android:includeFontPadding="false"
-                            android:paddingBottom="1dp"
-                            android:text="退款金额：¥129"
-                            android:textColor="@color/text_red"
-                            android:textSize="13sp"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="bottom"
+                                android:includeFontPadding="false"
+                                android:paddingBottom="1dp"
+                                android:text="退款金额："
+                                android:textColor="@color/text_red"
+                                android:textSize="13sp" />
+
+                            <TextView
+                                android:id="@+id/tv_money"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="bottom"
+                                android:includeFontPadding="false"
+                                android:paddingBottom="1dp"
+                                android:text="¥129"
+                                android:textColor="@color/text_red"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <TextView
@@ -327,7 +341,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="20dp"
                         android:gravity="center">
 

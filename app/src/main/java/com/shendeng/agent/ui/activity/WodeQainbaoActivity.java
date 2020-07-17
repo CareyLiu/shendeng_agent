@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;

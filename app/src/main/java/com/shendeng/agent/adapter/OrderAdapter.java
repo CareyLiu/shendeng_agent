@@ -56,7 +56,7 @@ public class OrderAdapter extends BaseQuickAdapter<OrderModel.DataBean, BaseView
         } else if (shop_pay_check.equals("8")) {
             tv_bt.setVisibility(View.VISIBLE);
             helper.setText(R.id.tv_bt, "退款审核");
-        } else if (shop_pay_check.equals("9") || shop_pay_check.equals("10")) {
+        } else {
             tv_bt.setVisibility(View.GONE);
         }
 

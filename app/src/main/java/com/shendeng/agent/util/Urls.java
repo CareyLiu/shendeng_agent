@@ -15,6 +15,7 @@ public class Urls {
 
     public final static String code_00001 = "00001";//发送验证码
     public final static String code_04310 = "04310";//登录接口
+    public final static String code_04336 = "04336";//修改密码卖家端
     public final static String code_04311 = "04311";//订单列表（普通）
     public final static String code_04312 = "04312";//退款订单详情
     public final static String code_04313 = "04313";//订单详情

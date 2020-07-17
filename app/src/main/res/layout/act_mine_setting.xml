@@ -177,6 +177,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="30dp"
         android:background="@drawable/white_radius_8"
+        android:gravity="center"
         android:text="退出登录"
-        android:textColor="@color/text_red" />
+        android:textColor="@color/text_red"
+        android:textSize="16sp" />
 </LinearLayout>

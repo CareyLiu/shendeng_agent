@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -290,7 +291,14 @@ public class OrderDetailsActivity extends BaseActivity {
                     @Override
                     public void onFinish() {
                         super.onFinish();
+                        dismissProgressDialog();
                         smartRefreshLayout.finishRefresh();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<OrderDetailsModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog("");
                     }
                 });
     }
