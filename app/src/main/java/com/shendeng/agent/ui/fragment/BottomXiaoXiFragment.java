@@ -96,6 +96,7 @@ public class BottomXiaoXiFragment extends BaseFragment {
         mImmersionBar
                 .titleBar(toolbar).fitsSystemWindows(true)
                 .statusBarDarkFont(true)
+                .statusBarColor(R.color.white)
                 .init();
     }
 

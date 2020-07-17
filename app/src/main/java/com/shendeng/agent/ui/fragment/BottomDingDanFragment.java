@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
+import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -394,6 +395,7 @@ public class BottomDingDanFragment extends BaseFragment {
         mImmersionBar
                 .titleBar(toolbar).fitsSystemWindows(true)
                 .statusBarDarkFont(true)
+                .statusBarColor(R.color.white)
                 .init();
     }
 
