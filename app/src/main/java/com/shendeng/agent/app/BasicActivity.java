@@ -1,5 +1,6 @@
 package com.shendeng.agent.app;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -19,6 +20,9 @@ import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BasicModel;
 import com.shendeng.agent.basicmvp.BasicPresenter;
 import com.shendeng.agent.util.TUtil;
+
+import java.util.LinkedList;
+import java.util.List;
 
 
 public abstract class BasicActivity<T extends BasicPresenter, E extends BasicModel> extends BasicSupportActivity {
@@ -61,6 +65,8 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
             mPresenter.mContext = this;
         }
         this.initPresenter();
+
+        AppManager.getAppManager().addActivity(this);
     }
 
 
@@ -198,6 +204,39 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
      */
     public void initPresenter() {
 
+    }
+
+
+
+    private List<Activity> activityList = new LinkedList<>();
+
+    /**
+     * 退出App
+     */
+    public void exitApp() {
+        exit();
+    }
+
+    public void addActivity(Activity activity) {
+        activityList.add(activity);
+    }
+
+    public void exit() {
+        try {
+            for (Activity activity : activityList) {
+                if (activity != null)
+                    activity.finish();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            System.exit(0);
+        }
+    }
+
+    public void onLowMemory() {
+        super.onLowMemory();
+        System.gc();
     }
 
 }

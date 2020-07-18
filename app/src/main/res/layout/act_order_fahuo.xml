@@ -75,13 +75,12 @@
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp">
 
-
                 <ImageView
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_marginRight="10dp"
-                    android:background="@color/black" />
-
+                    android:background="@color/black"
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/tv_kuaidigongsi"
@@ -136,11 +135,12 @@
                         android:id="@+id/iv_ewm"
                         android:layout_width="48dp"
                         android:layout_height="match_parent"
-                        android:background="@color/black"
                         android:paddingLeft="14dp"
                         android:paddingTop="11dp"
                         android:paddingRight="14dp"
-                        android:paddingBottom="11dp" />
+                        android:paddingBottom="11dp"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/jij_shouye_saoyisao" />
                 </LinearLayout>
             </RelativeLayout>
 

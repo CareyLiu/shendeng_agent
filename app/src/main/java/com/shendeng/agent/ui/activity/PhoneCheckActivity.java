@@ -180,8 +180,6 @@ public class PhoneCheckActivity extends BaseActivity {
             return;
         }
 
-        smsId = "24214";
-
         if (TextUtils.isEmpty(smsId)) {
             Y.t("请发送验证码");
             return;
@@ -192,59 +190,35 @@ public class PhoneCheckActivity extends BaseActivity {
 
         if (weixinOrZhiFuBao.equals(AppCode.code_pwd_zhifu) || weixinOrZhiFuBao.equals(AppCode.code_pwd_login)) {
             LoginPwdActivity.actionStart(this, mod_id);
+            finish();
         } else if (weixinOrZhiFuBao.equals(AppCode.code_weixin_jie)) {
             PreferenceHelper.getInstance(mContext).putString(AppCode.WX_TYPE, "2");
             api = WXAPIFactory.createWXAPI(mContext, Y.getString(R.string.wx_app_id));
-            SendAuth.Req req = new SendAuth.Req();
-            req.scope = "snsapi_userinfo";
-            req.state = "wechat_sdk_demo_test";
-            api.sendReq(req);
+            if (!api.isWXAppInstalled()) {
+                Y.t("您的设备未安装微信客户端");
+            } else {
+                SendAuth.Req req = new SendAuth.Req();
+                req.scope = "snsapi_userinfo";
+                req.state = "wechat_sdk_demo_test";
+                api.sendReq(req);
+            }
         } else if (weixinOrZhiFuBao.equals(AppCode.code_weixin)) {
             PreferenceHelper.getInstance(mContext).putString(AppCode.WX_TYPE, "1");
             api = WXAPIFactory.createWXAPI(mContext, Y.getString(R.string.wx_app_id));
-            SendAuth.Req req = new SendAuth.Req();
-            req.scope = "snsapi_userinfo";
-            req.state = "wechat_sdk_demo_test";
-            api.sendReq(req);
+            if (!api.isWXAppInstalled()) {
+                Y.t("您的设备未安装微信客户端");
+            } else {
+                SendAuth.Req req = new SendAuth.Req();
+                req.scope = "snsapi_userinfo";
+                req.state = "wechat_sdk_demo_test";
+                api.sendReq(req);
+            }
         } else if (weixinOrZhiFuBao.equals(AppCode.code_zhifubao)) {
             SetAlipayActivity.actionStart(this);
+            finish();
         }
     }
 
-    private void setPayPwd() {
-//        String payPwd = ed_pay_pwd.getText().toString();
-        String payPwd = "fff";
-        if (TextUtils.isEmpty(payPwd)) {
-            Y.t("请输入支付密码");
-            return;
-        }
-
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "04337");
-        map.put("key", Urls.KEY);
-        map.put("token", UserManager.getManager(this).getAppToken());
-        map.put("password", payPwd);
-        map.put("sms_code", sms_code);
-        map.put("sms_id", smsId);
-        Gson gson = new Gson();
-        OkGo.<AppResponse<JiesuanModel.DataBean>>post(Urls.WORKER)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<JiesuanModel.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<JiesuanModel.DataBean>> response) {
-                        UserManager.getManager(PhoneCheckActivity.this).setPay_pwd_check("1");
-                        Y.t("设置成功");
-                        finish();
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-
-                    }
-                });
-    }
 
     @OnClick({R.id.tv_yzm, R.id.bt_ok})
     public void onViewClicked(View view) {

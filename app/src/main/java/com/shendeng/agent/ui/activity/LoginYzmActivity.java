@@ -80,6 +80,7 @@ public class LoginYzmActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        timeCount = new TimeCount(60000, 1000, tv_yzm);
     }
 
     @OnClick({R.id.tv_yzm, R.id.bt_ok})
@@ -103,6 +104,7 @@ public class LoginYzmActivity extends BaseActivity {
             Y.t("请输入手机号");
             return;
         }
+        showProgressDialog();
         Map<String, String> map = new HashMap<>();
         map.put("code", Urls.code_00001);
         map.put("key", Urls.KEY);
@@ -125,6 +127,12 @@ public class LoginYzmActivity extends BaseActivity {
                         Y.t(response.getException().getMessage());
                         timeCount.cancel();
                         timeCount.onFinish();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
                     }
                 });
     }
