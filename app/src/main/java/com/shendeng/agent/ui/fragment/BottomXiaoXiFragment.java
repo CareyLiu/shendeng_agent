@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
@@ -121,6 +122,7 @@ public class BottomXiaoXiFragment extends BaseFragment {
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                notifyId = "";
                 getNet();
             }
         });
@@ -158,6 +160,13 @@ public class BottomXiaoXiFragment extends BaseFragment {
         messageListAdapter = new MessageListAdapter(R.layout.item_messagelist, mDatas);
         messageListAdapter.openLoadAnimation();//默认为渐显效果
         recyclerView.setAdapter(messageListAdapter);
+
+        messageListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
     }
 
     private void getNet() {
@@ -165,6 +174,7 @@ public class BottomXiaoXiFragment extends BaseFragment {
         map.put("code", "04341");
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(getActivity()).getAppToken());
+
 
         Gson gson = new Gson();
         OkGo.<AppResponse<MessageModel.DataBean>>post(Urls.WORKER)
