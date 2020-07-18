@@ -102,10 +102,15 @@ public class LoginActivity extends BaseActivity {
     private void init() {
         req_type = "1";
         timeCount = new TimeCount(60000, 1000, tv_yzm);
-        ed_phone.setText("18249030297");
-//        ed_phone.setText("15244772616");
-        ed_pwd.setText("123456");
-//        ed_pwd.setText("15244772616");
+        ed_phone.setText("13351102680");
+        ed_pwd.setText("13351102680");
+
+        //        ed_phone.setText("18249030297");
+        //        ed_pwd.setText("123456");
+
+
+        //        ed_phone.setText("15244772616");
+        //        ed_pwd.setText("15244772616");
 
 
         doubleClick = new DoubleClickExitHelper(this);
@@ -172,6 +177,7 @@ public class LoginActivity extends BaseActivity {
         if (TextUtils.isEmpty(ed_phone.getText().toString())) {
             Y.t("请输入手机号码");
         } else {
+            showProgressDialog();
             Map<String, String> map = new HashMap<>();
             map.put("code", Urls.code_00001);
             map.put("key", Urls.KEY);
@@ -197,6 +203,12 @@ public class LoginActivity extends BaseActivity {
                             Y.t(response.getException().getMessage());
                             timeCount.cancel();
                             timeCount.onFinish();
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            super.onFinish();
+                            dismissProgressDialog();
                         }
                     });
         }

@@ -16,13 +16,22 @@
 package com.shendeng.agent.callback;
 
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 
 import com.google.gson.stream.JsonReader;
 import com.lzy.okgo.convert.Converter;
+import com.shendeng.agent.app.App;
+import com.shendeng.agent.app.AppManager;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.SimpleResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.TishiDialog;
+import com.shendeng.agent.ui.activity.LoginActivity;
+import com.shendeng.agent.ui.activity.SettingActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -40,6 +49,7 @@ public class JsonConvert<T> implements Converter<T> {
     private Class<T> clazz;
 
     public JsonConvert() {
+
     }
 
     public JsonConvert(Type type) {
@@ -143,8 +153,7 @@ public class JsonConvert<T> implements Converter<T> {
                     //noinspection unchecked
                     return (T) appResponse;
                 } else if (msg_code.equals("0003")) {
-//                    MyApplication.getAppContext().startActivity(new Intent( MyApplication.getAppContext(), LoginActivity.class));
-//                    UserManager.getManager(MyApplication.getAppContext()).removeUser();
+                    loginOut();
                     throw new IllegalStateException(appResponse.msg);
                 } else {
                     //直接将服务端的错误信息抛出，onError中可以获取
@@ -152,5 +161,37 @@ public class JsonConvert<T> implements Converter<T> {
                 }
             }
         }
+    }
+
+    private void loginOut() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                Looper.prepare();//增加部分
+
+                TishiDialog dialog = new TishiDialog(AppManager.getAppManager().currentActivity(), new TishiDialog.TishiDialogListener() {
+                    @Override
+                    public void onClickCancel(View v, TishiDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onClickConfirm(View v, TishiDialog dialog) {
+
+                    }
+
+                    @Override
+                    public void onDismiss(TishiDialog dialog) {
+                        AppManager.getAppManager().currentActivity().startActivity(new Intent(AppManager.getAppManager().currentActivity(), LoginActivity.class));
+                        UserManager.getManager(AppManager.getAppManager().currentActivity()).removeUser();
+                    }
+                });
+                dialog.setTextCont("您的登录信息已失效，请重新登录");
+                dialog.setTextCancel("");
+                dialog.show();
+                Looper.loop();//增
+            }
+        }).start();
     }
 }

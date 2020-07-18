@@ -16,6 +16,8 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.OrderDetailsModel;
+import com.shendeng.agent.model.WxBangModel;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
@@ -60,8 +62,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp baseResp) {
         // TODO: 2020/6/24 获取code 后，传递给后台，提现的时候 自动提现
         SendAuth.Resp resp = (SendAuth.Resp) baseResp;
-
-
         wx_type = PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppCode.WX_TYPE, "");
         if (TextUtils.isEmpty(resp.code)) {
             shibai("微信授权被拒");
@@ -99,19 +99,18 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         map.put("sms_id", PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppCode.SMS_ID, ""));
         map.put("sms_code", PreferenceHelper.getInstance(WXEntryActivity.this).getString(AppCode.SMS_CODE, ""));
         Gson gson = new Gson();
-        OkGo.<AppResponse>post(Urls.WORKER)
+        OkGo.<AppResponse<WxBangModel.DataBean>>post(Urls.WORKER)
                 .tag(WXEntryActivity.this)//
                 .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse>() {
+                .execute(new JsonCallback<AppResponse<WxBangModel.DataBean>>() {
                     @Override
-                    public void onSuccess(Response<AppResponse> response) {
-
-                        String msg_code = response.body().msg_code;
+                    public void onSuccess(Response<AppResponse<WxBangModel.DataBean>> response) {
+                        String msg_code = response.body().msg;
                         String msg = response.body().msg;
                         if (msg_code.equals("0000")) {
                             if (wx_type.equals("1")) {
                                 UserManager.getManager(WXEntryActivity.this).setWx_pay_check("1");
-                                UserManager.getManager(WXEntryActivity.this).setWx_user_name("1");
+                                UserManager.getManager(WXEntryActivity.this).setWx_user_name(response.body().data.get(0).getWx_store_user_name());
                                 Notice n = new Notice();
                                 n.type = ConstanceValue.WX_SET_S;
                                 RxBus.getDefault().sendRx(n);
@@ -128,7 +127,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     }
 
                     @Override
-                    public void onError(Response<AppResponse> response) {
+                    public void onError(Response<AppResponse<WxBangModel.DataBean>> response) {
                         super.onError(response);
                         shibai(response.message());
                     }
