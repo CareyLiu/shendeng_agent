@@ -374,6 +374,7 @@
                                 android:src="@mipmap/mine_icon_change" />
 
                             <TextView
+                                android:id="@+id/tv_change_moshi"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="点击切换到至团购商家模式"
