@@ -63,7 +63,7 @@ public class OrderKuaidiActivity extends BaseActivity {
     public static void actionStart(Context context, String form_money_go, String shop_form_id) {
         Intent intent = new Intent();
         intent.setClass(context, OrderKuaidiActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("form_money_go", form_money_go);
         intent.putExtra("shop_form_id", shop_form_id);
         context.startActivity(intent);

@@ -64,7 +64,7 @@ public class WodeMingxiDetailsActivity extends BaseActivity {
     public static void actionStart(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, WodeMingxiDetailsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Bundle bundle = new Bundle();
         intent.putExtras(bundle);
         context.startActivity(intent);

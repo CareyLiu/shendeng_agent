@@ -12,4 +12,8 @@ public interface ConstanceValue {
     int WX_JIECHU_S = 0x10102;//微信绑定解除成功
     int WX_JIECHU_F = 0x10103;//微信绑定解除失败
 
+
+    int shangpin_edit_finish = 0x10110;
+
+
 }

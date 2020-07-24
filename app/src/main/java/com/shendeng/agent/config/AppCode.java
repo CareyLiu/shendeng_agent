@@ -22,5 +22,6 @@ public class AppCode {
 
     public static final int CAMERA_PERMISSIONS_REQUEST_CODE = 0x01;//相机权限
     public static final int STORAGE_PERMISSIONS_REQUEST_CODE = 0x02;//相册权限
+    public static final int REQUEST_CROP_PHOTO = 0x03;//剪切
 
 }

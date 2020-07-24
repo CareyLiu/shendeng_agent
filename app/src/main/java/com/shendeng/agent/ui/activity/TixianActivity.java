@@ -98,7 +98,7 @@ public class TixianActivity extends BaseActivity {
     public static void actionStart(Context context, String weiXinOrZhiFuBao, String money_use, String zuidiMoney, String shouxufei) {
         Intent intent = new Intent();
         intent.setClass(context, TixianActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("weiXinOrZhiFuBao", weiXinOrZhiFuBao);
         intent.putExtra("money_use", money_use);
         intent.putExtra("zuidiMoney", zuidiMoney);
