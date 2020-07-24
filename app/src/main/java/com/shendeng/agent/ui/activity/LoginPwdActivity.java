@@ -67,7 +67,7 @@ public class LoginPwdActivity extends BaseActivity {
     public static void actionStart(Context context, String mod_id) {
         Intent intent = new Intent();
         intent.setClass(context, LoginPwdActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("mod_id", mod_id);
         context.startActivity(intent);
     }

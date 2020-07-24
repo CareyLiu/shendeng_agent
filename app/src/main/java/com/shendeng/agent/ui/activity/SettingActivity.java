@@ -64,7 +64,7 @@ public class SettingActivity extends BaseActivity {
     public static void actionStart(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, SettingActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 

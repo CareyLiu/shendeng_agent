@@ -98,7 +98,7 @@ public class OrderPingjiaActivity extends BaseActivity {
     public static void actionStart(Context context, String shop_form_id) {
         Intent intent = new Intent();
         intent.setClass(context, OrderPingjiaActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("shop_form_id", shop_form_id);
         context.startActivity(intent);
     }

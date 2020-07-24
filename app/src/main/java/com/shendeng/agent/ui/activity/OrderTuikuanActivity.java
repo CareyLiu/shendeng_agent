@@ -132,7 +132,7 @@ public class OrderTuikuanActivity extends BaseActivity {
     public static void actionStart(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, OrderTuikuanActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
@@ -142,7 +142,7 @@ public class OrderTuikuanActivity extends BaseActivity {
     public static void actionStart(Context context, String shop_form_id) {
         Intent intent = new Intent();
         intent.setClass(context, OrderTuikuanActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("shop_form_id", shop_form_id);
         context.startActivity(intent);
     }
@@ -242,7 +242,6 @@ public class OrderTuikuanActivity extends BaseActivity {
                                 bt2.setVisibility(View.GONE);
                             }
 
-
                             qiu2.setBackgroundResource(R.drawable.order_qiu_s);
                             qiu3.setBackgroundResource(R.drawable.order_qiu_s);
                             line1.setBackgroundColor(Y.getColor(R.color.order_red));
@@ -282,7 +281,6 @@ public class OrderTuikuanActivity extends BaseActivity {
                         tv_title_name.setText(dataBean.getShop_product_title());
                         tv_num.setText(dataBean.getProduct_title());
                         tv_money.setText("¥" + dataBean.getPay_money());
-
 
                         order_info_arr = dataBean.getOrder_info_arr();
                         adapter.setNewData(order_info_arr);

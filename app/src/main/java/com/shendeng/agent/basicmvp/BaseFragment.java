@@ -22,6 +22,7 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
     protected CompositeSubscription _subscriptions = new CompositeSubscription();
 
     protected Gloading.Holder mHolder;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -67,7 +68,6 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
     }
 
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -105,6 +105,10 @@ public abstract class BaseFragment<T extends BasicPresenter, E extends BasicMode
         if (!lordingDialog.isShowing()) {
             lordingDialog.show();
         }
+    }
+
+    public void showProgressDialog() {
+        showProgressDialog("");
     }
 
     public void dismissProgressDialog() {

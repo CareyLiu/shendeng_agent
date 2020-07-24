@@ -21,8 +21,7 @@
                 <com.youth.banner.Banner
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
-                    android:layout_height="360dp"
-                    android:background="@color/black" />
+                    android:layout_height="360dp" />
 
                 <TextView
                     android:id="@+id/tv_title_name"
@@ -32,17 +31,16 @@
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:padding="14dp"
-                    android:text="FIN体育 Pharrell x NERD x Adidas NMD Human Race Trail EF2682菲董联名黄色初代跑鞋"
                     android:textColor="@color/black"
                     android:textSize="13sp"
                     android:textStyle="bold" />
-
 
                 <LinearLayout
                     android:id="@+id/ll_taocan"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -123,7 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="50dp"
+                    android:layout_marginBottom="81dp"
                     android:background="@color/white"
                     android:gravity="center_vertical"
                     android:paddingLeft="14dp"
@@ -149,7 +147,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="71dp"
             android:layout_gravity="bottom"
             android:background="@color/bg"
             android:gravity="right"
@@ -185,6 +183,7 @@
                 android:layout_width="72dp"
                 android:layout_height="31dp"
                 android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
                 android:background="@drawable/bt_radius8_s"
                 android:gravity="center"
                 android:text="删除"

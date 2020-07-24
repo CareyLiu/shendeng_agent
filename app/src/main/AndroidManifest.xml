@@ -118,6 +118,49 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
+
+        <!--    商品详情    -->
+        <activity
+            android:name=".ui.activity.ShangpinDetailsActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!--    添加商品    -->
+        <activity
+            android:name=".ui.activity.ShangpinAddActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!--    编辑商品    -->
+        <activity
+            android:name=".ui.activity.ShangpinEditActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!--    子套餐详情    -->
+        <activity
+            android:name=".ui.activity.ShangpinZiAddActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!--    商品封面    -->
+        <activity
+            android:name=".ui.activity.ShangpinFenmianActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!--图片剪裁-->
+        <activity
+            android:name=".ui.activity.headimage.ClipImageActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
         <!--    设置    -->
         <activity
             android:name=".ui.activity.SettingActivity"
@@ -185,6 +228,7 @@
         <activity
             android:name=".ui.activity.AboutActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
+            android:launchMode="standard"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 

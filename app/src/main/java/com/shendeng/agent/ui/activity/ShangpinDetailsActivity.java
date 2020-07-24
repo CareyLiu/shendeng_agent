@@ -1,0 +1,353 @@
+package com.shendeng.agent.ui.activity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
+import com.shendeng.agent.R;
+import com.shendeng.agent.adapter.ShangpinDetailsZiAdapter;
+import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.app.ConstanceValue;
+import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.ShangpinDetailsModel;
+import com.shendeng.agent.util.FullyLinearLayoutManager;
+import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
+import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+
+public class ShangpinDetailsActivity extends BaseActivity {
+
+    @BindView(R.id.banner)
+    Banner banner;
+    @BindView(R.id.tv_title_name)
+    TextView tv_title_name;
+    @BindView(R.id.rv_taocan)
+    RecyclerView rv_taocan;
+    @BindView(R.id.ll_xianshiquanbu)
+    LinearLayout ll_xianshiquanbu;
+    @BindView(R.id.ll_taocan)
+    LinearLayout ll_taocan;
+    @BindView(R.id.ll_tuwen_details)
+    LinearLayout ll_tuwen_details;
+    @BindView(R.id.ll_pingjia)
+    LinearLayout ll_pingjia;
+    @BindView(R.id.bt_edit)
+    TextView bt_edit;
+    @BindView(R.id.bt_add)
+    TextView bt_add;
+    @BindView(R.id.bt_delete)
+    TextView bt_delete;
+
+    private String wares_id;
+    private ShangpinDetailsModel.DataBean dataBean;
+    private List<ShangpinDetailsModel.DataBean.PackageListBean> package_list = new ArrayList<>();
+    private List<ShangpinDetailsModel.DataBean.PackageListBean> package_list_use = new ArrayList<>();
+    private ShangpinDetailsZiAdapter ziAdapter;
+
+    @Override
+    public int getContentViewResId() {
+        return R.layout.act_shangpin_details;
+    }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
+
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setText("商品详情");
+        tv_rightTitle.setText("保存");
+        tv_rightTitle.setTextSize(17);
+        tv_rightTitle.setTextColor(this.getResources().getColor(R.color.color_494949));
+        tv_rightTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        tv_rightTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+    }
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     */
+    public static void actionStart(Context context, String wares_id) {
+        Intent intent = new Intent();
+        intent.setClass(context, ShangpinDetailsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("wares_id", wares_id);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        init();
+    }
+
+    private void init() {
+        wares_id = getIntent().getStringExtra("wares_id");
+        initAdapter();
+        initHuidiao();
+
+        showProgressDialog();
+        getNet();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.shangpin_edit_finish) {
+                    Y.t("商品啊啊啊");
+                    getNet();
+                }
+            }
+        }));
+    }
+
+    private void initAdapter() {
+        ziAdapter = new ShangpinDetailsZiAdapter(R.layout.item_shangpin_details_zi, package_list_use);
+        rv_taocan.setLayoutManager(new FullyLinearLayoutManager(mContext));
+        rv_taocan.setNestedScrollingEnabled(false);
+        rv_taocan.setFocusable(false);
+        rv_taocan.setAdapter(ziAdapter);
+        ziAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (package_list_use != null && package_list_use.size() > position) {
+                    ShangpinDetailsModel.DataBean.PackageListBean bean = package_list_use.get(position);
+                    actionStart(dataBean.getWares_id(), bean);
+                }
+            }
+        });
+    }
+
+    private void actionStart(String wares_id, ShangpinDetailsModel.DataBean.PackageListBean packageListBean) {
+        Intent intent = new Intent();
+        intent.setClass(this, ShangpinZiAddActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("wares_id", wares_id);
+        intent.putExtra("packageListBean", packageListBean);
+        startActivityForResult(intent, 100);
+    }
+
+    private void getNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04322);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("wares_id", wares_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ShangpinDetailsModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        dataBean = response.body().data.get(0);
+                        dataBean.setWares_id(wares_id);
+                        initView();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+                });
+    }
+
+    private void initView() {
+        tv_title_name.setText(dataBean.getShop_product_title());
+        package_list = dataBean.getPackage_list();
+        package_list_use.clear();
+        if (package_list.size() > 0 && package_list.size() < 3) {
+            ll_taocan.setVisibility(View.VISIBLE);
+            ll_xianshiquanbu.setVisibility(View.GONE);
+            for (int i = 0; i < package_list.size(); i++) {
+                package_list_use.add(package_list.get(i));
+            }
+        } else if (package_list.size() >= 3) {
+            ll_xianshiquanbu.setVisibility(View.VISIBLE);
+            for (int i = 0; i < 2; i++) {
+                package_list_use.add(package_list.get(i));
+            }
+        } else {
+            ll_taocan.setVisibility(View.GONE);
+        }
+
+        ziAdapter.setNewData(package_list_use);
+        ziAdapter.notifyDataSetChanged();
+
+
+        if (dataBean.getWares_state().equals("1")) {//商品状态 1.上架中  2.下架中
+            bt_add.setText("下架");
+        } else {
+            bt_add.setText("上架");
+        }
+
+        initBanner();
+    }
+
+    @OnClick({R.id.ll_xianshiquanbu, R.id.ll_tuwen_details, R.id.ll_pingjia, R.id.bt_edit, R.id.bt_add, R.id.bt_delete})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_xianshiquanbu:
+                break;
+            case R.id.ll_tuwen_details:
+                break;
+            case R.id.ll_pingjia:
+                break;
+            case R.id.bt_edit:
+                cliickEdit();
+                break;
+            case R.id.bt_add:
+                clickAdd();
+                break;
+            case R.id.bt_delete:
+                setStates("3");
+                break;
+        }
+    }
+
+    private void clickAdd() {
+        String text = bt_add.getText().toString();
+        if (text.equals("上架")) {
+            setStates("2");
+        } else {
+            setStates("1");
+        }
+    }
+
+    private void setStates(String type) {//商品：下架传1 上架传2  删除传3
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04323);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("wares_id", dataBean.getWares_id());
+        map.put("dif_type", "1");
+        map.put("type", type);//商品：下架传1 上架传2  删除传3
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ShangpinDetailsModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        if (type.equals("3")) {
+                            Y.t("删除成功");
+                            finish();
+                        } else {
+                            Y.t("修改成功");
+                            String text = bt_add.getText().toString();
+                            if (text.equals("上架")) {
+                                bt_add.setText("下架");
+                            } else {
+                                bt_add.setText("上架");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<ShangpinDetailsModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+                });
+    }
+
+    private void cliickEdit() {
+        ShangpinEditActivity.actionStart(mContext, dataBean);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == 200) {
+            getNet();
+        }
+    }
+
+
+    private void initBanner() {//初始化banner
+        List<ShangpinDetailsModel.DataBean.ImgListBean> img_list = dataBean.getImg_list();
+        if (img_list != null && img_list.size() > 0) {
+            MyImageLoader mMyImageLoader = new MyImageLoader();
+            banner.setImageLoader(mMyImageLoader);
+            //  initMagicIndicator1(tagList);
+            List<String> imagePath = new ArrayList<>();
+            for (int i = 0; i < img_list.size(); i++) {
+                imagePath.add(img_list.get(i).getImg_url());
+            }
+            banner.setImages(imagePath);
+            //设置图片加载地址
+
+            banner.setOnBannerListener(new OnBannerListener() {
+                @Override
+                public void OnBannerClick(int position) {
+//                    clickDanan(BaziCode.ST_mingpan);
+                }
+            });
+            banner.start();
+        }
+    }
+
+    /**
+     * 图片加载类
+     */
+    private class MyImageLoader extends ImageLoader {
+        @Override
+        public void displayImage(Context context, Object path, ImageView imageView) {
+            Glide.with(context.getApplicationContext())
+                    .load(path)
+                    .into(imageView);
+        }
+    }
+}
