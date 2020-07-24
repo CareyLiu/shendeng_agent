@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -32,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/rl_title" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srL_smart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
@@ -56,6 +58,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <RelativeLayout
+                    android:id="@+id/rl_shumayanzheng"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -95,6 +98,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_saomayanzheng"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -251,7 +255,7 @@
                             android:id="@+id/tv_jinqitian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="19dp"
+                            android:paddingHorizontal="6.5dp"
                             android:includeFontPadding="false"
                             android:text="近7天"
                             android:textColor="#ffffffff"
@@ -277,7 +281,7 @@
                             android:id="@+id/tv_zuotian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="13dp"
+              android:paddingHorizontal="6.5dp"
                             android:includeFontPadding="false"
                             android:text="昨天"
                             android:textColor="#ffffffff"
@@ -303,7 +307,7 @@
                             android:id="@+id/tv_jintian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="13dp"
+                            android:paddingHorizontal="6.5dp"
                             android:includeFontPadding="false"
                             android:text="今天"
                             android:textColor="#ffffffff"
@@ -364,6 +368,7 @@
                                 app:layout_constraintRight_toRightOf="parent" />
 
                             <TextView
+                                android:layout_marginTop="3dp"
                                 android:layout_width="54dp"
                                 android:layout_height="19dp"
                                 android:layout_gravity="center_horizontal"
@@ -402,6 +407,7 @@
                                 app:layout_constraintRight_toRightOf="parent" />
 
                             <TextView
+                                android:layout_marginTop="3dp"
                                 android:layout_width="54dp"
                                 android:layout_height="19dp"
                                 android:layout_gravity="center_horizontal"
@@ -469,7 +475,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="13dp"
-                    android:src="@mipmap/sd_push_grey"
+                    android:src="@mipmap/sjd_icon_arrow_gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -551,12 +557,20 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:layout_marginHorizontal="14dp"
+                app:layout_constraintTop_toBottomOf="@+id/cl_tuangou"
+                android:id="@+id/view"
+                android:background="#eeeeee"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"/>
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_maidan"
                 android:layout_width="match_parent"
                 android:layout_height="65dp"
                 android:layout_marginHorizontal="14dp"
                 android:background="@color/white"
-                app:layout_constraintTop_toBottomOf="@+id/cl_tuangou">
+                app:layout_constraintTop_toBottomOf="@+id/view">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
@@ -599,7 +613,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="13dp"
-                    android:src="@mipmap/sd_push_grey"
+                    android:src="@mipmap/sjd_icon_arrow_gray"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

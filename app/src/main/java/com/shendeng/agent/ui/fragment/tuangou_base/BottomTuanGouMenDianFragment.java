@@ -4,20 +4,43 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.ui.fragment.mendian.MenDianFragment1;
+import com.shendeng.agent.ui.fragment.mendian.MenDianFragment2;
+import com.shendeng.agent.ui.fragment.mendian.MyFragmentPagerAdapter;
+import com.shendeng.agent.ui.widget.MenDianViewPager;
+import com.shendeng.agent.util.UIHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class BottomTuanGouMenDianFragment extends BaseFragment {
     public static final String TAG = "BottomShangPinFragment";
+    @BindView(R.id.tv_mendian_guanli)
+    TextView tvMendianGuanli;
+    @BindView(R.id.view_mendianguanli_line)
+    View viewMendianguanliLine;
+    @BindView(R.id.tv_pingjia_xiangqing)
+    TextView tvPingjiaXiangqing;
+    @BindView(R.id.view_pingjiaxiangqing_line)
+    View viewPingjiaxiangqingLine;
+    @BindView(R.id.vp_viewpager)
+    MenDianViewPager vpViewpager;
+    List<Fragment> aList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +62,7 @@ public class BottomTuanGouMenDianFragment extends BaseFragment {
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.frag_mian_shangpin;
+        return R.layout.frag_mian_mendian;
     }
 
     @Override
@@ -49,6 +72,36 @@ public class BottomTuanGouMenDianFragment extends BaseFragment {
     @Override
     protected void initLogic() {
 
+        tvMendianGuanli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewMendianguanliLine.setVisibility(View.VISIBLE);
+                viewPingjiaxiangqingLine.setVisibility(View.GONE);
+
+                UIHelper.ToastMessage(getActivity(), "点击了门店管理");
+                vpViewpager.setCurrentItem(0);
+            }
+        });
+
+        tvPingjiaXiangqing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewMendianguanliLine.setVisibility(View.GONE);
+                viewPingjiaxiangqingLine.setVisibility(View.VISIBLE);
+
+                UIHelper.ToastMessage(getActivity(), "点击了评价详情");
+                vpViewpager.setCurrentItem(1);
+            }
+        });
+
+
+        aList = new ArrayList<Fragment>(); //new一个List<Fragment>
+        aList.add(new MenDianFragment1());
+        aList.add(new MenDianFragment2());
+
+        MyFragmentPagerAdapter mAdapter = new MyFragmentPagerAdapter(getFragmentManager(), aList);
+        vpViewpager.setAdapter(mAdapter);
+        vpViewpager.setCurrentItem(0);
     }
 
     @Override

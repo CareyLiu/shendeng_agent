@@ -309,6 +309,9 @@ public class BottomWoDeFragment extends BaseFragment {
 //                }, 5000);//3秒后执行Runnable中的run方法
 
                 HomeBasicTuanGouActivity.actionStart(getActivity());
+
+//                DisplayNextView displayNextView = new DisplayNextView(getActivity(), Constants.KEY_SECOND_CLOCKWISE);
+//                displayNextView.doSomethingOnEnd(Constants.KEY_FIRST_INVERSE);
                 break;
             case R.id.iv_set:
                 SettingActivity.actionStart(getContext());

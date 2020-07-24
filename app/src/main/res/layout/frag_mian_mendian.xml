@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="42dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_mendian_guanli"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="3dp"
+                    android:text="门店管理"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <View
+                    android:id="@+id/view_mendianguanli_line"
+
+                    android:layout_width="58dp"
+                    android:layout_height="3dp"
+                    android:background="@drawable/red_line"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_mendian_guanli"
+                    app:layout_constraintRight_toRightOf="@+id/tv_mendian_guanli"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_mendian_guanli" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="21dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_pingjia_xiangqing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:includeFontPadding="false"
+                    android:paddingBottom="3dp"
+                    android:text="评价详情"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view_pingjiaxiangqing_line"
+                    android:layout_width="58dp"
+                    android:layout_height="3dp"
+                    android:background="@drawable/red_line"
+                    android:visibility="gone"
+                    app:layout_constraintLeft_toLeftOf="@+id/tv_pingjia_xiangqing"
+                    app:layout_constraintRight_toRightOf="@+id/tv_pingjia_xiangqing"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_pingjia_xiangqing" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#cccccc" />
+
+
+    <com.shendeng.agent.ui.widget.MenDianViewPager
+        android:id="@+id/vp_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.shendeng.agent.ui.widget.MenDianViewPager>
+
+</LinearLayout>

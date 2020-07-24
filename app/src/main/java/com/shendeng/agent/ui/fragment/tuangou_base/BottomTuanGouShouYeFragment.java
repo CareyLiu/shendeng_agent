@@ -3,8 +3,6 @@ package com.shendeng.agent.ui.fragment.tuangou_base;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,38 +10,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.gyf.barlibrary.ImmersionBar;
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.ui.activity.OrderSaoyisaoActivity;
+import com.shendeng.agent.ui.activity.tuangou.HandAddActivity;
+import com.shendeng.agent.ui.activity.tuangou.TuanGouSaoMaActivity;
 import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Y;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
-import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.reactivex.ObservableSource;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
-import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-import rx.functions.Func2;
-import rx.schedulers.Schedulers;
-
-import static android.content.ContentValues.TAG;
 
 public class BottomTuanGouShouYeFragment extends BaseFragment {
 
@@ -121,6 +108,14 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
     boolean zuotian;//昨天
     boolean jinqitian;//近七天
     private final CompositeDisposable disposables = new CompositeDisposable();
+    @BindView(R.id.rl_shumayanzheng)
+    RelativeLayout rlShumayanzheng;
+    @BindView(R.id.cl_maidan)
+    ConstraintLayout clMaidan;
+    @BindView(R.id.rl_saomayanzheng)
+    RelativeLayout rlSaomayanzheng;
+    @BindView(R.id.srL_smart)
+    SmartRefreshLayout srLSmart;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -161,6 +156,7 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
+                UIHelper.ToastMessage(getActivity(), "点击了近七天");
                 viewJinqitianLine.setVisibility(View.VISIBLE);
                 viewJintianLine.setVisibility(View.GONE);
                 viewZuotianLine.setVisibility(View.GONE);
@@ -170,21 +166,53 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
         tvJintian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UIHelper.ToastMessage(getActivity(), "点击了今天");
                 viewJinqitianLine.setVisibility(View.GONE);
                 viewJintianLine.setVisibility(View.VISIBLE);
                 viewZuotianLine.setVisibility(View.GONE);
             }
         });
 
+
         tvZuotian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UIHelper.ToastMessage(getActivity(), "点击了昨天");
                 viewJinqitianLine.setVisibility(View.GONE);
                 viewJintianLine.setVisibility(View.GONE);
                 viewZuotianLine.setVisibility(View.VISIBLE);
             }
         });
 
+        rlShumayanzheng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HandAddActivity.actionStart(getActivity());
+            }
+        });
+
+        clTuangou.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.ToastMessage(getActivity(), "团购");
+            }
+        });
+
+        clMaidan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.ToastMessage(getActivity(), "买单");
+            }
+        });
+
+        rlSaomayanzheng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TuanGouSaoMaActivity.actionStart(getActivity());
+            }
+        });
+
+        srLSmart.setEnableLoadMore(false);
     }
 
 
