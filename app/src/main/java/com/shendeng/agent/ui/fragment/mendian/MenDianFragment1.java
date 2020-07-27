@@ -14,7 +14,9 @@ import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.TaoCanGuanLiAdapter;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.model.JiesuanModel;
+import com.shendeng.agent.ui.activity.tuangou.AddTaoCanActivity;
 import com.shendeng.agent.ui.activity.tuangou.TaoCanGuanLiActivity;
+import com.shendeng.agent.ui.activity.tuangou.TaoCanGuanLi_HomeActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +125,9 @@ public class MenDianFragment1 extends BaseFragment {
         taocanBianji.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TaoCanGuanLiActivity.actionStart(getActivity());
+                //TaoCanGuanLiActivity.actionStart(getActivity());
+                //AddTaoCanActivity.actionStart(getActivity(),"1");
+                TaoCanGuanLi_HomeActivity.actionStart(getActivity());
             }
         });
 
