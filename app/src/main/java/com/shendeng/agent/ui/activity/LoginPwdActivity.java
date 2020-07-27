@@ -20,6 +20,7 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.MingxiDetailsModel;
 import com.shendeng.agent.ui.widget.DoubleClickExitHelper;
 import com.shendeng.agent.util.Urls;
@@ -136,8 +137,13 @@ public class LoginPwdActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<MingxiDetailsModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<MingxiDetailsModel.DataBean>> response) {
-                        Y.t("修改成功");
-                        finish();
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(LoginPwdActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                            @Override
+                            public void onDismiss() {
+                                finish();
+                            }
+                        });
+                        dialog.show();
                     }
 
                     @Override

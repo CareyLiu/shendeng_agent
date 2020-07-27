@@ -29,10 +29,11 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.InputDialog;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.ChandiModel;
 import com.shendeng.agent.model.LeimuModel;
 import com.shendeng.agent.model.ShangpinDetailsModel;
-import com.shendeng.agent.util.FullyLinearLayoutManager;
+import com.shendeng.agent.ui.activity.sample.ImageShowActivity;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
@@ -42,11 +43,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class ShangpinEditActivity extends BaseActivity {
 
@@ -171,11 +174,23 @@ public class ShangpinEditActivity extends BaseActivity {
         wares_id = detailsModel.getWares_id();
         initAdapter();
         initView();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.shangpin_edit_use) {
+                    getNet();
+                }
+            }
+        }));
     }
 
     private void initAdapter() {
         ziAdapter = new ShangpinZiAdapter(R.layout.item_shangpin_zi, package_list);
-        rv_add_shangpinhao.setLayoutManager(new FullyLinearLayoutManager(mContext));
+        rv_add_shangpinhao.setLayoutManager(new LinearLayoutManager(mContext));
         rv_add_shangpinhao.setNestedScrollingEnabled(false);
         rv_add_shangpinhao.setFocusable(false);
         rv_add_shangpinhao.setAdapter(ziAdapter);
@@ -191,7 +206,9 @@ public class ShangpinEditActivity extends BaseActivity {
                         if (TextUtils.isEmpty(index_photo_url)) {
                             actionStart(detailsModel.getWares_id(), packageListBean);
                         } else {
-                            Y.t("显示图片");
+                            ArrayList<String> imgs = new ArrayList<>();
+                            imgs.add(index_photo_url);
+                            ImageShowActivity.actionStart(mContext, imgs);
                         }
                     }
                 }
@@ -206,7 +223,8 @@ public class ShangpinEditActivity extends BaseActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("wares_id", wares_id);
         intent.putExtra("packageListBean", packageListBean);
-        startActivityForResult(intent, 100);
+        intent.putExtra("isEdit", true);
+        startActivity(intent);
     }
 
     private void initView() {
@@ -466,6 +484,7 @@ public class ShangpinEditActivity extends BaseActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("wares_id", wares_id);
         intent.putExtra("url", detailsModel.getWares_photo_url());
+        intent.putExtra("isEdit", true);
         startActivityForResult(intent, 100);
     }
 
@@ -494,13 +513,15 @@ public class ShangpinEditActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
-                        Y.t("修改成功");
                         String text = bt_ok.getText().toString();
                         if (text.equals("上架销售")) {
                             bt_ok.setText("放入仓库");
                         } else {
                             bt_ok.setText("上架销售");
                         }
+
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(ShangpinEditActivity.this);
+                        dialog.show();
                     }
 
                     @Override
@@ -662,7 +683,8 @@ public class ShangpinEditActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
-                        Y.t("修改成功");
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(ShangpinEditActivity.this);
+                        dialog.show();
                     }
 
                     @Override
@@ -690,14 +712,6 @@ public class ShangpinEditActivity extends BaseActivity {
                 });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == 200) {
-            getNet();
-        }
-    }
-
     private void getNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", Urls.code_04322);
@@ -711,6 +725,7 @@ public class ShangpinEditActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        Y.e("克劳福德静电纺丝李开复所发生的唠嗑的见风使舵");
                         detailsModel = response.body().data.get(0);
                         detailsModel.setWares_id(wares_id);
                         initView();
@@ -727,7 +742,7 @@ public class ShangpinEditActivity extends BaseActivity {
 
     private void back() {
         Notice n = new Notice();
-        n.type = ConstanceValue.shangpin_edit_finish;
+        n.type = ConstanceValue.shangpin_details_use;
         RxBus.getDefault().sendRx(n);
         finish();
     }

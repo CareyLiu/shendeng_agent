@@ -19,6 +19,7 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.TishiDialog;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.PingjiaModel;
 import com.shendeng.agent.util.TimeUtils;
 import com.shendeng.agent.util.Urls;
@@ -116,8 +117,13 @@ public class OrderKuaidiActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<PingjiaModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<PingjiaModel.DataBean>> response) {
-                        Y.t("修改成功");
-                        finish();
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(OrderKuaidiActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                            @Override
+                            public void onDismiss() {
+                                finish();
+                            }
+                        });
+                        dialog.show();
                     }
 
                     @Override
