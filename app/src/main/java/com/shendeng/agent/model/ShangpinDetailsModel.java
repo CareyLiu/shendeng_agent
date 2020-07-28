@@ -76,7 +76,7 @@ public class ShangpinDetailsModel implements Serializable {
         private String wares_detail;
         private String wares_state;
         private String wares_id;
-        private List<?> imgText_list;
+        private List<ImgTextListBeen> imgText_list;
         private List<ImgListBean> img_list;
         private List<PackageListBean> package_list;
 
@@ -168,11 +168,11 @@ public class ShangpinDetailsModel implements Serializable {
             this.wares_state = wares_state;
         }
 
-        public List<?> getImgText_list() {
+        public List<ImgTextListBeen> getImgText_list() {
             return imgText_list;
         }
 
-        public void setImgText_list(List<?> imgText_list) {
+        public void setImgText_list(List<ImgTextListBeen> imgText_list) {
             this.imgText_list = imgText_list;
         }
 
@@ -192,7 +192,7 @@ public class ShangpinDetailsModel implements Serializable {
             this.package_list = package_list;
         }
 
-        public static class ImgListBean {
+        public static class ImgListBean implements Serializable{
             /**
              * wares_img_id : 323
              * img_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9928
@@ -228,7 +228,54 @@ public class ShangpinDetailsModel implements Serializable {
             }
         }
 
-        public static class PackageListBean  implements Serializable  {
+        public static class ImgTextListBeen implements Serializable{
+
+            /**
+             * img_width : 800
+             * wares_detail_img_id : 156
+             * img_url : https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=11522
+             * img_height : 800
+             */
+
+            private String img_width;
+            private String wares_detail_img_id;
+            private String img_url;
+            private String img_height;
+
+            public String getImg_width() {
+                return img_width;
+            }
+
+            public void setImg_width(String img_width) {
+                this.img_width = img_width;
+            }
+
+            public String getWares_detail_img_id() {
+                return wares_detail_img_id;
+            }
+
+            public void setWares_detail_img_id(String wares_detail_img_id) {
+                this.wares_detail_img_id = wares_detail_img_id;
+            }
+
+            public String getImg_url() {
+                return img_url;
+            }
+
+            public void setImg_url(String img_url) {
+                this.img_url = img_url;
+            }
+
+            public String getImg_height() {
+                return img_height;
+            }
+
+            public void setImg_height(String img_height) {
+                this.img_height = img_height;
+            }
+        }
+
+        public static class PackageListBean implements Serializable {
             /**
              * lock_count : 0
              * index_show : 2

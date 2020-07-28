@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.shendeng.agent.R;
+import com.shendeng.agent.util.Y;
 
 import androidx.annotation.NonNull;
 
@@ -25,6 +26,7 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
         this.str2 = str2;
         this.strCenter = strCenter;
         this.listener = listener;
+        init();
     }
 
     public MyCarCaoZuoDialog_CaoZuoTIshi(@NonNull Context context, String str1, String str2, String strLft, String strRight, OnDialogItemClickListener listener) {
@@ -35,18 +37,17 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
         this.strLft = strLft;
         this.strRight = strRight;
         this.listener = listener;
+        init();
     }
 
     public MyCarCaoZuoDialog_CaoZuoTIshi(@NonNull Context context, OnDialogItemClickListener listener) {
         super(context, R.style.turntable_dialog);
         this.context = context;
         this.listener = listener;
+        init();
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    private void init() {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         theView = inflater.inflate(R.layout.dialog_caozuo_caozuo_tishi, null);
         tvCaozuocheng = theView.findViewById(R.id.tv_caozuochegngong);
@@ -114,4 +115,11 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
     }
 
 
+    public void setTextContent(String text) {
+        tvCaoZuoChengGongHuaShu.setText(text);
+    }
+
+    public void setTitle(String text) {
+        tvCaozuocheng.setText(text);
+    }
 }

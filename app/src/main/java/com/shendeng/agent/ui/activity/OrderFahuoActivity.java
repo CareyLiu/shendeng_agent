@@ -1,6 +1,7 @@
 package com.shendeng.agent.ui.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -22,6 +23,8 @@ import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.app.ConstanceValue;
+import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
@@ -44,6 +47,7 @@ import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
 public class OrderFahuoActivity extends BaseActivity {
@@ -140,6 +144,19 @@ public class OrderFahuoActivity extends BaseActivity {
 
         getDetails();
         getWuliu();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.order_fahuo) {
+                    String express_no = (String) message.content;
+                    ed_danhao.setText(express_no);
+                }
+            }
+        }));
     }
 
     private void getDetails() {
@@ -246,7 +263,7 @@ public class OrderFahuoActivity extends BaseActivity {
             @Override
             public void call(Boolean granted) {
                 if (granted) { // 在android 6.0之前会默认返回true
-                    OrderFahuoEwmActivity.actionStartForResult(OrderFahuoActivity.this, 100);
+                    actionStartForResult();
                 } else {
                     Y.tLong("该应用需要赋予访问相机的权限，不开启将无法正常工作！");
                 }
@@ -254,14 +271,15 @@ public class OrderFahuoActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            String express_no = data.getStringExtra("dingdan");
-            ed_danhao.setText(express_no);
-        }
+    /**
+     * 用于其他Activty跳转到该Activity
+     */
+    public void actionStartForResult() {
+        Intent intent = new Intent(this, OrderFahuoEwmActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityForResult(intent, 100);
     }
+
 
     private class Shop_form_id {
         private String shop_form_id;

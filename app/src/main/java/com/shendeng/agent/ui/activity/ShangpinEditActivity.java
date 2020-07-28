@@ -240,11 +240,18 @@ public class ShangpinEditActivity extends BaseActivity {
         tv_yunfei.setText(detailsModel.getWares_money_go());
 
         String is_installable = detailsModel.getIs_installable();
-        if (is_installable.equals("1")) {
-            ll_anzhuangfuwu.setVisibility(View.VISIBLE);
-            tv_anzhuangfei.setText(detailsModel.getInstall_money());
-            iv_swich.setImageResource(R.mipmap.swich_on);
-        } else {
+
+        if (!TextUtils.isEmpty(is_installable)) {
+            if (is_installable.equals("1")) {
+                ll_anzhuangfuwu.setVisibility(View.VISIBLE);
+                tv_anzhuangfei.setText(detailsModel.getInstall_money());
+                iv_swich.setImageResource(R.mipmap.swich_on);
+            } else {
+                ll_anzhuangfuwu.setVisibility(View.GONE);
+                iv_swich.setImageResource(R.mipmap.swich_off);
+                tv_anzhuangfei.setText("");
+            }
+        }else {
             ll_anzhuangfuwu.setVisibility(View.GONE);
             iv_swich.setImageResource(R.mipmap.swich_off);
             tv_anzhuangfei.setText("");
@@ -445,6 +452,7 @@ public class ShangpinEditActivity extends BaseActivity {
             case R.id.iv_add:
                 break;
             case R.id.tv_img_num:
+                clickBanner();
                 break;
             case R.id.ed_title_name:
                 clickName();
@@ -468,6 +476,7 @@ public class ShangpinEditActivity extends BaseActivity {
                 ShangpinZiAddActivity.actionStart(mContext, detailsModel.getWares_id());
                 break;
             case R.id.ll_tuwen:
+                clickTuwen();
                 break;
             case R.id.ll_fengmian:
                 clickFengmian();
@@ -485,7 +494,24 @@ public class ShangpinEditActivity extends BaseActivity {
         intent.putExtra("wares_id", wares_id);
         intent.putExtra("url", detailsModel.getWares_photo_url());
         intent.putExtra("isEdit", true);
-        startActivityForResult(intent, 100);
+        startActivity(intent);
+    }
+
+    private void clickTuwen() {
+        Intent intent = new Intent();
+        intent.setClass(this, ShangpinImgxiangActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("wares_id", wares_id);
+        startActivity(intent);
+    }
+
+    private void clickBanner() {
+        Intent intent = new Intent();
+        intent.setClass(this, ShangpinBannerActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("wares_id", wares_id);
+        intent.putExtra("isEdit", true);
+        startActivity(intent);
     }
 
     private void clickOK() {

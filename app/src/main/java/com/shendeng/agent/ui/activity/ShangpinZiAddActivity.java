@@ -33,6 +33,7 @@ import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.BottomDialog;
 import com.shendeng.agent.dialog.BottomDialogView;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Delete;
 import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Failed;
 import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
@@ -198,13 +199,13 @@ public class ShangpinZiAddActivity extends BaseActivity {
                 clickAddJia();
                 break;
             case R.id.tv_delete:
-                setStates("3");
+                showDeleteShangpin();
                 break;
             case R.id.bt_save:
                 save();
                 break;
             case R.id.iv_delete:
-                ImgDelete();
+                showDeleteDialog();
                 break;
             case R.id.iv_swich:
                 swich();
@@ -395,7 +396,7 @@ public class ShangpinZiAddActivity extends BaseActivity {
 
         if (packageListBean != null) {
             String index_photo_url = packageListBean.getIndex_photo_url();
-            if (!TextUtils.isEmpty(index_photo_url)){
+            if (!TextUtils.isEmpty(index_photo_url)) {
                 deletePicture();
             }
             packageListBean.setIndex_photo_url("");
@@ -593,6 +594,23 @@ public class ShangpinZiAddActivity extends BaseActivity {
         isHaveImg = true;
     }
 
+    private void showDeleteDialog() {
+        MyCarCaoZuoDialog_CaoZuoTIshi caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext, new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+
+            }
+
+            @Override
+            public void clickRight() {
+                ImgDelete();
+            }
+        });
+        caoZuoTIshi.setTitle("提示");
+        caoZuoTIshi.setTextContent("你确定要删除当前图片么");
+        caoZuoTIshi.show();
+    }
+
 
     private void deletePicture() {
         Map<String, String> map = new HashMap<>();
@@ -636,4 +654,21 @@ public class ShangpinZiAddActivity extends BaseActivity {
         onActivityFinish();
     }
 
+
+    private void showDeleteShangpin() {
+        MyCarCaoZuoDialog_CaoZuoTIshi caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext, new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+
+            }
+
+            @Override
+            public void clickRight() {
+                setStates("3");
+            }
+        });
+        caoZuoTIshi.setTitle("提示");
+        caoZuoTIshi.setTextContent("你确定要删除此套餐么");
+        caoZuoTIshi.show();
+    }
 }

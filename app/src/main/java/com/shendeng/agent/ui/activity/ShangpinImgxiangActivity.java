@@ -13,16 +13,17 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
+import com.shendeng.agent.adapter.ShangpinTuwenAdapter;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.app.ConstanceValue;
 import com.shendeng.agent.bean.Notice;
@@ -37,6 +38,7 @@ import com.shendeng.agent.model.ShangpinDetailsModel;
 import com.shendeng.agent.model.Upload;
 import com.shendeng.agent.ui.activity.headimage.ClipImageActivity;
 import com.shendeng.agent.ui.activity.sample.ImageShowActivity;
+import com.shendeng.agent.util.FullyLinearLayoutManager;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
@@ -48,12 +50,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.functions.Action1;
 
-public class ShangpinFenmianActivity extends BaseActivity {
+public class ShangpinImgxiangActivity extends BaseActivity {
+
 
     @BindView(R.id.iv_add)
     ImageView iv_add;
@@ -61,22 +66,22 @@ public class ShangpinFenmianActivity extends BaseActivity {
     TextView tv;
     @BindView(R.id.rv_wu)
     RelativeLayout rv_wu;
-    @BindView(R.id.iv_main)
-    ImageView iv_main;
-    @BindView(R.id.iv_delete)
-    ImageView iv_delete;
+    @BindView(R.id.rv_img)
+    RecyclerView rv_img;
     @BindView(R.id.bt_chongxin)
     TextView bt_chongxin;
     @BindView(R.id.ll_main)
-    LinearLayout ll_main;
+    NestedScrollView ll_main;
     private String wares_id;
-    private String url;
-    private File file;
     private boolean isEdit;
+    private File file;
+    private ShangpinDetailsModel.DataBean detailsModel;
+    private List<ShangpinDetailsModel.DataBean.ImgTextListBeen> imgText_list = new ArrayList<>();
+    private ShangpinTuwenAdapter adapter;
 
     @Override
     public int getContentViewResId() {
-        return R.layout.act_shangpin_fengmian;
+        return R.layout.act_shangpin_imgxing;
     }
 
     @Override
@@ -87,7 +92,7 @@ public class ShangpinFenmianActivity extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("添加商品封面");
+        tv_title.setText("商品详情图片");
     }
 
     @Override
@@ -100,47 +105,76 @@ public class ShangpinFenmianActivity extends BaseActivity {
 
     private void init() {
         wares_id = getIntent().getStringExtra("wares_id");
-        url = getIntent().getStringExtra("url");
-        isEdit = getIntent().getBooleanExtra("isEdit", false);
+        initTuwenAdapter();
 
-        if (TextUtils.isEmpty(url)) {
-            ll_main.setVisibility(View.GONE);
-            rv_wu.setVisibility(View.VISIBLE);
-        } else {
-            ll_main.setVisibility(View.VISIBLE);
-            rv_wu.setVisibility(View.GONE);
-            Glide.with(mContext).load(url).into(iv_main);
-        }
+        showProgressDialog();
+        getNet();
     }
 
-    @OnClick({R.id.iv_add, R.id.iv_main, R.id.iv_delete, R.id.bt_chongxin})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_main:
-                showPic();
-                break;
-            case R.id.iv_delete:
-                showDeleteDialog();
-                break;
-            case R.id.bt_chongxin:
-            case R.id.iv_add:
-                clickAdd();
-                break;
-        }
-    }
-
-    private void showPic() {
-        ArrayList<String> imgs = new ArrayList<>();
-        if (!TextUtils.isEmpty(url)) {
-            if (TextUtils.isEmpty(url)) {
-                imgs.add(file.getPath());
-            } else {
-                imgs.add(url);
+    private void initTuwenAdapter() {
+        adapter = new ShangpinTuwenAdapter(R.layout.item_shangpin_tuwen, imgText_list);
+        rv_img.setAdapter(adapter);
+        rv_img.setLayoutManager(new FullyLinearLayoutManager(mContext));
+        rv_img.setNestedScrollingEnabled(false);
+        rv_img.setFocusable(false);
+        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (imgText_list != null && imgText_list.size() > position) {
+                    switch (view.getId()) {
+                        case R.id.iv_delete:
+                            showDeleteDialog(position);
+                            break;
+                        case R.id.iv_main:
+                            showPic(position);
+                            break;
+                    }
+                }
             }
-        } else {
-            imgs.add(file.getPath());
+        });
+    }
+
+    private void getNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04322);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("wares_id", wares_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ShangpinDetailsModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        detailsModel = response.body().data.get(0);
+                        imgText_list = detailsModel.getImgText_list();
+                        if (imgText_list != null && imgText_list.size() > 0) {
+                            rv_wu.setVisibility(View.GONE);
+                            ll_main.setVisibility(View.VISIBLE);
+                            adapter.setNewData(imgText_list);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            rv_wu.setVisibility(View.VISIBLE);
+                            ll_main.setVisibility(View.GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+                });
+    }
+
+
+    private void showPic(int position) {
+        ArrayList<String> imgs = new ArrayList<>();
+        for (int i = 0; i < imgText_list.size(); i++) {
+            imgs.add(imgText_list.get(i).getImg_url());
         }
-        ImageShowActivity.actionStart(mContext, imgs);
+        ImageShowActivity.actionStart(mContext, imgs, position);
     }
 
     private void clickAdd() {
@@ -316,7 +350,6 @@ public class ShangpinFenmianActivity extends BaseActivity {
         rv_wu.setVisibility(View.GONE);
         ll_main.setVisibility(View.VISIBLE);
         file = new File(imageString);
-        Glide.with(mContext).load(file).into(iv_main);
         saveEdit();
     }
 
@@ -324,7 +357,7 @@ public class ShangpinFenmianActivity extends BaseActivity {
         OkGo.<AppResponse<Upload.DataBean>>post(Urls.UPLOAD)
                 .tag(this)//
                 .isMultipart(true)
-                .params("code", Urls.code_04199)
+                .params("code", Urls.code_04196)
                 .params("key", Urls.KEY)
                 .params("token", UserManager.getManager(mContext).getAppToken())
                 .params("wares_id", wares_id)
@@ -333,17 +366,12 @@ public class ShangpinFenmianActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<Upload.DataBean>>() {
                     @Override
                     public void onSuccess(final Response<AppResponse<Upload.DataBean>> response) {
-
+                        getNet();
                     }
 
                     @Override
                     public void onError(Response<AppResponse<Upload.DataBean>> response) {
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
+                        Y.tError(response);
                         dismissProgressDialog();
                     }
 
@@ -371,7 +399,8 @@ public class ShangpinFenmianActivity extends BaseActivity {
         finish();
     }
 
-    private void showDeleteDialog() {
+
+    private void showDeleteDialog(int pos) {
         MyCarCaoZuoDialog_CaoZuoTIshi caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext, new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
             @Override
             public void clickLeft() {
@@ -380,7 +409,7 @@ public class ShangpinFenmianActivity extends BaseActivity {
 
             @Override
             public void clickRight() {
-                deletePicture();
+                deletePicture(pos);
             }
         });
         caoZuoTIshi.setTitle("提示");
@@ -388,13 +417,13 @@ public class ShangpinFenmianActivity extends BaseActivity {
         caoZuoTIshi.show();
     }
 
-    private void deletePicture() {
+    private void deletePicture(int pos) {
         Map<String, String> map = new HashMap<>();
         map.put("code", Urls.code_04192);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
-        map.put("wares_id", wares_id);
-        map.put("delete_type", "4");//删除图片类型 1.子商品图片 2.图文详情图片 3.轮播图图片 4.封面主图
+        map.put("wares_detail_img_id", imgText_list.get(pos).getWares_detail_img_id());
+        map.put("delete_type", "2");//删除图片类型 1.子商品图片 2.图文详情图片 3.轮播图图片 4.封面主图
         Gson gson = new Gson();
         OkGo.<AppResponse<ShangpinDetailsModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//
@@ -402,9 +431,15 @@ public class ShangpinFenmianActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
-                        ll_main.setVisibility(View.GONE);
-                        rv_wu.setVisibility(View.VISIBLE);
-                        url = "";
+                        imgText_list.remove(pos);
+                        detailsModel.setImgText_list(imgText_list);
+                        if (imgText_list.size() <= 0) {
+                            rv_wu.setVisibility(View.VISIBLE);
+                            ll_main.setVisibility(View.GONE);
+                        } else {
+                            adapter.setNewData(imgText_list);
+                            adapter.notifyDataSetChanged();
+                        }
                     }
 
                     @Override
@@ -425,5 +460,17 @@ public class ShangpinFenmianActivity extends BaseActivity {
                         Y.tError(response);
                     }
                 });
+
+
+    }
+
+    @OnClick({R.id.iv_add, R.id.bt_chongxin})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_add:
+            case R.id.bt_chongxin:
+                clickAdd();
+                break;
+        }
     }
 }

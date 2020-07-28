@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.app.ConstanceValue;
@@ -118,8 +119,10 @@ public class PhoneCheckActivity extends BaseActivity {
                     finish();
                 } else if (message.type == ConstanceValue.WX_SET_F) {
                     Y.t((String) message.content);
+
                 } else if (message.type == ConstanceValue.WX_JIECHU_F) {
                     Y.t((String) message.content);
+                    Y.e("开发了将大幅度收看电视");
                 }
             }
         }));
@@ -163,9 +166,21 @@ public class PhoneCheckActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<Message.DataBean>> response) {
-                        Y.t(response.getException().getMessage());
+                        Y.tError(response);
                         timeCount.cancel();
                         timeCount.onFinish();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<Message.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
                     }
                 });
     }

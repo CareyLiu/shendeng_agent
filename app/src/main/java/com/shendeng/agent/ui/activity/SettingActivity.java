@@ -61,10 +61,11 @@ public class SettingActivity extends BaseActivity {
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String inst_owner) {
         Intent intent = new Intent();
         intent.setClass(context, SettingActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("inst_owner", inst_owner);
         context.startActivity(intent);
     }
 
@@ -82,20 +83,28 @@ public class SettingActivity extends BaseActivity {
     }
 
     private void init() {
-        pay_pwd_check = UserManager.getManager(this).getPay_pwd_check();
-        wx_pay_check = UserManager.getManager(this).getWx_pay_check();
-        alipay_number_check = UserManager.getManager(this).getAlipay_number_check();
+        String inst_owner = getIntent().getStringExtra("inst_owner");
 
-        if (wx_pay_check.equals("1")) {
-            wx_user_name = UserManager.getManager(this).getWx_user_name();
-            tv_weixin_ming.setText(wx_user_name);
+        if (inst_owner.equals("1")) {
+            pay_pwd_check = UserManager.getManager(this).getPay_pwd_check();
+            wx_pay_check = UserManager.getManager(this).getWx_pay_check();
+            alipay_number_check = UserManager.getManager(this).getAlipay_number_check();
+
+            if (wx_pay_check.equals("1")) {
+                wx_user_name = UserManager.getManager(this).getWx_user_name();
+                tv_weixin_ming.setText(wx_user_name);
+            }
+
+            if (alipay_number_check.equals("1")) {
+                alipay_uname = UserManager.getManager(this).getAlipay_uname();
+                tv_zhifubao_ming.setText(alipay_uname);
+            }
+        } else {
+            ll_pwd_pay.setVisibility(View.GONE);
+            ll_weixin.setVisibility(View.GONE);
+            ll_zhifubao.setVisibility(View.GONE);
         }
-
-
-        if (alipay_number_check.equals("1")) {
-            alipay_uname = UserManager.getManager(this).getAlipay_uname();
-            tv_zhifubao_ming.setText(alipay_uname);
-        }
+        ll_dianpu.setVisibility(View.GONE);
     }
 
     @OnClick({R.id.ll_pwd_login, R.id.ll_pwd_pay, R.id.ll_zhifubao, R.id.ll_weixin, R.id.ll_dianpu, R.id.bt_login_out})

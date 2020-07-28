@@ -23,6 +23,9 @@ import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.BottomDialog;
+import com.shendeng.agent.dialog.BottomDialogView;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_CaoZuoTIshi;
 import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.ShangpinDetailsModel;
 import com.shendeng.agent.ui.activity.sample.ImageShowActivity;
@@ -248,13 +251,35 @@ public class ShangpinDetailsActivity extends BaseActivity {
                 clickAdd();
                 break;
             case R.id.bt_delete:
-                setStates("3");
+                showDeleteShangpin();
                 break;
         }
     }
 
     private void showBotoomm() {
-        clickFengmian();
+        List<String> names = new ArrayList<>();
+        names.add("商品封面图");
+        names.add("商品详情图");
+        final BottomDialog bottomDialog = new BottomDialog(this);
+        bottomDialog.setModles(names);
+        bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
+            @Override
+            public void onClickItem(int pos) {
+                bottomDialog.dismiss();
+                if (pos == 0) {
+                    clickFengmian();
+                } else {
+                    clickTuwen();
+                }
+            }
+
+            @Override
+            public void onClickCancel(View v) {
+                bottomDialog.dismiss();
+            }
+        });
+        bottomDialog.showBottom();
+
     }
 
     private void clickFengmian() {
@@ -264,7 +289,15 @@ public class ShangpinDetailsActivity extends BaseActivity {
         intent.putExtra("wares_id", wares_id);
         intent.putExtra("url", dataBean.getWares_photo_url());
         intent.putExtra("isEdit", false);
-        startActivityForResult(intent, 100);
+        startActivity(intent);
+    }
+
+    private void clickTuwen() {
+        Intent intent = new Intent();
+        intent.setClass(this, ShangpinImgxiangActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("wares_id", wares_id);
+        startActivity(intent);
     }
 
     private void clickXianshiQuanbu() {
@@ -391,5 +424,23 @@ public class ShangpinDetailsActivity extends BaseActivity {
                     .load(path)
                     .into(imageView);
         }
+    }
+
+
+    private void showDeleteShangpin() {
+        MyCarCaoZuoDialog_CaoZuoTIshi caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext, new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+
+            }
+
+            @Override
+            public void clickRight() {
+                setStates("3");
+            }
+        });
+        caoZuoTIshi.setTitle("提示");
+        caoZuoTIshi.setTextContent("你确定要删除该商品么");
+        caoZuoTIshi.show();
     }
 }
