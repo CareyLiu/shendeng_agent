@@ -92,8 +92,6 @@
 
 
 
-
-
     <style name="turntable_dialog" parent="@android:style/Theme.Dialog">
         //Dialog的windowFrame框为无
         <item name="android:windowFrame">@null</item>

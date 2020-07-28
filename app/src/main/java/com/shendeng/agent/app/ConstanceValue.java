@@ -16,5 +16,7 @@ public interface ConstanceValue {
     int shangpin_details_use = 0x10110;
     int shangpin_edit_use = 0x10111;
 
+    int order_fahuo = 0x10211;
+
 
 }

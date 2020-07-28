@@ -10,6 +10,9 @@ import android.widget.LinearLayout;
 
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.app.ConstanceValue;
+import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Y;
 
 import butterknife.BindView;
@@ -54,14 +57,6 @@ public class OrderFahuoEwmActivity extends BaseActivity implements QRCodeView.De
         context.startActivity(intent);
     }
 
-    /**
-     * 用于其他Activty跳转到该Activity
-     */
-    public static void actionStartForResult(Activity activity,int result) {
-        Intent intent = new Intent(activity, OrderFahuoEwmActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        activity.startActivityForResult(intent,result);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +93,10 @@ public class OrderFahuoEwmActivity extends BaseActivity implements QRCodeView.De
         Y.e("扫描结果" + result);
         vibrate();
         mQRCodeView.startSpot();
-        Intent intent = new Intent();
-        intent.putExtra("dingdan", result);
-        setResult(100, intent);
+        Notice n = new Notice();
+        n.content = result;
+        n.type = ConstanceValue.order_fahuo;
+        RxBus.getDefault().sendRx(n);
         finish();
     }
 

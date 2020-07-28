@@ -200,7 +200,7 @@ public class LoginActivity extends BaseActivity {
 
                         @Override
                         public void onError(Response<AppResponse<Message.DataBean>> response) {
-                            Y.t(response.getException().getMessage());
+                            Y.tError(response);
                             timeCount.cancel();
                             timeCount.onFinish();
                         }
@@ -268,7 +268,7 @@ public class LoginActivity extends BaseActivity {
 
                     @Override
                     public void onError(Response<AppResponse<LoginUser.DataBean>> response) {
-                        Y.t(response.getException().getMessage());
+                        Y.tError(response);
                     }
                 });
     }

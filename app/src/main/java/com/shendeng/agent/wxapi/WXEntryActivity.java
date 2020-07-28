@@ -105,7 +105,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 .execute(new JsonCallback<AppResponse<WxBangModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<WxBangModel.DataBean>> response) {
-                        String msg_code = response.body().msg;
+                        String msg_code = response.body().msg_code;
                         String msg = response.body().msg;
                         if (msg_code.equals("0000")) {
                             if (wx_type.equals("1")) {

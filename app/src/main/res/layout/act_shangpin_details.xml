@@ -22,7 +22,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="360dp">
 
-
                     <com.youth.banner.Banner
                         android:id="@+id/banner"
                         android:layout_width="match_parent"
@@ -32,6 +31,7 @@
                         android:id="@+id/iv_nopic"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:scaleType="fitXY"
                         android:src="@mipmap/nopic_preview_shop"
                         android:visibility="gone" />
                 </FrameLayout>

@@ -149,7 +149,6 @@ public class ClipViewLayout extends RelativeLayout {
         Matrix m = new Matrix();
         m.setRotate(rotation);
 
-        com.shendeng.agent.util.Y.e("可垃圾发多少法师队发多少  " + bitmap.getWidth() + "       " + bitmap.getHeight());
         bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
 
         //图片的缩放比
@@ -374,7 +373,7 @@ public class ClipViewLayout extends RelativeLayout {
         Bitmap zoomedCropBitmap = null;
         try {
             cropBitmap = Bitmap.createBitmap(imageView.getDrawingCache(), rect.left, rect.top, rect.width(), rect.height());
-            zoomedCropBitmap = zoomBitmap(cropBitmap, 800, 800);
+            zoomedCropBitmap = zoomBitmap(cropBitmap, 1080, 1080);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -33,6 +33,7 @@ import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
 import com.shendeng.agent.ui.activity.WodeTuihuoActivity;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +80,7 @@ public class BottomWoDeFragment extends BaseFragment {
     @BindView(R.id.view_top)
     View viewTop;
     private WodeModel.DataBean userMain;
+    private String inst_owner;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -177,7 +179,7 @@ public class BottomWoDeFragment extends BaseFragment {
                     public void onSuccess(Response<AppResponse<WodeModel.DataBean>> response) {
                         userMain = response.body().data.get(0);
                         tv_title.setText(userMain.getInst_name());
-                        String inst_owner = userMain.getInst_owner();
+                        inst_owner = userMain.getInst_owner();
                         if (inst_owner.equals("1")) {
                             ll_yuangong.setVisibility(View.VISIBLE);
                             iv_shenfen.setImageResource(R.mipmap.mine_boss);
@@ -236,7 +238,11 @@ public class BottomWoDeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_qianbao:
-                WodeQainbaoActivity.actionStart(getContext());
+                if (inst_owner.equals("1")){
+                    WodeQainbaoActivity.actionStart(getContext());
+                }else {
+                    Y.t("您没有打开钱包的权限哦");
+                }
                 break;
             case R.id.ll_about:
                 AboutActivity.actionStart(getContext());
@@ -249,7 +255,7 @@ public class BottomWoDeFragment extends BaseFragment {
             case R.id.ll_qiehuan:
                 break;
             case R.id.iv_set:
-                SettingActivity.actionStart(getContext());
+                SettingActivity.actionStart(getContext(),inst_owner);
                 break;
         }
     }
