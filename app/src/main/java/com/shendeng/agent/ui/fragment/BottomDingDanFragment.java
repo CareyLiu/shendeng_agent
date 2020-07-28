@@ -29,9 +29,11 @@ import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.BottomDialog;
 import com.shendeng.agent.dialog.BottomDialogView;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.OrderModel;
 import com.shendeng.agent.ui.FeedBackActivity;
 import com.shendeng.agent.ui.activity.DefaultX5WebViewActivity;
+import com.shendeng.agent.ui.activity.LoginPwdActivity;
 import com.shendeng.agent.ui.activity.OrderDetailsActivity;
 import com.shendeng.agent.ui.activity.OrderFahuoActivity;
 import com.shendeng.agent.ui.activity.OrderPingjiaActivity;
@@ -267,8 +269,8 @@ public class BottomDingDanFragment extends BaseFragment {
 
     private void showBottom(String shop_form_id) {
         List<String> names = new ArrayList<>();
-        names.add("");
-        names.add("用聚易佳密码登录");
+        names.add("同意退款");
+        names.add("拒绝退款");
         final BottomDialog bottomDialog = new BottomDialog(getActivity());
         bottomDialog.setModles(names);
         bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
@@ -304,8 +306,13 @@ public class BottomDingDanFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse>() {
                     @Override
                     public void onSuccess(Response<AppResponse> response) {
-                        Y.t(response.body().msg);
-                        getOrder(shop_pay_check);
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(getActivity(), new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                            @Override
+                            public void onDismiss() {
+                                getOrder(shop_pay_check);
+                            }
+                        });
+                        dialog.show();
                     }
 
                     @Override
@@ -477,7 +484,7 @@ public class BottomDingDanFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.iv_saoyisao:
                 ewm();
-               // FeedBackActivity.actionStart(getActivity());
+                // FeedBackActivity.actionStart(getActivity());
                 break;
             case R.id.tab_all:
                 selectTab(0);

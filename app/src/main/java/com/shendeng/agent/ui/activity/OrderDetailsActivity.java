@@ -225,7 +225,7 @@ public class OrderDetailsActivity extends BaseActivity {
                             bt2.setText("关闭此交易");
                             bt2.setTextColor(Y.getColor(R.color.text_color_3));
                         } else if (pay_check_index.equals("1")) {
-                            bt1.setVisibility(View.INVISIBLE);
+                            bt1.setVisibility(View.GONE);
                             bt2.setText("去发货");
                             bt2.setTextColor(Y.getColor(R.color.text_red));
 
@@ -242,6 +242,7 @@ public class OrderDetailsActivity extends BaseActivity {
                         } else if (pay_check_index.equals("3")) {
                             bt1.setText("查看欠款去向");
                             bt1.setTextColor(Y.getColor(R.color.text_color_3));
+                            bt1.setVisibility(View.GONE);
                             bt2.setText("去评价");
                             bt2.setTextColor(Y.getColor(R.color.text_red));
 
@@ -254,6 +255,7 @@ public class OrderDetailsActivity extends BaseActivity {
                         } else if (pay_check_index.equals("4")) {
                             bt1.setText("查看欠款去向");
                             bt1.setTextColor(Y.getColor(R.color.text_color_3));
+                            bt1.setVisibility(View.GONE);
                             bt2.setText("查看评价");
                             bt2.setTextColor(Y.getColor(R.color.text_red));
 

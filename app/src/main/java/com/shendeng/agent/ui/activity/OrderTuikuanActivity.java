@@ -24,6 +24,7 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.TishiDialog;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.OrderDetailsModel;
 import com.shendeng.agent.model.OrderTuikuanModel;
 import com.shendeng.agent.util.FullyLinearLayoutManager;
@@ -335,9 +336,9 @@ public class OrderTuikuanActivity extends BaseActivity {
         }
     }
 
-    private void tuihuoSure() {
+    private void tuihuoSure() {//确认收货
         Map<String, String> map = new HashMap<>();
-        map.put("code", Urls.code_04315);
+        map.put("code", Urls.code_04319);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("shop_form_id", shop_form_id);
@@ -348,8 +349,13 @@ public class OrderTuikuanActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse>() {
                     @Override
                     public void onSuccess(Response<AppResponse> response) {
-                        Y.t(response.body().msg);
-                        finish();
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(OrderTuikuanActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                            @Override
+                            public void onDismiss() {
+                                finish();
+                            }
+                        });
+                        dialog.show();
                     }
 
                     @Override
@@ -386,8 +392,13 @@ public class OrderTuikuanActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse>() {
                     @Override
                     public void onSuccess(Response<AppResponse> response) {
-                        Y.t(response.body().msg);
-                        finish();
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(OrderTuikuanActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                            @Override
+                            public void onDismiss() {
+                                finish();
+                            }
+                        });
+                        dialog.show();
                     }
 
                     @Override
