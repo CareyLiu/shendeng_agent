@@ -1,4 +1,4 @@
-package com.shendeng.agent.ui.fragment;
+package com.shendeng.agent.ui.fragment.tuangou_base;
 
 import android.app.Activity;
 import android.content.res.Resources;
@@ -28,7 +28,7 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.WodeModel;
-import com.shendeng.agent.ui.HomeBasicTuanGouActivity;
+import com.shendeng.agent.ui.HomeBasicActivity;
 import com.shendeng.agent.ui.activity.AboutActivity;
 import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
@@ -45,7 +45,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
-public class BottomWoDeFragment extends BaseFragment {
+public class BottomTuanGouWoDeFragment extends BaseFragment {
     public static final String TAG = "BottomWoDeFragment";
     @BindView(R.id.tv_title)
     TextView tv_title;
@@ -95,9 +95,15 @@ public class BottomWoDeFragment extends BaseFragment {
 
     }
 
-    public static BottomWoDeFragment newInstance() {
+    @Override
+    public void onStart() {
+        super.onStart();
+        tvChangeMoshi.setText("点击切换到聚易佳商家模式");
+    }
+
+    public static BottomTuanGouWoDeFragment newInstance() {
         Bundle args = new Bundle();
-        BottomWoDeFragment fragment = new BottomWoDeFragment();
+        BottomTuanGouWoDeFragment fragment = new BottomTuanGouWoDeFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -230,12 +236,6 @@ public class BottomWoDeFragment extends BaseFragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        tvChangeMoshi.setText("点击切换到团购商家模式");
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
 
@@ -307,11 +307,8 @@ public class BottomWoDeFragment extends BaseFragment {
 //                        progressDialog.dismiss();
 //                    }
 //                }, 5000);//3秒后执行Runnable中的run方法
+                HomeBasicActivity.actionStart(getActivity());
 
-                HomeBasicTuanGouActivity.actionStart(getActivity());
-
-//                DisplayNextView displayNextView = new DisplayNextView(getActivity(), Constants.KEY_SECOND_CLOCKWISE);
-//                displayNextView.doSomethingOnEnd(Constants.KEY_FIRST_INVERSE);
                 break;
             case R.id.iv_set:
                 SettingActivity.actionStart(getContext());

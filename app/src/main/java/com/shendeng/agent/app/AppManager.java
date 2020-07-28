@@ -3,6 +3,7 @@ package com.shendeng.agent.app;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.Stack;
 
@@ -101,6 +102,7 @@ public class AppManager {
             activityMgr.restartPackage(context.getPackageName());
             System.exit(0);
         } catch (Exception e) {
+            Log.i("exception", e.getMessage());
         }
     }
 

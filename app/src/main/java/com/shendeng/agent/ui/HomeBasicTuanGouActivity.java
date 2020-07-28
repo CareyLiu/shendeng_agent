@@ -1,45 +1,33 @@
 package com.shendeng.agent.ui;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Toast;
-
 
 import androidx.annotation.Nullable;
 
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.App;
-import com.shendeng.agent.app.AppConfig;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.basicmvp.BasicFragment;
 import com.shendeng.agent.ui.fragment.BottomDingDanFragment;
 import com.shendeng.agent.ui.fragment.BottomShangPinFragment;
 import com.shendeng.agent.ui.fragment.BottomWoDeFragment;
 import com.shendeng.agent.ui.fragment.BottomXiaoXiFragment;
+import com.shendeng.agent.ui.fragment.tuangou_base.BottomTuanGouMenDianFragment;
+import com.shendeng.agent.ui.fragment.tuangou_base.BottomTuanGouShouYeFragment;
+import com.shendeng.agent.ui.fragment.tuangou_base.BottomTuanGouWoDeFragment;
+import com.shendeng.agent.ui.fragment.tuangou_base.BottomTuanGouXiaoXiFragment;
 import com.shendeng.agent.ui.view.BottomBar;
 import com.shendeng.agent.ui.view.BottomBarTab;
 import com.shendeng.agent.ui.widget.DoubleClickExitHelper;
-import com.tbruyelle.rxpermissions.Permission;
-import com.tbruyelle.rxpermissions.RxPermissions;
-
-import java.util.Date;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 
 
-public class HomeBasicActivity extends BaseActivity {
+public class HomeBasicTuanGouActivity extends BaseActivity {
 
-    private static final String tag = HomeBasicActivity.class.getSimpleName();
+    private static final String tag = HomeBasicTuanGouActivity.class.getSimpleName();
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -53,7 +41,7 @@ public class HomeBasicActivity extends BaseActivity {
     private BasicFragment[] mFragments = new BasicFragment[5];
     DoubleClickExitHelper doubleClick;
     private App app;
-    public static HomeBasicActivity ac;
+    public static HomeBasicTuanGouActivity ac;
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -62,7 +50,7 @@ public class HomeBasicActivity extends BaseActivity {
      */
     public static void actionStart(Context context) {
         Intent intent = new Intent();
-        intent.setClass(context, HomeBasicActivity.class);
+        intent.setClass(context, HomeBasicTuanGouActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         Bundle bundle = new Bundle();
         intent.putExtras(bundle);
@@ -71,29 +59,21 @@ public class HomeBasicActivity extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.activity_home_basic;
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
-        Log.i("shouYeZhouQi", "DingDan_onNewIntent");
+        return R.layout.activity_home_tuangou_basic;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Log.i("shouYeZhouQi", "DingDan_oncraete");
+        Log.i("shouYeZhouQi","tuangou_oncreatre");
         overridePendingTransition(R.anim.anim_bottom_in, R.anim.anim_bottom_out);
         ac = this;
         BasicFragment firstFragment = findFragment(BottomDingDanFragment.class);
         if (firstFragment == null) {
-            mFragments[FIRST] = BottomDingDanFragment.newInstance();
-            mFragments[SECOND] = BottomXiaoXiFragment.newInstance();
-            mFragments[THIRD] = BottomShangPinFragment.newInstance();
-            mFragments[FOURTH] = BottomWoDeFragment.newInstance();
+            mFragments[FIRST] = BottomTuanGouShouYeFragment.newInstance();
+            mFragments[SECOND] = BottomTuanGouXiaoXiFragment.newInstance();
+            mFragments[THIRD] = BottomTuanGouMenDianFragment.newInstance();
+            mFragments[FOURTH] = BottomTuanGouWoDeFragment.newInstance();
 
 
             loadMultipleRootFragment(R.id.fl_container1, FIRST,
@@ -115,9 +95,9 @@ public class HomeBasicActivity extends BaseActivity {
         mBottomBar = (BottomBar) findViewById(R.id.bottomBar);
         mBottomBar.show();
         mBottomBar
-                .addItem(new BottomBarTab(this, R.mipmap.tab_icon_dingdan_nor, R.mipmap.tab_icon_dingdan_sel, "订单"))
+                .addItem(new BottomBarTab(this, R.mipmap.tab_icon_home_nor, R.mipmap.tab_icon_home_sel, "首页"))
                 .addItem(new BottomBarTab(this, R.mipmap.tab_icon_xiaoxi_nor, R.mipmap.tab_icon_xiaoxi_sel, "消息"))
-                .addItem(new BottomBarTab(this, R.mipmap.tab_icon_shangpin_nor, R.mipmap.tab_icon_shangpin_sel, "商品"))
+                .addItem(new BottomBarTab(this, R.mipmap.tab_icon_mendian_nor, R.mipmap.tab_icon_mendian_sel, "门店"))
                 .addItem(new BottomBarTab(this, R.mipmap.tab_icon_mine_nor, R.mipmap.tab_icon_mine_sel, "我的"));
 
         mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
@@ -152,7 +132,7 @@ public class HomeBasicActivity extends BaseActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i("shouYeZhouQi", "DingDan_onDestroy");
+        Log.i("shouYeZhouQi","tuangou_onDestroy");
 
     }
 
@@ -171,7 +151,7 @@ public class HomeBasicActivity extends BaseActivity {
 //            }
 //        });
         app = App.getInstance();
-        Log.i("shouYeZhouQi", "DingDan_onStart");
+        Log.i("shouYeZhouQi","tuangou_onStart");
     }
 
 
