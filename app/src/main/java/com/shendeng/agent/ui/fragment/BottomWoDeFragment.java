@@ -184,8 +184,9 @@ public class BottomWoDeFragment extends BaseFragment {
                         userMain = response.body().data.get(0);
                         tv_title.setText(userMain.getInst_name());
                         inst_owner = userMain.getInst_owner();
-                        if (inst_owner.equals("1")) {
-                            ll_yuangong.setVisibility(View.VISIBLE);
+                        if (inst_owner.equals("1")) {//员工管理
+//                            ll_yuangong.setVisibility(View.VISIBLE);
+                            ll_yuangong.setVisibility(View.GONE);
                             iv_shenfen.setImageResource(R.mipmap.mine_boss);
                         } else {
                             ll_yuangong.setVisibility(View.GONE);
