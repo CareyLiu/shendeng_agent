@@ -232,7 +232,6 @@ public class LoginActivity extends BaseActivity {
             return;
         }
 
-
         Map<String, String> map = new HashMap<>();
         map.put("code", Urls.code_04310);
         map.put("key", Urls.KEY);
