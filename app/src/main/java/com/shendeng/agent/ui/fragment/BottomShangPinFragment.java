@@ -20,6 +20,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.ShangpinAdapter;
+import com.shendeng.agent.app.ConstanceValue;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
@@ -83,12 +84,6 @@ public class BottomShangPinFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
-            @Override
-            public void call(Notice message) {
-
-            }
-        }));
     }
 
     public static BottomShangPinFragment newInstance() {
@@ -132,6 +127,18 @@ public class BottomShangPinFragment extends BaseFragment {
         initAdapter();
         initSM();
         getNet();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.shangpin_frag) {
+                    getNet();
+                }
+            }
+        }));
     }
 
     private void initSM() {

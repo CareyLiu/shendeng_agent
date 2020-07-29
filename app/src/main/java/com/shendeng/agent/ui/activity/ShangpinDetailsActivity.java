@@ -30,6 +30,7 @@ import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.ShangpinDetailsModel;
 import com.shendeng.agent.ui.activity.sample.ImageShowActivity;
 import com.shendeng.agent.util.FullyLinearLayoutManager;
+import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 import com.youth.banner.Banner;
@@ -105,6 +106,13 @@ public class ShangpinDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
             }
         });
     }
@@ -345,7 +353,7 @@ public class ShangpinDetailsActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
                         if (type.equals("3")) {
                             Y.t("删除成功");
-                            finish();
+                            back();
                         } else {
                             String text = bt_add.getText().toString();
                             if (text.equals("上架")) {
@@ -385,7 +393,7 @@ public class ShangpinDetailsActivity extends BaseActivity {
     }
 
     private void cliickEdit() {
-        ShangpinEditActivity.actionStart(mContext, dataBean);
+        ShangpinEditActivity.actionStartD(mContext, dataBean);
     }
 
     private void initBanner() {//初始化banner
@@ -442,5 +450,18 @@ public class ShangpinDetailsActivity extends BaseActivity {
         caoZuoTIshi.setTitle("提示");
         caoZuoTIshi.setTextContent("你确定要删除该商品么");
         caoZuoTIshi.show();
+    }
+
+    private void back() {
+        Notice n = new Notice();
+        n.type = ConstanceValue.shangpin_frag;
+        RxBus.getDefault().sendRx(n);
+        finish();
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        super.onBackPressedSupport();
+        back();
     }
 }

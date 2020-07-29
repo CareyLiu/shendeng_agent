@@ -14,7 +14,6 @@ import androidx.annotation.NonNull;
 
 public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
 
-    private View theView;
     private Context context;
     private TextView tvCaozuocheng, tvCaoZuoChengGongHuaShu;
     private String str1, str2, strLft, strCenter, strRight;
@@ -48,11 +47,10 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
     }
 
     private void init() {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        theView = inflater.inflate(R.layout.dialog_caozuo_caozuo_tishi, null);
-        tvCaozuocheng = theView.findViewById(R.id.tv_caozuochegngong);
-        tvCaoZuoChengGongHuaShu = theView.findViewById(R.id.tv_caozuochenggonghuashu);
-        TextView tvLft = theView.findViewById(R.id.tv_left);
+        setContentView(R.layout.dialog_caozuo_caozuo_tishi);
+        tvCaozuocheng = findViewById(R.id.tv_caozuochegngong);
+        tvCaoZuoChengGongHuaShu = findViewById(R.id.tv_caozuochenggonghuashu);
+        TextView tvLft = findViewById(R.id.tv_left);
         tvLft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +59,7 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
             }
         });
 
-        TextView tvCenter = theView.findViewById(R.id.tv_center);
+        TextView tvCenter = findViewById(R.id.tv_center);
         tvCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +68,7 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
             }
         });
 
-        TextView tvRight = theView.findViewById(R.id.tv_right);
+        TextView tvRight = findViewById(R.id.tv_right);
         tvRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +100,6 @@ public class MyCarCaoZuoDialog_CaoZuoTIshi extends Dialog {
             tvCaozuocheng.setText(str1);
             tvCaoZuoChengGongHuaShu.setText(str2);
         }
-        setContentView(theView);
         setCanceledOnTouchOutside(false);
     }
 

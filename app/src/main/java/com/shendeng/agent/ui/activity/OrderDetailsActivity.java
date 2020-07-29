@@ -224,6 +224,7 @@ public class OrderDetailsActivity extends BaseActivity {
                             bt1.setTextColor(Y.getColor(R.color.text_red));
                             bt2.setText("关闭此交易");
                             bt2.setTextColor(Y.getColor(R.color.text_color_3));
+                            bt1.setVisibility(View.VISIBLE);
                         } else if (pay_check_index.equals("1")) {
                             bt1.setVisibility(View.GONE);
                             bt2.setText("去发货");
@@ -231,6 +232,7 @@ public class OrderDetailsActivity extends BaseActivity {
 
                             qiu2.setBackgroundResource(R.drawable.order_qiu_s);
                             line1.setBackgroundColor(Y.getColor(R.color.order_red));
+                            bt2.setVisibility(View.VISIBLE);
                         } else if (pay_check_index.equals("2")) {
                             bt1.setVisibility(View.GONE);
                             bt2.setVisibility(View.GONE);
@@ -245,6 +247,7 @@ public class OrderDetailsActivity extends BaseActivity {
                             bt1.setVisibility(View.GONE);
                             bt2.setText("去评价");
                             bt2.setTextColor(Y.getColor(R.color.text_red));
+                            bt2.setVisibility(View.VISIBLE);
 
                             qiu2.setBackgroundResource(R.drawable.order_qiu_s);
                             qiu3.setBackgroundResource(R.drawable.order_qiu_s);
@@ -258,6 +261,7 @@ public class OrderDetailsActivity extends BaseActivity {
                             bt1.setVisibility(View.GONE);
                             bt2.setText("查看评价");
                             bt2.setTextColor(Y.getColor(R.color.text_red));
+                            bt2.setVisibility(View.VISIBLE);
 
                             qiu2.setBackgroundResource(R.drawable.order_qiu_s);
                             qiu3.setBackgroundResource(R.drawable.order_qiu_s);

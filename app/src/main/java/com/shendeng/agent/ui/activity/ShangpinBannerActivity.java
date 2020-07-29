@@ -85,6 +85,12 @@ public class ShangpinBannerActivity extends BaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("商品详情图片");
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               onActivityFinish();
+            }
+        });
     }
 
     @Override

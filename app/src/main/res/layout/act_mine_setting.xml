@@ -191,7 +191,9 @@
 
     <TextView
         android:id="@+id/bt_login_out"
-        android:layout_width="331dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="30dp"
