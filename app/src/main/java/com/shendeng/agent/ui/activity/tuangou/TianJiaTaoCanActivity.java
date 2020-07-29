@@ -94,6 +94,8 @@ public class TianJiaTaoCanActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         TianJiaGuiZeActivity.actionStart(mContext, "0");
+                        UIHelper.ToastMessage(mContext,"我点击了添加规则");
+
                     }
                 });
                 llGuize.addView(view);

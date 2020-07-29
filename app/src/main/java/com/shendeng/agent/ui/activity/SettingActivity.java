@@ -17,6 +17,7 @@ import com.shendeng.agent.dialog.TishiDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
 
 public class SettingActivity extends BaseActivity {
 
@@ -224,6 +225,7 @@ public class SettingActivity extends BaseActivity {
             public void onClickConfirm(View v, TishiDialog dialog) {
                 UserManager.getManager(SettingActivity.this).removeUser();
                 LoginActivity.actionStart(SettingActivity.this);
+                RongIM.getInstance().logout();
             }
 
             @Override

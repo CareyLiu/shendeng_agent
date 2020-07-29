@@ -102,8 +102,8 @@ public class LoginActivity extends BaseActivity {
     private void init() {
         req_type = "2";
         timeCount = new TimeCount(60000, 1000, tv_yzm);
-//        ed_phone.setText("13351102680");
-//        ed_pwd.setText("13351102680");
+        ed_phone.setText("13351102680");
+        ed_pwd.setText("13351102680");
 
 //                ed_phone.setText("18249030297");
 //                ed_pwd.setText("123456");

@@ -39,6 +39,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -163,7 +165,17 @@ public class BottomXiaoXiFragment extends BaseFragment {
         messageListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
+                switch (view.getId()) {
+                    case R.id.constrain:
+                        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+                        String targetId = mDatas.get(position).getLt_user_accid();
+                        String instName = mDatas.get(position).getLt_user_name();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("dianpuming", instName);
+                        bundle.putString("inst_accid", mDatas.get(position).getLt_user_accid());
+                        RongIM.getInstance().startConversation(getActivity(), conversationType, targetId, instName, bundle);
+                        break;
+                }
             }
         });
     }
