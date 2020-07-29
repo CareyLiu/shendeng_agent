@@ -112,6 +112,13 @@ public class WodeQainbaoActivity extends BaseActivity {
                         tv_money.setText(dataBean.getInst_money_access());
                         tv_jiesuan_money.setText(dataBean.getInst_money_ready());
                     }
+
+                    @Override
+                    public void onError(Response<AppResponse<QainbaoModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                        finish();
+                    }
                 });
     }
 
@@ -134,7 +141,9 @@ public class WodeQainbaoActivity extends BaseActivity {
     }
 
     private void tianxian() {
-        float inst_money_access = Y.getFloat(dataBean.getInst_money_access());
+        String inst_money_access1 = dataBean.getInst_money_access();
+        Y.e("klfjdslkdfjs fsd" + inst_money_access1);
+        float inst_money_access = Y.getFloat(inst_money_access1);
         if (inst_money_access > 0) {
             showWeiXinOrZhiFuBaoSelect();
         } else {

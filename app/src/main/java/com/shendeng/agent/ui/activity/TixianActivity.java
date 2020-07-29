@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +22,7 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.InputDialog;
 import com.shendeng.agent.dialog.TishiDialog;
 import com.shendeng.agent.model.JiesuanModel;
 import com.shendeng.agent.util.Urls;
@@ -190,27 +193,33 @@ public class TixianActivity extends BaseActivity {
         String pay_pwd_check = UserManager.getManager(this).getPay_pwd_check();
 
         if (pay_pwd_check.equals("1")) {
-//            getTixian();
 
-            TishiDialog tishiDialog = new TishiDialog(this, new TishiDialog.TishiDialogListener() {
+            InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
                 @Override
-                public void onClickCancel(View v, TishiDialog dialog) {
+                public void onClickCancel(View v, InputDialog dialog) {
 
                 }
 
                 @Override
-                public void onClickConfirm(View v, TishiDialog dialog) {
-                    PhoneCheckActivity.actionStart(TixianActivity.this, "0006", "4");
+                public void onClickConfirm(View v, InputDialog dialog) {
+                    String payPwd = dialog.getTextContent();
+
+                    if (!TextUtils.isEmpty(payPwd)){
+                        getTixian(payPwd);
+                    }else {
+                        Y.t("请输入支付密码");
+                    }
                 }
 
                 @Override
-                public void onDismiss(TishiDialog dialog) {
+                public void onDismiss(InputDialog dialog) {
 
                 }
             });
-            tishiDialog.setTextCont("您还未设置支付密码，是否去设置");
-            tishiDialog.setTextConfirm("去设置");
-            tishiDialog.show();
+
+            dialog.setTextInput(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+            dialog.setTextTitle("请输入支付密码");
+            dialog.show();
         } else {
             TishiDialog tishiDialog = new TishiDialog(this, new TishiDialog.TishiDialogListener() {
                 @Override
@@ -234,12 +243,12 @@ public class TixianActivity extends BaseActivity {
         }
     }
 
-    private void getTixian() {
+    private void getTixian(String pay_pwd) {
         Map<String, String> map = new HashMap<>();
         map.put("code", Urls.code_04338);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
-//        map.put("pay_pwd", pay_pwd);
+        map.put("pay_pwd", pay_pwd);
         map.put("money", et_text.getText().toString());
         map.put("withdraw_type", weiXinOrZhiFuBao);
         Gson gson = new Gson();

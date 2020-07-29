@@ -18,26 +18,35 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.app.ConstanceValue;
+import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.BottomDialog;
 import com.shendeng.agent.dialog.BottomDialogView;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_CaoZuoTIshi;
+import com.shendeng.agent.model.ShangpinDetailsModel;
 import com.shendeng.agent.model.Upload;
 import com.shendeng.agent.ui.activity.headimage.ClipImageActivity;
+import com.shendeng.agent.ui.activity.sample.ImageShowActivity;
+import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,6 +72,7 @@ public class ShangpinFenmianActivity extends BaseActivity {
     private String wares_id;
     private String url;
     private File file;
+    private boolean isEdit;
 
     @Override
     public int getContentViewResId() {
@@ -77,7 +87,7 @@ public class ShangpinFenmianActivity extends BaseActivity {
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("完善商品信息");
+        tv_title.setText("添加商品封面");
     }
 
     @Override
@@ -91,6 +101,7 @@ public class ShangpinFenmianActivity extends BaseActivity {
     private void init() {
         wares_id = getIntent().getStringExtra("wares_id");
         url = getIntent().getStringExtra("url");
+        isEdit = getIntent().getBooleanExtra("isEdit", false);
 
         if (TextUtils.isEmpty(url)) {
             ll_main.setVisibility(View.GONE);
@@ -106,8 +117,10 @@ public class ShangpinFenmianActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_main:
+                showPic();
                 break;
             case R.id.iv_delete:
+                showDeleteDialog();
                 break;
             case R.id.bt_chongxin:
             case R.id.iv_add:
@@ -116,6 +129,19 @@ public class ShangpinFenmianActivity extends BaseActivity {
         }
     }
 
+    private void showPic() {
+        ArrayList<String> imgs = new ArrayList<>();
+        if (!TextUtils.isEmpty(url)) {
+            if (TextUtils.isEmpty(url)) {
+                imgs.add(file.getPath());
+            } else {
+                imgs.add(url);
+            }
+        } else {
+            imgs.add(file.getPath());
+        }
+        ImageShowActivity.actionStart(mContext, imgs);
+    }
 
     private void clickAdd() {
         List<String> names = new ArrayList<>();
@@ -325,6 +351,78 @@ public class ShangpinFenmianActivity extends BaseActivity {
                     public void onStart(Request<AppResponse<Upload.DataBean>, ? extends Request> request) {
                         super.onStart(request);
                         showProgressDialog();
+                    }
+                });
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        onActivityFinish();
+    }
+
+    private void onActivityFinish() {
+        Notice n = new Notice();
+        if (isEdit) {
+            n.type = ConstanceValue.shangpin_edit_use;
+        } else {
+            n.type = ConstanceValue.shangpin_details_use;
+        }
+        RxBus.getDefault().sendRx(n);
+        finish();
+    }
+
+    private void showDeleteDialog() {
+        MyCarCaoZuoDialog_CaoZuoTIshi caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext, new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+
+            }
+
+            @Override
+            public void clickRight() {
+                deletePicture();
+            }
+        });
+        caoZuoTIshi.setTitle("提示");
+        caoZuoTIshi.setTextContent("你确定要删除当前图片么");
+        caoZuoTIshi.show();
+    }
+
+    private void deletePicture() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04192);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("wares_id", wares_id);
+        map.put("delete_type", "4");//删除图片类型 1.子商品图片 2.图文详情图片 3.轮播图图片 4.封面主图
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ShangpinDetailsModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        ll_main.setVisibility(View.GONE);
+                        rv_wu.setVisibility(View.VISIBLE);
+                        url = "";
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<ShangpinDetailsModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
                     }
                 });
     }

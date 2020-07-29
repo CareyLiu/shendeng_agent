@@ -68,7 +68,6 @@ public class BottomXiaoXiFragment extends BaseFragment {
 
             }
         }));
-
     }
 
     public static BottomXiaoXiFragment newInstance() {

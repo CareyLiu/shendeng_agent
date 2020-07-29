@@ -28,6 +28,7 @@ public class Urls {
     public final static String code_04321 = "04321";//商品列表
     public final static String code_04322 = "04322";//商品详情
     public final static String code_04323 = "04323";//商家修改商品产品状态
+    public final static String code_04192 = "04192";//删除商品图片/删除子商品图片/轮播图图片/图文详情图片
     public final static String code_04179 = "04179";//添加商品
     public final static String code_04193 = "04193";//经营项三级数据
     public final static String code_04194 = "04194";//添加子商品

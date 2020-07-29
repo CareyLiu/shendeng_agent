@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -26,9 +27,13 @@ import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.BottomDialog;
+import com.shendeng.agent.dialog.BottomDialogView;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.OrderModel;
 import com.shendeng.agent.ui.FeedBackActivity;
 import com.shendeng.agent.ui.activity.DefaultX5WebViewActivity;
+import com.shendeng.agent.ui.activity.LoginPwdActivity;
 import com.shendeng.agent.ui.activity.OrderDetailsActivity;
 import com.shendeng.agent.ui.activity.OrderFahuoActivity;
 import com.shendeng.agent.ui.activity.OrderPingjiaActivity;
@@ -235,7 +240,7 @@ public class BottomDingDanFragment extends BaseFragment {
                             } else if (shop_pay_check.equals("7")) {//查看详情
                                 OrderPingjiaActivity.actionStart(getContext(), shop_form_id);
                             } else if (shop_pay_check.equals("8")) {//退款审核
-
+                                showBottom(shop_form_id);
                             }
                         }
                         break;
@@ -250,7 +255,7 @@ public class BottomDingDanFragment extends BaseFragment {
                     OrderModel.DataBean dataBean = data.get(position);
                     String shop_form_id = dataBean.getProduct().get(0).getShop_form_id();
                     String shop_pay_check = dataBean.getShop_pay_check();
-                    if (shop_pay_check.equals("8") || shop_pay_check.equals("9") || shop_pay_check.equals("10")|| shop_pay_check.equals("12")) {//退款
+                    if (shop_pay_check.equals("8") || shop_pay_check.equals("9") || shop_pay_check.equals("10") || shop_pay_check.equals("12")) {//退款
                         OrderTuikuanActivity.actionStart(getContext(), shop_form_id);
                     } else {
                         Bundle bundle = new Bundle();
@@ -260,6 +265,74 @@ public class BottomDingDanFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    private void showBottom(String shop_form_id) {
+        List<String> names = new ArrayList<>();
+        names.add("同意退款");
+        names.add("拒绝退款");
+        final BottomDialog bottomDialog = new BottomDialog(getActivity());
+        bottomDialog.setModles(names);
+        bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
+            @Override
+            public void onClickItem(int pos) {
+                bottomDialog.dismiss();
+                if (pos == 0) {
+                    tuikuanshenhe("2", shop_form_id);
+                } else {
+                    tuikuanshenhe("6", shop_form_id);
+                }
+            }
+
+            @Override
+            public void onClickCancel(View v) {
+                bottomDialog.dismiss();
+            }
+        });
+        bottomDialog.showBottom();
+    }
+
+    private void tuikuanshenhe(String refund_rate, String shop_form_id) {//refund_rate  审核结果：2同意6拒绝
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04315);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(getActivity()).getAppToken());
+        map.put("shop_form_id", shop_form_id);
+        map.put("refund_rate", refund_rate);
+        Gson gson = new Gson();
+        OkGo.<AppResponse>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse> response) {
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(getActivity(), new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                            @Override
+                            public void onDismiss() {
+                                getOrder(shop_pay_check);
+                            }
+                        });
+                        dialog.show();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
     }
 
     private void initSM() {
@@ -307,7 +380,7 @@ public class BottomDingDanFragment extends BaseFragment {
                         if (data.size() > 0) {
                             form_id = BottomDingDanFragment.this.data.get(BottomDingDanFragment.this.data.size() - 1).getForm_id();
                             ll_no_data.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             ll_no_data.setVisibility(View.VISIBLE);
                         }
 
@@ -345,7 +418,7 @@ public class BottomDingDanFragment extends BaseFragment {
                         if (data.size() > 0) {
                             form_id = BottomDingDanFragment.this.data.get(BottomDingDanFragment.this.data.size() - 1).getForm_id();
                             ll_no_data.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             ll_no_data.setVisibility(View.VISIBLE);
                         }
 
@@ -411,7 +484,7 @@ public class BottomDingDanFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.iv_saoyisao:
                 ewm();
-               // FeedBackActivity.actionStart(getActivity());
+                // FeedBackActivity.actionStart(getActivity());
                 break;
             case R.id.tab_all:
                 selectTab(0);

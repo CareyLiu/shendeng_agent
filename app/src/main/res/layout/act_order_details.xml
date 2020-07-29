@@ -20,7 +20,6 @@
             app:srlTextSizeTime="10sp"
             app:srlTextSizeTitle="@dimen/sp_12" />
 
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -72,7 +71,6 @@
                             android:layout_height="wrap_content"
                             android:gravity="center" />
                     </LinearLayout>
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -363,31 +361,37 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
                         android:layout_marginTop="23dp"
+                        android:layout_marginRight="15dp"
                         android:layout_marginBottom="20dp"
                         android:gravity="center">
 
                         <TextView
                             android:id="@+id/bt1"
-                            android:layout_width="158dp"
+                            android:layout_width="0dp"
                             android:layout_height="48dp"
-                            android:layout_marginLeft="1dp"
-                            android:layout_marginRight="20dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
                             android:background="@drawable/white_line_radius_8"
                             android:gravity="center"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
-
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/bt2"
-                            android:layout_width="158dp"
+                            android:layout_width="0dp"
                             android:layout_height="48dp"
-                            android:layout_marginRight="1dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
                             android:background="@drawable/white_line_radius_8"
                             android:gravity="center"
                             android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            android:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

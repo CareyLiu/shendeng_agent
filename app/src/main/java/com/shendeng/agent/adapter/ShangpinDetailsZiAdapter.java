@@ -47,7 +47,7 @@ public class ShangpinDetailsZiAdapter extends BaseQuickAdapter<ShangpinDetailsMo
 
         helper.setText(R.id.tv_xinghao, "型号    " + item.getProduct_title());
         helper.setText(R.id.tv_shoujia, shouJia);
-        helper.setText(R.id.tv_xiaoliang, "销量    " + item.getProduct_count());
+        helper.setText(R.id.tv_xiaoliang, "销量    " + item.getPay_count());
         helper.setText(R.id.tv_kucun, "库存    " + item.getProduct_count());
         helper.setText(R.id.tv_zhuangtai, zhuangtai);
 

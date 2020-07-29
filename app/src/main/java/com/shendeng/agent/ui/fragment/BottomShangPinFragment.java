@@ -20,6 +20,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.ShangpinAdapter;
+import com.shendeng.agent.app.ConstanceValue;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
@@ -66,6 +67,10 @@ public class BottomShangPinFragment extends BaseFragment {
     LinearLayout ll_paixu_time;
     @BindView(R.id.ll_paixu_xiaoliang)
     LinearLayout ll_paixu_xiaoliang;
+    @BindView(R.id.iv_left_select)
+    ImageView iv_left_select;
+    @BindView(R.id.iv_right_select)
+    ImageView iv_right_select;
 
     private String wares_id;
     private String wares_state;
@@ -79,12 +84,6 @@ public class BottomShangPinFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
-            @Override
-            public void call(Notice message) {
-
-            }
-        }));
     }
 
     public static BottomShangPinFragment newInstance() {
@@ -128,6 +127,18 @@ public class BottomShangPinFragment extends BaseFragment {
         initAdapter();
         initSM();
         getNet();
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.shangpin_frag) {
+                    getNet();
+                }
+            }
+        }));
     }
 
     private void initSM() {
@@ -217,31 +228,35 @@ public class BottomShangPinFragment extends BaseFragment {
     }
 
     private void selectPaixu1() {
+        iv_right_select.setImageResource(R.mipmap.dianpu_jiage_weixuanze);
         selectJiaShang = false;
         tv_paixu_time.setTextColor(Y.getColor(R.color.text_red));
         tv_paixu_xiaoliang.setTextColor(Y.getColor(R.color.text_color_9));
         if (selectTimeShang) {
             screening_type = "2";
+            iv_left_select.setImageResource(R.mipmap.dianpu_jiage_jiangxu);
         } else {
             screening_type = "1";
+            iv_left_select.setImageResource(R.mipmap.dianpu_jiage_shengxu);
         }
         selectTimeShang = !selectTimeShang;
-        Y.t(screening_type);
         showProgressDialog();
         getNet();
     }
 
     private void selectPaixu2() {
+        iv_left_select.setImageResource(R.mipmap.dianpu_jiage_weixuanze);
         selectTimeShang = false;
         tv_paixu_time.setTextColor(Y.getColor(R.color.text_color_9));
         tv_paixu_xiaoliang.setTextColor(Y.getColor(R.color.text_red));
         if (selectJiaShang) {
             screening_type = "4";
+            iv_right_select.setImageResource(R.mipmap.dianpu_jiage_jiangxu);
         } else {
             screening_type = "3";
+            iv_right_select.setImageResource(R.mipmap.dianpu_jiage_shengxu);
         }
         selectJiaShang = !selectJiaShang;
-        Y.t(screening_type);
         showProgressDialog();
         getNet();
     }
@@ -278,6 +293,11 @@ public class BottomShangPinFragment extends BaseFragment {
                     @Override
                     public void onSuccess(Response<AppResponse<ShangpinModel.DataBean>> response) {
                         shangpinModels = response.body().data;
+
+                        if (shangpinModels != null && shangpinModels.size() > 0) {
+                            wares_id = shangpinModels.get(shangpinModels.size() - 1).getWares_id();
+                        }
+
                         adapter.setNewData(shangpinModels);
                         adapter.notifyDataSetChanged();
                     }
@@ -306,7 +326,11 @@ public class BottomShangPinFragment extends BaseFragment {
                 .execute(new JsonCallback<AppResponse<ShangpinModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ShangpinModel.DataBean>> response) {
-                        shangpinModels = response.body().data;
+                        List<ShangpinModel.DataBean> data = response.body().data;
+                        shangpinModels.addAll(data);
+                        if (shangpinModels != null && shangpinModels.size() > 0) {
+                            wares_id = shangpinModels.get(shangpinModels.size() - 1).getWares_id();
+                        }
                         adapter.setNewData(shangpinModels);
                         adapter.notifyDataSetChanged();
                     }

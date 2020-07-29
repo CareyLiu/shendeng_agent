@@ -82,6 +82,7 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
     @BindView(R.id.tv_change_moshi)
     TextView tvChangeMoshi;
     private WodeModel.DataBean userMain;
+    private String inst_owner;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -187,7 +188,7 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
                     public void onSuccess(Response<AppResponse<WodeModel.DataBean>> response) {
                         userMain = response.body().data.get(0);
                         tv_title.setText(userMain.getInst_name());
-                        String inst_owner = userMain.getInst_owner();
+                        inst_owner = userMain.getInst_owner();
                         if (inst_owner.equals("1")) {
                             ll_yuangong.setVisibility(View.VISIBLE);
                             iv_shenfen.setImageResource(R.mipmap.mine_boss);
@@ -311,7 +312,7 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
 
                 break;
             case R.id.iv_set:
-                SettingActivity.actionStart(getContext());
+                SettingActivity.actionStart(getContext(), inst_owner);
                 break;
         }
     }

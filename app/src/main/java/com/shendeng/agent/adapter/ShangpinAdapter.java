@@ -1,6 +1,7 @@
 package com.shendeng.agent.adapter;
 
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +23,7 @@ public class ShangpinAdapter extends BaseQuickAdapter<ShangpinModel.DataBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, ShangpinModel.DataBean item) {
-        Glide.with(mContext).load(item.getWares_photo_url()).into((ImageView) helper.getView(R.id.iv_img));
+        Glide.with(mContext).load(item.getWares_photo_url()).error(R.mipmap.nopic_preview_shop).into((ImageView) helper.getView(R.id.iv_img));
         helper.setText(R.id.tv_title_name, item.getShop_product_title());
         String money = item.getMoney();
         if (TextUtils.isEmpty(money)) {
@@ -32,5 +33,12 @@ public class ShangpinAdapter extends BaseQuickAdapter<ShangpinModel.DataBean, Ba
         }
         helper.setText(R.id.tv_xiaoliao, "销量：" + item.getWares_sales_volume());
         helper.setText(R.id.tv_time, item.getCreate_time());
+        View iv_yixiajia = helper.getView(R.id.iv_yixiajia);
+        String wares_state = item.getWares_state();
+        if (wares_state.equals("2")) {
+            iv_yixiajia.setVisibility(View.VISIBLE);
+        } else {
+            iv_yixiajia.setVisibility(View.GONE);
+        }
     }
 }

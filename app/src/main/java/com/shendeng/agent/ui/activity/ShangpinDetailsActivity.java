@@ -23,8 +23,14 @@ import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.BottomDialog;
+import com.shendeng.agent.dialog.BottomDialogView;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_CaoZuoTIshi;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.ShangpinDetailsModel;
+import com.shendeng.agent.ui.activity.sample.ImageShowActivity;
 import com.shendeng.agent.util.FullyLinearLayoutManager;
+import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 import com.youth.banner.Banner;
@@ -54,6 +60,8 @@ public class ShangpinDetailsActivity extends BaseActivity {
     RecyclerView rv_taocan;
     @BindView(R.id.ll_xianshiquanbu)
     LinearLayout ll_xianshiquanbu;
+    @BindView(R.id.tv_xianshiquanbu)
+    TextView tv_xianshiquanbu;
     @BindView(R.id.ll_taocan)
     LinearLayout ll_taocan;
     @BindView(R.id.ll_tuwen_details)
@@ -66,12 +74,15 @@ public class ShangpinDetailsActivity extends BaseActivity {
     TextView bt_add;
     @BindView(R.id.bt_delete)
     TextView bt_delete;
+    @BindView(R.id.iv_nopic)
+    ImageView iv_nopic;
 
     private String wares_id;
     private ShangpinDetailsModel.DataBean dataBean;
     private List<ShangpinDetailsModel.DataBean.PackageListBean> package_list = new ArrayList<>();
     private List<ShangpinDetailsModel.DataBean.PackageListBean> package_list_use = new ArrayList<>();
     private ShangpinDetailsZiAdapter ziAdapter;
+    private boolean isShowAll = false;
 
     @Override
     public int getContentViewResId() {
@@ -95,6 +106,13 @@ public class ShangpinDetailsActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
             }
         });
     }
@@ -131,8 +149,7 @@ public class ShangpinDetailsActivity extends BaseActivity {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
-                if (message.type == ConstanceValue.shangpin_edit_finish) {
-                    Y.t("商品啊啊啊");
+                if (message.type == ConstanceValue.shangpin_details_use) {
                     getNet();
                 }
             }
@@ -162,7 +179,8 @@ public class ShangpinDetailsActivity extends BaseActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("wares_id", wares_id);
         intent.putExtra("packageListBean", packageListBean);
-        startActivityForResult(intent, 100);
+        intent.putExtra("isEdit", false);
+        startActivity(intent);
     }
 
     private void getNet() {
@@ -202,6 +220,7 @@ public class ShangpinDetailsActivity extends BaseActivity {
                 package_list_use.add(package_list.get(i));
             }
         } else if (package_list.size() >= 3) {
+            ll_taocan.setVisibility(View.VISIBLE);
             ll_xianshiquanbu.setVisibility(View.VISIBLE);
             for (int i = 0; i < 2; i++) {
                 package_list_use.add(package_list.get(i));
@@ -209,7 +228,6 @@ public class ShangpinDetailsActivity extends BaseActivity {
         } else {
             ll_taocan.setVisibility(View.GONE);
         }
-
         ziAdapter.setNewData(package_list_use);
         ziAdapter.notifyDataSetChanged();
 
@@ -227,8 +245,10 @@ public class ShangpinDetailsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_xianshiquanbu:
+                clickXianshiQuanbu();
                 break;
             case R.id.ll_tuwen_details:
+                showBotoomm();
                 break;
             case R.id.ll_pingjia:
                 break;
@@ -239,9 +259,71 @@ public class ShangpinDetailsActivity extends BaseActivity {
                 clickAdd();
                 break;
             case R.id.bt_delete:
-                setStates("3");
+                showDeleteShangpin();
                 break;
         }
+    }
+
+    private void showBotoomm() {
+        List<String> names = new ArrayList<>();
+        names.add("商品封面图");
+        names.add("商品详情图");
+        final BottomDialog bottomDialog = new BottomDialog(this);
+        bottomDialog.setModles(names);
+        bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
+            @Override
+            public void onClickItem(int pos) {
+                bottomDialog.dismiss();
+                if (pos == 0) {
+                    clickFengmian();
+                } else {
+                    clickTuwen();
+                }
+            }
+
+            @Override
+            public void onClickCancel(View v) {
+                bottomDialog.dismiss();
+            }
+        });
+        bottomDialog.showBottom();
+
+    }
+
+    private void clickFengmian() {
+        Intent intent = new Intent();
+        intent.setClass(this, ShangpinFenmianActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("wares_id", wares_id);
+        intent.putExtra("url", dataBean.getWares_photo_url());
+        intent.putExtra("isEdit", false);
+        startActivity(intent);
+    }
+
+    private void clickTuwen() {
+        Intent intent = new Intent();
+        intent.setClass(this, ShangpinImgxiangActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("wares_id", wares_id);
+        startActivity(intent);
+    }
+
+    private void clickXianshiQuanbu() {
+        package_list_use.clear();
+        if (isShowAll) {
+            tv_xianshiquanbu.setText("显示全部");
+            for (int i = 0; i < 2; i++) {
+                package_list_use.add(package_list.get(i));
+            }
+        } else {
+            tv_xianshiquanbu.setText("收起");
+            for (int i = 0; i < package_list.size(); i++) {
+                package_list_use.add(package_list.get(i));
+            }
+        }
+        isShowAll = !isShowAll;
+        ziAdapter.setNewData(package_list_use);
+        ziAdapter.notifyDataSetChanged();
     }
 
     private void clickAdd() {
@@ -271,15 +353,22 @@ public class ShangpinDetailsActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
                         if (type.equals("3")) {
                             Y.t("删除成功");
-                            finish();
+                            back();
                         } else {
-                            Y.t("修改成功");
                             String text = bt_add.getText().toString();
                             if (text.equals("上架")) {
                                 bt_add.setText("下架");
                             } else {
                                 bt_add.setText("上架");
                             }
+
+                            MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(ShangpinDetailsActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                                @Override
+                                public void onDismiss() {
+                                    getNet();
+                                }
+                            });
+                            dialog.show();
                         }
                     }
 
@@ -304,25 +393,17 @@ public class ShangpinDetailsActivity extends BaseActivity {
     }
 
     private void cliickEdit() {
-        ShangpinEditActivity.actionStart(mContext, dataBean);
+        ShangpinEditActivity.actionStartD(mContext, dataBean);
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100 && resultCode == 200) {
-            getNet();
-        }
-    }
-
 
     private void initBanner() {//初始化banner
         List<ShangpinDetailsModel.DataBean.ImgListBean> img_list = dataBean.getImg_list();
         if (img_list != null && img_list.size() > 0) {
+            iv_nopic.setVisibility(View.GONE);
             MyImageLoader mMyImageLoader = new MyImageLoader();
             banner.setImageLoader(mMyImageLoader);
             //  initMagicIndicator1(tagList);
-            List<String> imagePath = new ArrayList<>();
+            ArrayList<String> imagePath = new ArrayList<String>();
             for (int i = 0; i < img_list.size(); i++) {
                 imagePath.add(img_list.get(i).getImg_url());
             }
@@ -332,10 +413,12 @@ public class ShangpinDetailsActivity extends BaseActivity {
             banner.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
-//                    clickDanan(BaziCode.ST_mingpan);
+                    ImageShowActivity.actionStart(ShangpinDetailsActivity.this, imagePath);
                 }
             });
             banner.start();
+        } else {
+            iv_nopic.setVisibility(View.VISIBLE);
         }
     }
 
@@ -349,5 +432,36 @@ public class ShangpinDetailsActivity extends BaseActivity {
                     .load(path)
                     .into(imageView);
         }
+    }
+
+
+    private void showDeleteShangpin() {
+        MyCarCaoZuoDialog_CaoZuoTIshi caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext, new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+            @Override
+            public void clickLeft() {
+
+            }
+
+            @Override
+            public void clickRight() {
+                setStates("3");
+            }
+        });
+        caoZuoTIshi.setTitle("提示");
+        caoZuoTIshi.setTextContent("你确定要删除该商品么");
+        caoZuoTIshi.show();
+    }
+
+    private void back() {
+        Notice n = new Notice();
+        n.type = ConstanceValue.shangpin_frag;
+        RxBus.getDefault().sendRx(n);
+        finish();
+    }
+
+    @Override
+    public void onBackPressedSupport() {
+        super.onBackPressedSupport();
+        back();
     }
 }

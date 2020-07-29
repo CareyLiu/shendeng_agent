@@ -7,7 +7,9 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="331dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_height="154dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/mine_qianbao_bg"
@@ -83,7 +85,9 @@
 
     <LinearLayout
         android:id="@+id/ll_jiesuan"
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_height="59dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/white_radius_8"
@@ -117,7 +121,9 @@
 
     <LinearLayout
         android:id="@+id/ll_zhanghaoset"
-        android:layout_width="325dp"
+        android:layout_width="match_parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_height="59dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/white_radius_8"

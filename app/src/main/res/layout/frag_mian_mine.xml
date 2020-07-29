@@ -74,10 +74,11 @@
                                 android:src="@mipmap/mine_set" />
                         </RelativeLayout>
 
-
                         <LinearLayout
-                            android:layout_width="331dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
                             android:background="@drawable/white_radius_8"
                             android:orientation="vertical">
 
@@ -228,9 +229,11 @@
 
                         <LinearLayout
                             android:id="@+id/ll_qianbao"
-                            android:layout_width="331dp"
+                            android:layout_width="match_parent"
                             android:layout_height="54dp"
+                            android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginRight="15dp"
                             android:background="@drawable/white_radius_8"
                             android:gravity="center_vertical">
 
@@ -261,9 +264,11 @@
 
                         <LinearLayout
                             android:id="@+id/ll_about"
-                            android:layout_width="331dp"
+                            android:layout_width="match_parent"
                             android:layout_height="54dp"
+                            android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginRight="15dp"
                             android:background="@drawable/white_radius_8"
                             android:gravity="center_vertical">
 
@@ -294,11 +299,14 @@
 
                         <LinearLayout
                             android:id="@+id/ll_dizhi"
-                            android:layout_width="331dp"
+                            android:layout_width="match_parent"
                             android:layout_height="54dp"
+                            android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginRight="15dp"
                             android:background="@drawable/white_radius_8"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:layout_width="31dp"
@@ -327,11 +335,14 @@
 
                         <LinearLayout
                             android:id="@+id/ll_yuangong"
-                            android:layout_width="331dp"
+                            android:layout_width="match_parent"
                             android:layout_height="54dp"
+                            android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginRight="15dp"
                             android:background="@drawable/white_radius_8"
-                            android:gravity="center_vertical">
+                            android:gravity="center_vertical"
+                            android:visibility="gone">
 
                             <ImageView
                                 android:layout_width="31dp"
@@ -360,9 +371,11 @@
 
                         <LinearLayout
                             android:id="@+id/ll_qiehuan"
-                            android:layout_width="331dp"
+                            android:layout_width="match_parent"
                             android:layout_height="54dp"
+                            android:layout_marginLeft="15dp"
                             android:layout_marginTop="15dp"
+                            android:layout_marginRight="15dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/white_radius_8"
                             android:gravity="center">
