@@ -3,4 +3,6 @@
 
 
     <string name="wx_app_id">wxe13b3c3db8282097</string>
+
+    <string name="app_name" translatable="false">聚易佳商家</string>
 </resources>

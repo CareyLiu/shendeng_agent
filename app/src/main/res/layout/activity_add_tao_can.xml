@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayfff5f5f5"
+    tools:context=".ui.activity.tuangou.AddTaoCanActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_mingcheng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="19dp"
+            android:layout_marginTop="25dp"
+            android:includeFontPadding="false"
+            android:text="名称"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <EditText
+            android:layout_width="272dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="19dp"
+            android:background="@drawable/taocanguanli_background_line"
+            android:hint="请输入名称"
+            android:includeFontPadding="false"
+            android:paddingLeft="19dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_mingcheng"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_mingcheng" />
+
+
+        <TextView
+            android:id="@+id/tv_shuliang"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:includeFontPadding="false"
+            android:text="数量"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_mingcheng"
+            app:layout_constraintRight_toRightOf="@+id/tv_mingcheng"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mingcheng" />
+
+
+        <EditText
+            android:layout_width="272dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="19dp"
+            android:background="@drawable/taocanguanli_background_line"
+            android:hint="请输入数量"
+            android:includeFontPadding="false"
+            android:paddingLeft="19dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_shuliang"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_shuliang" />
+
+
+        <TextView
+            android:id="@+id/tv_jiage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:includeFontPadding="false"
+            android:text="价格"
+            android:textColor="#ff000000"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="@+id/tv_shuliang"
+            app:layout_constraintRight_toRightOf="@+id/tv_shuliang"
+            app:layout_constraintTop_toBottomOf="@+id/tv_shuliang" />
+
+        <EditText
+            android:id="@+id/et_jiage"
+            android:layout_width="272dp"
+            android:layout_height="35dp"
+            android:layout_marginRight="19dp"
+            android:background="@drawable/taocanguanli_background_line"
+            android:hint="请输入价格"
+            android:includeFontPadding="false"
+            android:paddingLeft="19dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_jiage"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_jiage" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/et_jiage" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <TextView
+        android:id="@+id/tv_queding"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginTop="19dp"
+        android:background="@drawable/taocanguanli_background_line"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="#fffc0100"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/cl_one" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_diercijinru"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="19dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_one">
+
+
+        <TextView
+            android:id="@+id/tv_shanchu"
+            android:layout_width="158dp"
+            android:layout_height="46dp"
+            android:background="@drawable/taocanguanli_background_line"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="#ff333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tv_queding1"
+            android:layout_marginLeft="14dp"
+            android:layout_width="158dp"
+            android:layout_height="46dp"
+            android:background="@drawable/taocanguanli_background_line"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="#fffc0100"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

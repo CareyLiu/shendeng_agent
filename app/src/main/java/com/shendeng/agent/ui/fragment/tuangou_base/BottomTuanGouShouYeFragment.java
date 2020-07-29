@@ -21,6 +21,7 @@ import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.ui.activity.OrderSaoyisaoActivity;
 import com.shendeng.agent.ui.activity.tuangou.HandAddActivity;
+import com.shendeng.agent.ui.activity.tuangou.TuanGouDingDanGuanliActivity;
 import com.shendeng.agent.ui.activity.tuangou.TuanGouSaoMaActivity;
 import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Y;
@@ -116,6 +117,10 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
     RelativeLayout rlSaomayanzheng;
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
+    @BindView(R.id.rl_dingdan_guanli)
+    RelativeLayout rlDingdanGuanli;
+    @BindView(R.id.view)
+    View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -211,7 +216,13 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
                 TuanGouSaoMaActivity.actionStart(getActivity());
             }
         });
-
+        rlDingdanGuanli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //UIHelper.ToastMessage(getActivity(), "点击了订单管理");
+                TuanGouDingDanGuanliActivity.actionStart(getActivity());
+            }
+        });
         srLSmart.setEnableLoadMore(false);
     }
 

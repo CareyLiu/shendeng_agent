@@ -11,11 +11,13 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.NestedScrollView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.util.UIHelper;
 
 import butterknife.BindView;
 
@@ -45,7 +47,18 @@ public class TaoCanGuanLiActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 View view = View.inflate(TaoCanGuanLiActivity.this, R.layout.item_taocan_tiaomu, null);
+
+                ConstraintLayout constraintLayout = view.findViewById(R.id.constrain);
+
+                constraintLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UIHelper.ToastMessage(mContext, "点击了");
+                        AddTaoCanActivity.actionStart(mContext, "1");
+                    }
+                });
                 llTaocan.addView(view);
+
 
                 Handler handler = new Handler();
                 handler.post(new Runnable() {
@@ -59,10 +72,6 @@ public class TaoCanGuanLiActivity extends BaseActivity {
 
     }
 
-    @Override
-    public int getContentViewResId() {
-        return R.layout.activity_tao_can_guan_li;
-    }
 
     @Override
     public boolean showToolBar() {

@@ -39,6 +39,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -164,6 +166,7 @@ public class BottomTuanGouXiaoXiFragment extends BaseFragment {
         messageListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+
 
             }
         });

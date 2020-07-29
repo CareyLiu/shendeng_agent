@@ -180,4 +180,11 @@ public class App extends Application {
         }
 
     }
+
+    @Override
+    public void onTerminate() {
+        // 程序终止的时候执行
+        RongIM.getInstance().logout();
+        super.onTerminate();
+    }
 }
