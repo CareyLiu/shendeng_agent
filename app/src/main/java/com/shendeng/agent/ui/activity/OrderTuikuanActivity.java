@@ -239,8 +239,9 @@ public class OrderTuikuanActivity extends BaseActivity {
                                 bt2.setText("查看物流");
                                 bt2.setVisibility(View.VISIBLE);
                             } else {
+                                bt2.setText("查看物流");
                                 bt1.setVisibility(View.GONE);
-                                bt2.setVisibility(View.GONE);
+                                bt2.setVisibility(View.VISIBLE);
                             }
 
                             qiu2.setBackgroundResource(R.drawable.order_qiu_s);
@@ -273,7 +274,7 @@ public class OrderTuikuanActivity extends BaseActivity {
 
                         tv_danhao_tuihuo.setText("退货单号：" + dataBean.getRefund_no());
                         tv_danhao_order.setText("订单号：" + dataBean.getForm_no());
-                        tv_yuanyin.setText("退款原因：");
+                        tv_yuanyin.setText("退款原因：" + dataBean.getRefund_cause());
 
                         tv_name_mai.setText("卖家收货人：" + dataBean.getInst_worker_name());
                         tv_adress_tui.setText("退货地址：" + dataBean.getInst_addr_all());
