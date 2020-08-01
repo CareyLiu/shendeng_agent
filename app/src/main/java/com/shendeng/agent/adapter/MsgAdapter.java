@@ -1,5 +1,7 @@
 package com.shendeng.agent.adapter;
 
+import android.widget.ImageView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shendeng.agent.R;
@@ -18,7 +20,7 @@ public class MsgAdapter extends BaseQuickAdapter<MsgModel, BaseViewHolder> {
     @Override
     protected void convert(BaseViewHolder helper, MsgModel item) {
         helper.setText(R.id.tv_name, item.getName());
-
-
+        ImageView iv_icon = (ImageView) helper.getView(R.id.iv_icon);
+        iv_icon.setImageResource(item.getImgId());
     }
 }

@@ -8,10 +8,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_height="154dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/mine_qianbao_bg"
         android:orientation="vertical"
         android:paddingLeft="20dp">
@@ -50,10 +50,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="11dp"
-                    android:layout_height="11dp"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:layout_marginLeft="9dp"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/qiaobao_icon_mingxi" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -86,10 +87,10 @@
     <LinearLayout
         android:id="@+id/ll_jiesuan"
         android:layout_width="match_parent"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_height="59dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/white_radius_8"
         android:gravity="center_vertical">
 
@@ -122,10 +123,10 @@
     <LinearLayout
         android:id="@+id/ll_zhanghaoset"
         android:layout_width="match_parent"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_height="59dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:background="@drawable/white_radius_8"
         android:gravity="center_vertical">
 

@@ -23,12 +23,19 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
+import com.shendeng.agent.adapter.MsgAdapter;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.MessageModel;
+import com.shendeng.agent.model.MsgModel;
+import com.shendeng.agent.ui.activity.MsgGonggaoActivity;
+import com.shendeng.agent.ui.activity.MsgHuodongActivity;
+import com.shendeng.agent.ui.activity.MsgIMActivity;
+import com.shendeng.agent.ui.activity.MsgNewActivity;
+import com.shendeng.agent.ui.activity.MsgOrderActivity;
 import com.shendeng.agent.ui.adapter.MessageListAdapter;
 import com.shendeng.agent.util.Urls;
 
@@ -46,19 +53,12 @@ import rx.functions.Action1;
 
 public class BottomTuanGouXiaoXiFragment extends BaseFragment {
 
+    @BindView(R.id.rv_view)
+    RecyclerView rv_view;
     @BindView(R.id.rl_title)
-    RelativeLayout rlTitle;
+    RelativeLayout rl_title;
     @BindView(R.id.view_line)
-    View viewLine;
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-    @BindView(R.id.srL_smart)
-    SmartRefreshLayout srLSmart;
-    List<MessageModel.DataBean> mDatas = new ArrayList<>();
-    String notifyId = "";
-    @BindView(R.id.iv_none)
-    ImageView ivNone;
-    private MessageListAdapter messageListAdapter;
+    View view_line;
 
 
     @Override
@@ -70,7 +70,6 @@ public class BottomTuanGouXiaoXiFragment extends BaseFragment {
 
             }
         }));
-
     }
 
     public static BottomTuanGouXiaoXiFragment newInstance() {
@@ -120,14 +119,6 @@ public class BottomTuanGouXiaoXiFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getNet();
-        Log.i("bottomxiaoxi", "onactivity_created");
-        srLSmart.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                notifyId = "";
-                getNet();
-            }
-        });
         initAdapter();
     }
 
@@ -135,93 +126,63 @@ public class BottomTuanGouXiaoXiFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 
     @Override
     public void onPause() {
         super.onPause();
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
     }
 
     private void initAdapter() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        messageListAdapter = new MessageListAdapter(R.layout.item_messagelist, mDatas);
-        messageListAdapter.openLoadAnimation();//默认为渐显效果
-        recyclerView.setAdapter(messageListAdapter);
+        List<MsgModel> models = new ArrayList<>();
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_liaotianxiaoxi, "私聊消息"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_dingdanxiaoxi, "订单消息"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_juyijiagonggao, "聚易佳公告"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_jingxuanhuodong, "精选活动"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_xingongneng, "新功能"));
 
-        messageListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+        MsgAdapter adapter = new MsgAdapter(R.layout.item_msg_xiaoxi, models);
+        rv_view.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_view.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
-
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (models != null && models.size() > position) {
+                    String name = models.get(position).getName();
+                    switch (name) {
+                        case "订单消息":
+                            MsgOrderActivity.actionStart(getContext());
+                            break;
+                        case "聚易佳公告":
+                            MsgGonggaoActivity.actionStart(getContext());
+                            break;
+                        case "精选活动":
+                            MsgHuodongActivity.actionStart(getContext());
+                            break;
+                        case "新功能":
+                            MsgNewActivity.actionStart(getContext());
+                            break;
+                        case "私聊消息":
+                            MsgIMActivity.actionStart(getContext());
+                            break;
+                    }
+                }
             }
         });
     }
 
     private void getNet() {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", "04341");
-        map.put("key", Urls.KEY);
-        map.put("token", UserManager.getManager(getActivity()).getAppToken());
 
-
-        Gson gson = new Gson();
-        OkGo.<AppResponse<MessageModel.DataBean>>post(Urls.WORKER)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<MessageModel.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<MessageModel.DataBean>> response) {
-                        if (response.body().data.size() > 0) {
-                            if (StringUtils.isEmpty(notifyId)) {
-                                mDatas.clear();
-                                mDatas.addAll(response.body().data);
-                                messageListAdapter.setNewData(mDatas);
-
-                            } else {
-                                srLSmart.setEnableLoadMore(true);
-                                mDatas.addAll(response.body().data);
-                            }
-
-                            notifyId = mDatas.get(mDatas.size() - 1).getNotify_id();
-                            messageListAdapter.notifyDataSetChanged();
-
-                            recyclerView.setVisibility(View.VISIBLE);
-                            ivNone.setVisibility(View.GONE);
-                            srLSmart.setEnableLoadMore(true);
-                        } else {
-                            srLSmart.setEnableLoadMore(false);
-                        }
-
-                        if (mDatas.size() == 0) {
-                            recyclerView.setVisibility(View.GONE);
-                            ivNone.setVisibility(View.VISIBLE);
-                        }
-                        srLSmart.finishLoadMore();
-                        srLSmart.finishRefresh();
-
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                    }
-                });
     }
-
 
 }

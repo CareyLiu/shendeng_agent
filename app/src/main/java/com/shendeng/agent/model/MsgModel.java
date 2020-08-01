@@ -3,20 +3,20 @@ package com.shendeng.agent.model;
 import android.content.Intent;
 
 public class MsgModel {
-    private int ImgId;
+    private int imgId;
     private String name;
 
     public MsgModel(int imgId, String name) {
-        ImgId = imgId;
+        this.imgId = imgId;
         this.name = name;
     }
 
     public int getImgId() {
-        return ImgId;
+        return imgId;
     }
 
     public void setImgId(int imgId) {
-        ImgId = imgId;
+        this.imgId = imgId;
     }
 
     public String getName() {

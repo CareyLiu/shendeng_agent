@@ -18,7 +18,6 @@
             android:layout_height="43dp"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
-            android:background="@color/black"
             android:scaleType="centerCrop" />
 
         <TextView

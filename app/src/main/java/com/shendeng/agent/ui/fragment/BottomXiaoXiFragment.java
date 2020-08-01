@@ -123,11 +123,11 @@ public class BottomXiaoXiFragment extends BaseFragment {
 
     private void initAdapter() {
         List<MsgModel> models = new ArrayList<>();
-        models.add(new MsgModel(1, "订单消息"));
-        models.add(new MsgModel(1, "聚易佳公告"));
-        models.add(new MsgModel(1, "精选活动"));
-        models.add(new MsgModel(1, "新功能"));
-        models.add(new MsgModel(1, "私聊消息"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_liaotianxiaoxi, "私聊消息"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_dingdanxiaoxi, "订单消息"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_juyijiagonggao, "聚易佳公告"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_jingxuanhuodong, "精选活动"));
+        models.add(new MsgModel(R.mipmap.xiaoxi_tongzhi_xingongneng, "新功能"));
 
         MsgAdapter adapter = new MsgAdapter(R.layout.item_msg_xiaoxi, models);
         rv_view.setLayoutManager(new LinearLayoutManager(getContext()));
