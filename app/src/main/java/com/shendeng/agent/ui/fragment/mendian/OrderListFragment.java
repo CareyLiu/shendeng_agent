@@ -13,6 +13,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.TuanGouDingDanListAdapter;
 import com.shendeng.agent.basicmvp.BaseFragment;
+import com.shendeng.agent.ui.activity.tuangou.TuanGouDingDanDetails;
 import com.shendeng.agent.util.UIHelper;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class OrderListFragment extends BaseFragment {
                 switch (view.getId()) {
                     case R.id.constrain:
                         UIHelper.ToastMessage(getActivity(), "点击了");
+                        TuanGouDingDanDetails.actionStart(getActivity());
                         break;
                 }
             }
