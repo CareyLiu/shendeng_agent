@@ -1,0 +1,184 @@
+package com.shendeng.agent.ui.activity;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
+import com.blankj.utilcode.util.StringUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.shendeng.agent.R;
+import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.MessageModel;
+import com.shendeng.agent.ui.adapter.MessageListAdapter;
+import com.shendeng.agent.util.Urls;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+
+public class MsgIMActivity extends BaseActivity {
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.srL_smart)
+    SmartRefreshLayout srLSmart;
+    List<MessageModel.DataBean> mDatas = new ArrayList<>();
+    @BindView(R.id.iv_none)
+    ImageView ivNone;
+
+    private MessageListAdapter messageListAdapter;
+    String notifyId = "";
+
+    @Override
+    public int getContentViewResId() {
+        return R.layout.act_msg_im;
+    }
+
+    @Override
+    public boolean showToolBar() {
+        return true;
+    }
+
+    @Override
+    protected void initToolbar() {
+        super.initToolbar();
+        tv_title.setText("私聊消息");
+    }
+
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     */
+    public static void actionStart(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, MsgIMActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+        init();
+    }
+
+    private void init() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+
+            }
+        }));
+        initAdapter();
+        getNet();
+
+        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                notifyId = "";
+                getNet();
+            }
+        });
+    }
+
+
+    private void initAdapter() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        messageListAdapter = new MessageListAdapter(R.layout.item_messagelist, mDatas);
+        messageListAdapter.openLoadAnimation();//默认为渐显效果
+        recyclerView.setAdapter(messageListAdapter);
+
+        messageListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                switch (view.getId()) {
+                    case R.id.constrain:
+                        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+                        String targetId = mDatas.get(position).getLt_user_accid();
+                        String instName = mDatas.get(position).getLt_user_name();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("dianpuming", instName);
+                        bundle.putString("inst_accid", mDatas.get(position).getLt_user_accid());
+                        RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
+                        break;
+                }
+            }
+        });
+    }
+
+    private void getNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", "04341");
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<MessageModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<MessageModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<MessageModel.DataBean>> response) {
+                        if (response.body().data.size() > 0) {
+                            if (StringUtils.isEmpty(notifyId)) {
+                                mDatas.clear();
+                                mDatas.addAll(response.body().data);
+                                messageListAdapter.setNewData(mDatas);
+
+                            } else {
+                                srLSmart.setEnableLoadMore(true);
+                                mDatas.addAll(response.body().data);
+                            }
+
+                            notifyId = mDatas.get(mDatas.size() - 1).getNotify_id();
+                            messageListAdapter.notifyDataSetChanged();
+
+                            recyclerView.setVisibility(View.VISIBLE);
+                            ivNone.setVisibility(View.GONE);
+                            srLSmart.setEnableLoadMore(true);
+                        } else {
+                            srLSmart.setEnableLoadMore(false);
+                        }
+
+                        if (mDatas.size() == 0) {
+                            recyclerView.setVisibility(View.GONE);
+                            ivNone.setVisibility(View.VISIBLE);
+                        }
+                        srLSmart.finishLoadMore();
+                        srLSmart.finishRefresh();
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+    }
+}

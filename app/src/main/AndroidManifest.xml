@@ -41,82 +41,149 @@
             android:name=".ui.activity.WelcomeActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- 登录页面 -->
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!-- 登录页面 -->
         <activity
             android:name=".ui.activity.LoginActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 手机验证 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 手机验证 -->
         <activity
             android:name=".ui.activity.LoginYzmActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 手机验证 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 手机验证 -->
         <activity
             android:name=".ui.activity.PhoneCheckActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 密码找回 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 密码找回 -->
         <activity
             android:name=".ui.activity.LoginPwdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 到店扫码 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 到店扫码 -->
         <activity
             android:name=".ui.activity.OrderSaoyisaoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 订单详情 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 订单详情 -->
         <activity
             android:name=".ui.activity.OrderDetailsActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- 退款订单详情 -->
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!-- 退款订单详情 -->
         <activity
             android:name=".ui.activity.OrderTuikuanActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- 发货 -->
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!-- 发货 -->
         <activity
             android:name=".ui.activity.OrderFahuoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 发货扫描单号 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 发货扫描单号 -->
         <activity
             android:name=".ui.activity.OrderFahuoEwmActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 修改快递费 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 修改快递费 -->
         <activity
             android:name=".ui.activity.OrderKuaidiActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 订单评价 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 订单评价 -->
         <activity
             android:name=".ui.activity.OrderPingjiaActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 商品详情 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 订单消息 -->
+        <activity
+            android:name=".ui.activity.MsgOrderActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 聚易佳公告 -->
+        <activity
+            android:name=".ui.activity.MsgGonggaoActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 精选活动 -->
+        <activity
+            android:name=".ui.activity.MsgHuodongActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 新功能 -->
+        <activity
+            android:name=".ui.activity.MsgNewActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 私聊消息 -->
+        <activity
+            android:name=".ui.activity.MsgIMActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 商品详情 -->
         <activity
             android:name=".ui.activity.ShangpinDetailsActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 添加商品 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 添加商品 -->
         <activity
             android:name=".ui.activity.ShangpinAddActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 编辑商品 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 编辑商品 -->
         <activity
             android:name=".ui.activity.ShangpinEditActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 子套餐详情 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 子套餐详情 -->
         <activity
             android:name=".ui.activity.ShangpinZiAddActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 商品封面 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 商品封面 -->
         <activity
             android:name=".ui.activity.ShangpinFenmianActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
@@ -130,7 +197,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustUnspecified|stateHidden" />
 
-        <!--    商品图文详情    -->
+        <!--    商品轮播图详情    -->
         <activity
             android:name=".ui.activity.ShangpinBannerActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
@@ -142,32 +209,44 @@
             android:name=".ui.activity.headimage.ClipImageActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 设置 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 设置 -->
         <activity
             android:name=".ui.activity.SettingActivity"
             android:configChanges="locale|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" /> <!-- 我的钱包 -->
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <!-- 我的钱包 -->
         <activity
             android:name=".ui.activity.WodeQainbaoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 绑定支付宝 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 绑定支付宝 -->
         <activity
             android:name=".ui.activity.SetAlipayActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 提现 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 提现 -->
         <activity
             android:name=".ui.activity.TixianActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 我的退货地址 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 我的退货地址 -->
         <activity
             android:name=".ui.activity.WodeTuihuoActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 新增退货地址 -->
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
+
+        <!-- 新增退货地址 -->
         <activity
             android:name=".ui.activity.WodeTuihuoAddActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
