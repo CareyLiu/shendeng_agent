@@ -11,7 +11,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
-import com.lzy.okgo.request.base.Request;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
@@ -30,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,6 +52,8 @@ public class WodeQainbaoActivity extends BaseActivity {
     LinearLayout ll_jiesuan;
     @BindView(R.id.ll_zhanghaoset)
     LinearLayout ll_zhanghaoset;
+    @BindView(R.id.smartRefreshLayout)
+    SmartRefreshLayout smartRefreshLayout;
     private QainbaoModel.DataBean dataBean;
 
     @Override
@@ -88,6 +94,17 @@ public class WodeQainbaoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+        initSM();
+    }
+
+    private void initSM() {
+        smartRefreshLayout.setEnableLoadMore(false);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
     }
 
     @Override
@@ -118,6 +135,12 @@ public class WodeQainbaoActivity extends BaseActivity {
                         super.onError(response);
                         Y.tError(response);
                         finish();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        smartRefreshLayout.finishRefresh();
                     }
                 });
     }

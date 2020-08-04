@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
@@ -24,6 +25,7 @@ import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.InputDialog;
 import com.shendeng.agent.dialog.TishiDialog;
+import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
 import com.shendeng.agent.model.JiesuanModel;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
@@ -204,9 +206,9 @@ public class TixianActivity extends BaseActivity {
                 public void onClickConfirm(View v, InputDialog dialog) {
                     String payPwd = dialog.getTextContent();
 
-                    if (!TextUtils.isEmpty(payPwd)){
+                    if (!TextUtils.isEmpty(payPwd)) {
                         getTixian(payPwd);
-                    }else {
+                    } else {
                         Y.t("请输入支付密码");
                     }
                 }
@@ -258,13 +260,25 @@ public class TixianActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<JiesuanModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<JiesuanModel.DataBean>> response) {
-
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(TixianActivity.this, "提现成功", "恭喜您操作成功", new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                            @Override
+                            public void onDismiss() {
+                                finish();
+                            }
+                        });
+                        dialog.show();
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
+                        dismissProgressDialog();
+                    }
 
+                    @Override
+                    public void onStart(Request<AppResponse<JiesuanModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
                     }
                 });
     }

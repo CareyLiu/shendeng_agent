@@ -101,8 +101,6 @@ public class OrderFahuoActivity extends BaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("发货");
-
-
         tv_rightTitle.setTextSize(17);
         tv_rightTitle.setTextColor(this.getResources().getColor(R.color.text_red));
         tv_rightTitle.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
@@ -297,7 +295,7 @@ public class OrderFahuoActivity extends BaseActivity {
         }
 
         express_no = ed_danhao.getText().toString();
-        express_no = "SF1081723448107";
+//        express_no = "SF1081723448107";
         if (TextUtils.isEmpty(express_no)) {
             Y.t("请输入快递单号");
             return;

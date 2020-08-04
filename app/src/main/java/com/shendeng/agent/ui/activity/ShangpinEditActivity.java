@@ -520,7 +520,6 @@ public class ShangpinEditActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_add:
-                break;
             case R.id.tv_img_num:
                 clickBanner();
                 break;
