@@ -419,10 +419,12 @@
 
 
                 <TextView
+
+                    android:paddingLeft="50dp"
                     android:id="@+id/taocan_bianji"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="6dp"
+                    android:paddingRight="6dp"
                     android:includeFontPadding="false"
                     android:text="编辑"
                     android:textColor="#ff333333"

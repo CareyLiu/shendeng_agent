@@ -10,18 +10,31 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.TaoCanGuanLiHomeAdapter;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.JiesuanModel;
+import com.shendeng.agent.model.OrderDetailsModel;
+import com.shendeng.agent.model.TaoCanListModel;
 import com.shendeng.agent.util.UIHelper;
+import com.shendeng.agent.util.Urls;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -32,13 +45,15 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
     TaoCanGuanLiHomeAdapter taoCanGuanLiHomeAdapter;
-    List<JiesuanModel.DataBean> mDatas;
+    List<TaoCanListModel.DataBean.TaocanListBean> mDatas;
     @BindView(R.id.tv_chushouzhong)
     TextView tvChushouzhong;
     @BindView(R.id.tv_yixiajia)
     TextView tvYixiajia;
     @BindView(R.id.tv_xinjian_taocan)
     TextView tvXinjianTaocan;
+    private String wares_id = "";
+    private String str = "1";//1出售中 2 已下架
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,27 +62,13 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-
+                wares_id = "";
+                getDetails();
             }
         });
 
         srLSmart.setEnableLoadMore(false);
         mDatas = new ArrayList<>();
-        JiesuanModel.DataBean jiesuanModel = new JiesuanModel.DataBean();
-
-
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
 
 
         taoCanGuanLiHomeAdapter = new TaoCanGuanLiHomeAdapter(R.layout.item_taocan_guanli, mDatas);
@@ -88,7 +89,11 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
             public void onClick(View v) {
                 tvChushouzhong.setTextColor(mContext.getResources().getColor(R.color.FC0100));
                 tvYixiajia.setTextColor(mContext.getResources().getColor(R.color.gray999999));
-                tvChushouzhong.setText("出售中(" + mDatas.size() + ")");
+
+
+                str = "1";
+                wares_id = "";
+                getDetails();
             }
         });
         tvYixiajia.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +101,9 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
             public void onClick(View v) {
                 tvYixiajia.setTextColor(mContext.getResources().getColor(R.color.FC0100));
                 tvChushouzhong.setTextColor(mContext.getResources().getColor(R.color.gray999999));
-                tvYixiajia.setText("已下架(" + mDatas.size() + ")");
+                str = "2";
+                wares_id = "";
+                getDetails();
             }
         });
 
@@ -106,8 +113,14 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
                 switch (view.getId()) {
                     case R.id.constrain:
 
-                        //  AddTaoCanActivity.actionStart(mContext, "1");
-                        TianJiaTaoCanActivity.actionStart(mContext, "1");
+
+                        if (taoCanGuanLiHomeAdapter.getData().get(position).getWares_state().equals("1")) {//出售中
+                            TianJiaTaoCanActivity.actionStart(mContext, "2","0",mDatas.get(position).getWares_id());
+                        } else {
+                            TianJiaTaoCanActivity.actionStart(mContext, "2","0",mDatas.get(position).getWares_id());
+                        }
+
+
                         break;
                 }
             }
@@ -121,11 +134,11 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
         tvXinjianTaocan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //     AddTaoCanActivity.actionStart(mContext, "0");
-
-                TianJiaTaoCanActivity.actionStart(mContext, "0");
+                TianJiaTaoCanActivity.actionStart(mContext, "0","1",null);
             }
         });
+
+        getDetails();
 
     }
 
@@ -154,5 +167,56 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
         intent.setClass(context, TaoCanGuanLi_HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    private void getDetails() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04202);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("wares_id", wares_id);
+        map.put("wares_state", str);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<TaoCanListModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<TaoCanListModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<TaoCanListModel.DataBean>> response) {
+
+
+                        taoCanGuanLiHomeAdapter.removeAllHeaderView();
+                        if (StringUtils.isEmpty(wares_id)) {
+                            mDatas.clear();
+                            mDatas.addAll(response.body().data.get(0).getTaocan_list());
+
+                            taoCanGuanLiHomeAdapter.notifyDataSetChanged();
+                        } else {
+                            mDatas.addAll(response.body().data.get(0).getTaocan_list());
+                            taoCanGuanLiHomeAdapter.notifyDataSetChanged();
+                        }
+                        if (mDatas.size() == 0) {
+                            View view = View.inflate(mContext, R.layout.layout_zanwushuju, null);
+                            taoCanGuanLiHomeAdapter.setHeaderView(view);
+                        }
+
+                        tvChushouzhong.setText("出售中(" + response.body().data.get(0).getBuyed_count() + ")");
+                        tvYixiajia.setText("已下架(" + response.body().data.get(0).getPull_off_count() + ")");
+
+                        srLSmart.finishRefresh();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<TaoCanListModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog("");
+                    }
+                });
     }
 }

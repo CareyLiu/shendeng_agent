@@ -52,6 +52,8 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:layout_marginLeft="100dp"
+                        android:id="@+id/et_taocanmingcheng"
                         android:gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -88,6 +90,8 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:layout_marginLeft="100dp"
+                        android:id="@+id/et_taocanyuanjia"
                         android:gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -124,6 +128,8 @@
                         android:textStyle="bold" />
 
                     <EditText
+                        android:layout_marginLeft="100dp"
+                        android:id="@+id/et_taocanxianjia"
                         android:gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -143,205 +149,252 @@
                     android:layout_height="0.5dp"
                     android:background="#cccccc" />
 
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constrain_tupian"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="123dp"
+                    android:layout_height="wrap_content"
                     android:background="@color/white">
 
                     <TextView
-                        android:id="@+id/tv_fenlei_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="47dp"
-                        android:layout_marginLeft="14dp"
-                        android:gravity="center"
-                        android:includeFontPadding="false"
-                        android:text="套餐图片"
-                        android:textColor="#ff000000"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-
-                    <ImageView
-                        android:id="@+id/iv_taocan_tupian"
-                        android:layout_width="58dp"
-                        android:layout_height="58dp"
-                        android:layout_marginLeft="14dp"
-                        android:layout_marginBottom="13dp"
-                        android:src="@mipmap/shoppicture_icon_add"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent" />
-
-
-                    <ImageView
-                        android:id="@+id/iv_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="14dp"
+                        android:includeFontPadding="false"
+                        android:text="套餐简介"
+                        android:textColor="#ff000000"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:layout_marginVertical="@dimen/dp_16"
+                        android:layout_marginLeft="100dp"
+                        android:id="@+id/et_taocanjianjie"
+                        android:gravity="right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="14dp"
-                        android:src="@mipmap/sjd_icon_arrow_gray"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_taocan_tupian"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/iv_taocan_tupian" />
-
-
-                    <TextView
-                        android:id="@+id/tv_tup_num"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="9dp"
-                        android:includeFontPadding="false"
-                        android:text="4张"
-                        android:textColor="#ff333333"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_back"
-                        app:layout_constraintRight_toLeftOf="@+id/iv_back"
-                        app:layout_constraintTop_toTopOf="@+id/iv_back" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/white">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="14dp"
-                        android:includeFontPadding="false"
-                        android:text="套餐内容"
-                        android:textColor="#ff000000"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:background="@null"
+                        android:hint="请输入套餐简介"
+                        android:textColor="#ff999999"
+                        android:textCursorDrawable="@drawable/guangbiao"
+                        android:textSize="14sp" />
 
                 </RelativeLayout>
 
-
                 <LinearLayout
-                    android:id="@+id/ll_leimu"
+                    android:id="@+id/ll_bianjineirong"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#cccccc" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constrain_tupian"
+                        android:layout_width="match_parent"
+                        android:layout_height="123dp"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:id="@+id/tv_fenlei_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="47dp"
+                            android:layout_marginLeft="14dp"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:text="套餐图片"
+                            android:textColor="#ff000000"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
-                </LinearLayout>
+                        <ImageView
+                            android:id="@+id/iv_taocan_tupian"
+                            android:layout_width="58dp"
+                            android:layout_height="58dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginBottom="13dp"
+                            android:src="@mipmap/shoppicture_icon_add"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#cccccc" />
 
-                <LinearLayout
-                    android:id="@+id/ll_tianjia_leimu"
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:layout_gravity="center"
-                    android:background="@color/white"
-                    android:gravity="center">
+                        <ImageView
+                            android:id="@+id/iv_back"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="14dp"
+                            android:src="@mipmap/sjd_icon_arrow_gray"
+                            app:layout_constraintBottom_toBottomOf="@+id/iv_taocan_tupian"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/iv_taocan_tupian" />
+
+
+                        <TextView
+                            android:id="@+id/tv_tup_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="9dp"
+                            android:includeFontPadding="false"
+                            android:text="4张"
+                            android:textColor="#ff333333"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/iv_back"
+                            app:layout_constraintRight_toLeftOf="@+id/iv_back"
+                            app:layout_constraintTop_toTopOf="@+id/iv_back" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/white">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="14dp"
+                            android:includeFontPadding="false"
+                            android:text="套餐内容"
+                            android:textColor="#ff000000"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:id="@+id/ll_leimu"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#cccccc" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_tianjia_leimu"
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
                         android:layout_gravity="center"
-                        android:gravity="center_vertical">
+                        android:background="@color/white"
+                        android:gravity="center">
 
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:src="@mipmap/tuangou_icon_tinajia" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:src="@mipmap/tuangou_icon_tinajia" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:includeFontPadding="false"
+                                android:text="添加类目"
+                                android:textColor="#ff666666"
+                                android:textSize="14sp" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/white">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="14dp"
                             android:includeFontPadding="false"
-                            android:text="添加类目"
-                            android:textColor="#ff666666"
-                            android:textSize="14sp" />
+                            android:text="使用规则"
+                            android:textColor="#ff000000"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
 
+                    </RelativeLayout>
 
-                    </LinearLayout>
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/white">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="14dp"
-                        android:includeFontPadding="false"
-                        android:text="使用规则"
-                        android:textColor="#ff000000"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
-
-                </RelativeLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/ll_guize"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#cccccc" />
-
-                <LinearLayout
-                    android:id="@+id/ll_tianjia_guize"
-                    android:layout_width="match_parent"
-                    android:layout_height="47dp"
-                    android:layout_gravity="center"
-                    android:background="@color/white"
-                    android:gravity="center">
 
                     <LinearLayout
-
-                        android:layout_width="wrap_content"
+                        android:id="@+id/ll_guize"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:layout_width="15dp"
-                            android:layout_height="15dp"
-                            android:src="@mipmap/tuangou_icon_tinajia" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dp"
-                            android:includeFontPadding="false"
-                            android:text="添加规则"
-                            android:textColor="#ff666666"
-                            android:textSize="14sp" />
+                        android:orientation="vertical">
 
 
                     </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#cccccc" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_tianjia_guize"
+                        android:layout_width="match_parent"
+                        android:layout_height="47dp"
+                        android:layout_gravity="center"
+                        android:background="@color/white"
+                        android:gravity="center">
+
+                        <LinearLayout
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:src="@mipmap/tuangou_icon_tinajia" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="6dp"
+                                android:includeFontPadding="false"
+                                android:text="添加规则"
+                                android:textColor="#ff666666"
+                                android:textSize="14sp" />
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#cccccc" />
+
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#cccccc" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

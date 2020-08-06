@@ -260,8 +260,6 @@ public class LoginActivity extends BaseActivity {
 
                         if (!StringUtils.isEmpty(rongYunTouken)) {
                             connectRongYun(response.body().data.get(0).getToken_rong());
-
-
                         }
                     }
 

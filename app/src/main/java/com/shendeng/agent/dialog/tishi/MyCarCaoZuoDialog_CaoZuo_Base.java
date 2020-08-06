@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
+import com.google.gson.internal.$Gson$Preconditions;
 import com.shendeng.agent.R;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,8 @@ public class MyCarCaoZuoDialog_CaoZuo_Base extends Dialog {
     private Context context;
     private String message1;
     private String message2;
+
+
 
     public MyCarCaoZuoDialog_CaoZuo_Base(@NonNull Context context, String message1, String message2, OnDialogItemClickListener listener) {
         super(context, R.style.turntable_dialog);
