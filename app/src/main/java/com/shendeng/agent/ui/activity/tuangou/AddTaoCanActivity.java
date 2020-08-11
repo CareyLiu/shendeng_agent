@@ -62,6 +62,10 @@ public class AddTaoCanActivity extends BaseActivity {
     private String taoCanId;
     String ziTaoCanId;
 
+    private String mingCheng;
+    private String shuLiang;
+    private String jiaGe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +81,15 @@ public class AddTaoCanActivity extends BaseActivity {
         }
 
         taoCanId = getIntent().getStringExtra("taoCanId");
+        ziTaoCanId = getIntent().getStringExtra("ziTaoCanId");
+        mingCheng = getIntent().getStringExtra("mingcheng");
+        shuLiang = getIntent().getStringExtra("shuliang");
+        jiaGe = getIntent().getStringExtra("jiage");
 
+
+        etMingcheng.setText(mingCheng);
+        etShuliang.setText(shuLiang);
+        etJiage.setText(jiaGe);
         tvQueding.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,6 +147,13 @@ public class AddTaoCanActivity extends BaseActivity {
             }
         }});
 
+        tvShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shanchuTaoCan();
+            }
+        });
+
     }
 
     @Override
@@ -162,6 +181,23 @@ public class AddTaoCanActivity extends BaseActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("type", type);
         intent.putExtra("taoCanId", taoCanId);
+
+        context.startActivity(intent);
+    }
+
+    /**
+     * 用于其他Activty跳转到该Activity
+     */
+    public static void actionStart(Context context, String type, String taoCanId, String ziTaoCanId, String mingchegn, String shuliang, String jiage) {
+        Intent intent = new Intent();
+        intent.setClass(context, AddTaoCanActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("type", type);
+        intent.putExtra("taoCanId", taoCanId);
+        intent.putExtra("ziTaoCanId", ziTaoCanId);
+        intent.putExtra("mingcheng", mingchegn);
+        intent.putExtra("shuliang", shuliang);
+        intent.putExtra("jiage", jiage);
         context.startActivity(intent);
     }
 
@@ -176,6 +212,15 @@ public class AddTaoCanActivity extends BaseActivity {
         map.put("menu_count", etShuliang.getText().toString());
         map.put("menu_pay", etJiage.getText().toString());
 
+        if (etShuliang.getText().toString().trim().length() >= 11) {
+            UIHelper.ToastMessage(mContext, "您输入的数量不能过多");
+            return;
+        }
+
+        if (etJiage.getText().toString().trim().length() >= 14) {
+            UIHelper.ToastMessage(mContext, "请输入符合实际的价格");
+            return;
+        }
         map.put("menu_detail_id", ziTaoCanId);
 
         Gson gson = new Gson();
@@ -188,6 +233,43 @@ public class AddTaoCanActivity extends BaseActivity {
 
                         UIHelper.ToastMessage(mContext, "套餐添加成功");
                         finish();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
+    }
+
+    private void shanchuTaoCan() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04204);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("dif_type", "2");
+        map.put("type", "1");
+        map.put("menu_detail_id", ziTaoCanId);
+
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse> response) {
+                        UIHelper.ToastMessage(mContext, "删除成功");
+                        finish();
+
                     }
 
                     @Override

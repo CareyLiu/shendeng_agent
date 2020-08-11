@@ -1,7 +1,7 @@
 package com.shendeng.agent.util;
 
 public class Urls {
-    // public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
+    //  public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
     public static String SERVER_URL = "https://test.hljsdkj.com/";//基本地址
 
     public static String KEY = "20180305124455yu";//全局请求key
@@ -47,4 +47,5 @@ public class Urls {
     public final static String code_04206 = "04206";//添加规则
     public final static String code_04204 = "04204";//删除规则
     public final static String code_04205 = "04205";//添加套餐
+    public final static String code_04207 = "04207";//团购经营项  例如 美食 - 早餐
 }

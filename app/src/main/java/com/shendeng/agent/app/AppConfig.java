@@ -7,6 +7,8 @@ public class AppConfig {
     public static String IS_FIRST_RUN = "0x1112";//是否首次进入app 十分重要 true 是首次 false 不是首次
     public static String RONGYUN_TOKEN = "0x1113";//融云token
 
+    public static int ROLE_NUMBER = 0;//当前角色的数量
+
     /**
      * 基本权限管理
      */

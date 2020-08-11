@@ -31,6 +31,7 @@
 
 
         <EditText
+            android:maxLength="20"
             android:id="@+id/et_mingcheng"
             android:layout_width="272dp"
             android:layout_height="35dp"

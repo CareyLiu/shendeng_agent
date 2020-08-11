@@ -25,11 +25,20 @@ public class TaoCanGuanLiHomeAdapter extends BaseQuickAdapter<TaoCanListModel.Da
     protected void convert(BaseViewHolder helper, TaoCanListModel.DataBean.TaocanListBean item) {
         helper.addOnClickListener(R.id.constrain);
         helper.setText(R.id.tv_product_name, item.getWares_name());
-        helper.setText(R.id.tv_riqi, "这里填套餐简介");
-        helper.setText(R.id.tv_yuanjia, "￥" + item.getShop_money_old());
+        helper.setText(R.id.tv_riqi, item.getShop_product_title());
+        helper.setText(R.id.tv_yuanjia, "¥" + item.getShop_money_old());
         TextView tvYuanJia = helper.getView(R.id.tv_yuanjia);
-        tvYuanJia.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
+        tvYuanJia.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);  // 设置中划线并加清晰
         helper.setText(R.id.tv_xianjia, item.getShop_money_now());
-        Glide.with(mContext).load(item.getWares_photo_url()).error(R.mipmap.shangpin_yixiajia_pic).placeholder(R.mipmap.shangpin_yixiajia_pic).into((ImageView) helper.getView(R.id.iv_product));
+
+        if (item.getWares_state().equals("1")) {//上架
+            helper.setVisible(R.id.iv_yixiajia, false);
+            Glide.with(mContext).load(item.getWares_photo_url()).into((ImageView) helper.getView(R.id.iv_product));
+        } else {//2 是下架
+            helper.setVisible(R.id.iv_yixiajia, true);
+
+            Glide.with(mContext).load(item.getWares_photo_url()).into((ImageView) helper.getView(R.id.iv_product));
+        }
+
     }
 }

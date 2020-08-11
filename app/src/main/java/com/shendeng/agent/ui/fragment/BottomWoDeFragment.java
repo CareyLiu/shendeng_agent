@@ -22,6 +22,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
+import com.shendeng.agent.app.AppConfig;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
@@ -121,7 +122,11 @@ public class BottomWoDeFragment extends BaseFragment {
     @Override
     protected void initLogic() {
 
-
+        if (AppConfig.ROLE_NUMBER == 2) {//双角色时候展示切换按钮
+            ll_qiehuan.setVisibility(View.VISIBLE);
+        } else {
+            ll_qiehuan.setVisibility(View.GONE);
+        }
     }
 
 
@@ -249,9 +254,9 @@ public class BottomWoDeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_qianbao:
-                if (inst_owner.equals("1")){
+                if (inst_owner.equals("1")) {
                     WodeQainbaoActivity.actionStart(getContext());
-                }else {
+                } else {
                     Y.t("您没有打开钱包的权限哦");
                 }
                 break;
@@ -321,7 +326,7 @@ public class BottomWoDeFragment extends BaseFragment {
 //                displayNextView.doSomethingOnEnd(Constants.KEY_FIRST_INVERSE);
                 break;
             case R.id.iv_set:
-                SettingActivity.actionStart(getContext(),inst_owner);
+                SettingActivity.actionStart(getContext(), inst_owner);
                 break;
         }
     }

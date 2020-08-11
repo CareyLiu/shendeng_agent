@@ -17,7 +17,7 @@ public class LoginUser {
      * msg_code : 0000
      * msg : ok
      * row_num : 0
-     * data : [{"of_user_id":"499","app_token":"1594265m33639200K000i000I000J0","user_name":"月亮","token_rong":"+02RA7sOtVAL4tWDQL2ASj92dU/6JxiSKYNlCv3mCCfTqmMTNJFbNg==@cd7u.cn.rongnav.com;cd7u.cn.rongcfg.com","accid":"jcz_sub_191","enter_type":"1","user_img":"https://jy.hljsdkj.com/commons/easyui/images/portrait86x86.png"}]
+     * data : [{"of_user_id":"2199","typeList":[{"business_type":"1"},{"business_type":"2"}],"app_token":"1597115k63965100W000L000I000i0","user_name":"juyijia_18249030228","token_rong":"+02RA7sOtVA9Eqa5ksgSgD92dU/6JxiSgOVPlvcfgNXTqmMTNJFbNg==@cd7u.cn.rongnav.com;cd7u.cn.rongcfg.com","accid":"jcz_sub_238","user_img":""}]
      */
 
     private String msg_code;
@@ -59,13 +59,13 @@ public class LoginUser {
 
     public static class DataBean {
         /**
-         * of_user_id : 499
-         * app_token : 1594265m33639200K000i000I000J0
-         * user_name : 月亮
-         * token_rong : +02RA7sOtVAL4tWDQL2ASj92dU/6JxiSKYNlCv3mCCfTqmMTNJFbNg==@cd7u.cn.rongnav.com;cd7u.cn.rongcfg.com
-         * accid : jcz_sub_191
-         * enter_type : 1
-         * user_img : https://jy.hljsdkj.com/commons/easyui/images/portrait86x86.png
+         * of_user_id : 2199
+         * typeList : [{"business_type":"1"},{"business_type":"2"}]
+         * app_token : 1597115k63965100W000L000I000i0
+         * user_name : juyijia_18249030228
+         * token_rong : +02RA7sOtVA9Eqa5ksgSgD92dU/6JxiSgOVPlvcfgNXTqmMTNJFbNg==@cd7u.cn.rongnav.com;cd7u.cn.rongcfg.com
+         * accid : jcz_sub_238
+         * user_img :
          */
 
         private String of_user_id;
@@ -73,8 +73,8 @@ public class LoginUser {
         private String user_name;
         private String token_rong;
         private String accid;
-        private String enter_type;
         private String user_img;
+        private List<TypeListBean> typeList;
 
         public String getOf_user_id() {
             return of_user_id;
@@ -116,20 +116,36 @@ public class LoginUser {
             this.accid = accid;
         }
 
-        public String getEnter_type() {
-            return enter_type;
-        }
-
-        public void setEnter_type(String enter_type) {
-            this.enter_type = enter_type;
-        }
-
         public String getUser_img() {
             return user_img;
         }
 
         public void setUser_img(String user_img) {
             this.user_img = user_img;
+        }
+
+        public List<TypeListBean> getTypeList() {
+            return typeList;
+        }
+
+        public void setTypeList(List<TypeListBean> typeList) {
+            this.typeList = typeList;
+        }
+
+        public static class TypeListBean {
+            /**
+             * business_type : 1
+             */
+
+            private String business_type;
+
+            public String getBusiness_type() {
+                return business_type;
+            }
+
+            public void setBusiness_type(String business_type) {
+                this.business_type = business_type;
+            }
         }
     }
 }

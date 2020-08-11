@@ -115,9 +115,9 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
 
 
                         if (taoCanGuanLiHomeAdapter.getData().get(position).getWares_state().equals("1")) {//出售中
-                            TianJiaTaoCanActivity.actionStart(mContext, "2","0",mDatas.get(position).getWares_id());
+                            TaoCanDetailsActivity.actionStart(mContext, mDatas.get(position).getWares_id());
                         } else {
-                            TianJiaTaoCanActivity.actionStart(mContext, "2","0",mDatas.get(position).getWares_id());
+                            TaoCanDetailsActivity.actionStart(mContext, mDatas.get(position).getWares_id());
                         }
 
 
@@ -127,19 +127,23 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
         });
 
 
-        View view = View.inflate(mContext, R.layout.taocan_guanli_emptyview, null);
-        taoCanGuanLiHomeAdapter.setEmptyView(view);
 
 
         tvXinjianTaocan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TianJiaTaoCanActivity.actionStart(mContext, "0","1",null);
+                TianJiaTaoCanActivity.actionStart(mContext, "0", "1", null);
             }
         });
 
         getDetails();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getDetails();
     }
 
     @Override
@@ -196,8 +200,9 @@ public class TaoCanGuanLi_HomeActivity extends BaseActivity {
                             taoCanGuanLiHomeAdapter.notifyDataSetChanged();
                         }
                         if (mDatas.size() == 0) {
+
                             View view = View.inflate(mContext, R.layout.layout_zanwushuju, null);
-                            taoCanGuanLiHomeAdapter.setHeaderView(view);
+                            taoCanGuanLiHomeAdapter.setEmptyView(view);
                         }
 
                         tvChushouzhong.setText("出售中(" + response.body().data.get(0).getBuyed_count() + ")");

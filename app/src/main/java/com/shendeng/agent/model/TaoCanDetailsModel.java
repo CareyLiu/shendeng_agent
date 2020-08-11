@@ -9,7 +9,7 @@ public class TaoCanDetailsModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 0
-     * data : [{"wares_photo_id":"","shop_product_title":"重庆小面","wares_photo_url":"","img_list":[],"shop_money_now":"100.00","item_name":"","shop_money_old":"100.00","taocan_list":[{"menu_detail_id":"2","menu_pay":"1","menu_text":"去","menu_count":"1"}],"wares_name":"重庆小面","rules_list":[{"prompt_detail_id":"13","prompt_text":"1.规则1"},{"prompt_detail_id":"14","prompt_text":"规则2"},{"prompt_detail_id":"15","prompt_text":"规则3"},{"prompt_detail_id":"16","prompt_text":"4. kaishi le"}],"wares_state":"2"}]
+     * data : [{"wares_photo_id":"11580","shop_product_title":"水煮肥牛是一个非常好的东西，嘎嘎地好太好了咋这么好呢","wares_photo_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=11580","img_list":[{"wares_img_id":"579","img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=11580","img_id":"11580"}],"shop_money_now":"80.00","item_name":"美食烧烤烤肉","shop_money_old":"100.00","taocan_list":[{"menu_detail_id":"19","menu_pay":"1.00","menu_text":"嗯","menu_count":"1"}],"wares_name":"水煮肥牛","rules_list":[{"prompt_detail_id":"19","prompt_text":"轻轻巧巧www望闻问切"}],"wares_state":"2"}]
      */
 
     private String msg_code;
@@ -51,16 +51,16 @@ public class TaoCanDetailsModel {
 
     public static class DataBean {
         /**
-         * wares_photo_id :
-         * shop_product_title : 重庆小面
-         * wares_photo_url :
-         * img_list : []
-         * shop_money_now : 100.00
-         * item_name :
+         * wares_photo_id : 11580
+         * shop_product_title : 水煮肥牛是一个非常好的东西，嘎嘎地好太好了咋这么好呢
+         * wares_photo_url : https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=11580
+         * img_list : [{"wares_img_id":"579","img_url":"https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=11580","img_id":"11580"}]
+         * shop_money_now : 80.00
+         * item_name : 美食烧烤烤肉
          * shop_money_old : 100.00
-         * taocan_list : [{"menu_detail_id":"2","menu_pay":"1","menu_text":"去","menu_count":"1"}]
-         * wares_name : 重庆小面
-         * rules_list : [{"prompt_detail_id":"13","prompt_text":"1.规则1"},{"prompt_detail_id":"14","prompt_text":"规则2"},{"prompt_detail_id":"15","prompt_text":"规则3"},{"prompt_detail_id":"16","prompt_text":"4. kaishi le"}]
+         * taocan_list : [{"menu_detail_id":"19","menu_pay":"1.00","menu_text":"嗯","menu_count":"1"}]
+         * wares_name : 水煮肥牛
+         * rules_list : [{"prompt_detail_id":"19","prompt_text":"轻轻巧巧www望闻问切"}]
          * wares_state : 2
          */
 
@@ -72,7 +72,7 @@ public class TaoCanDetailsModel {
         private String shop_money_old;
         private String wares_name;
         private String wares_state;
-        private List<?> img_list;
+        private List<ImgListBean> img_list;
         private List<TaocanListBean> taocan_list;
         private List<RulesListBean> rules_list;
 
@@ -140,11 +140,11 @@ public class TaoCanDetailsModel {
             this.wares_state = wares_state;
         }
 
-        public List<?> getImg_list() {
+        public List<ImgListBean> getImg_list() {
             return img_list;
         }
 
-        public void setImg_list(List<?> img_list) {
+        public void setImg_list(List<ImgListBean> img_list) {
             this.img_list = img_list;
         }
 
@@ -164,11 +164,48 @@ public class TaoCanDetailsModel {
             this.rules_list = rules_list;
         }
 
+        public static class ImgListBean {
+            /**
+             * wares_img_id : 579
+             * img_url : https://test.hljsdkj.com/Frame/uploadFile/showImg?file_id=11580
+             * img_id : 11580
+             */
+
+            private String wares_img_id;
+            private String img_url;
+            private String img_id;
+            public String type;//0 点击无效 1 选中弹出相册
+
+            public String getWares_img_id() {
+                return wares_img_id;
+            }
+
+            public void setWares_img_id(String wares_img_id) {
+                this.wares_img_id = wares_img_id;
+            }
+
+            public String getImg_url() {
+                return img_url;
+            }
+
+            public void setImg_url(String img_url) {
+                this.img_url = img_url;
+            }
+
+            public String getImg_id() {
+                return img_id;
+            }
+
+            public void setImg_id(String img_id) {
+                this.img_id = img_id;
+            }
+        }
+
         public static class TaocanListBean {
             /**
-             * menu_detail_id : 2
-             * menu_pay : 1
-             * menu_text : 去
+             * menu_detail_id : 19
+             * menu_pay : 1.00
+             * menu_text : 嗯
              * menu_count : 1
              */
 
@@ -212,8 +249,8 @@ public class TaoCanDetailsModel {
 
         public static class RulesListBean {
             /**
-             * prompt_detail_id : 13
-             * prompt_text : 1.规则1
+             * prompt_detail_id : 19
+             * prompt_text : 轻轻巧巧www望闻问切
              */
 
             private String prompt_detail_id;
