@@ -33,11 +33,11 @@ public class TaoCanGuanLiHomeAdapter extends BaseQuickAdapter<TaoCanListModel.Da
 
         if (item.getWares_state().equals("1")) {//上架
             helper.setVisible(R.id.iv_yixiajia, false);
-            Glide.with(mContext).load(item.getWares_photo_url()).into((ImageView) helper.getView(R.id.iv_product));
+            Glide.with(mContext).load(item.getWares_photo_url()).placeholder(R.mipmap.nopic_preview_shop).error(R.mipmap.nopic_preview_shop).into((ImageView) helper.getView(R.id.iv_product));
         } else {//2 是下架
             helper.setVisible(R.id.iv_yixiajia, true);
 
-            Glide.with(mContext).load(item.getWares_photo_url()).into((ImageView) helper.getView(R.id.iv_product));
+            Glide.with(mContext).load(item.getWares_photo_url()).placeholder(R.mipmap.nopic_preview_shop).error(R.mipmap.nopic_preview_shop).into((ImageView) helper.getView(R.id.iv_product));
         }
 
     }

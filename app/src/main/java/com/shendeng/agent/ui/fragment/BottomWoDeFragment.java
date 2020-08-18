@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.AppConfig;
+import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
@@ -34,6 +35,7 @@ import com.shendeng.agent.ui.activity.AboutActivity;
 import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
 import com.shendeng.agent.ui.activity.WodeTuihuoActivity;
+import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 
@@ -122,7 +124,9 @@ public class BottomWoDeFragment extends BaseFragment {
     @Override
     protected void initLogic() {
 
-        if (AppConfig.ROLE_NUMBER == 2) {//双角色时候展示切换按钮
+        int roleNumber = Integer.parseInt(PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ROLE_NUMBER, "0"));
+
+        if (roleNumber == 2) {//双角色时候展示切换按钮
             ll_qiehuan.setVisibility(View.VISIBLE);
         } else {
             ll_qiehuan.setVisibility(View.GONE);

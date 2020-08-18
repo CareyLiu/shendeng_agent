@@ -440,6 +440,12 @@ public class TianJiaTaoCanActivity extends BaseActivity {
                             llTaocantupian.addView(view);
                         }
 
+                        if (response.body().data.get(0).getImg_list().size() == 0) {
+                            View view = View.inflate(mContext, R.layout.item_taocantupian, null);
+                            ImageView ivTaoCanTuPian = view.findViewById(R.id.iv_taocan_tupian);
+                            ivTaoCanTuPian.setBackgroundResource(R.mipmap.shangchuantupian);
+                            llTaocantupian.addView(view);
+                        }
                         tvTupNum.setText(response.body().data.get(0).getImg_list().size() + "张");
 
                         tvLeimu.setText(response.body().data.get(0).getItem_name());

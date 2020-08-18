@@ -38,6 +38,7 @@ import com.shendeng.agent.ui.HomeBasicTuanGouActivity;
 import com.shendeng.agent.ui.widget.DoubleClickExitHelper;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.TimeCount;
+import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 
@@ -264,18 +265,26 @@ public class LoginActivity extends BaseActivity {
                         }
                         //typeList	business_type   	商家类型
                         //1.商城  2.团购
-                        if (response.body().data.get(0).getTypeList() != null) {
-                            AppConfig.ROLE_NUMBER = response.body().data.get(0).getTypeList().size();
+                        if (response.body().data.get(0).getTypeList().size() > 1) {
+
+                            ChooseRoleActivity.actionStart(mContext);
+
+                        }else {
 
                             if (response.body().data.get(0).getTypeList().get(0).getBusiness_type().equals("1")) {
-
                                 startActivity(new Intent(LoginActivity.this, HomeBasicActivity.class));
                             } else if (response.body().data.get(0).getTypeList().get(0).getBusiness_type().equals("2")) {
-
                                 HomeBasicTuanGouActivity.actionStart(LoginActivity.this);
                             }
+
                         }
+
+                        PreferenceHelper.getInstance(mContext).putString(AppConfig.ROLE_NUMBER, String.valueOf(response.body().data.get(0).getTypeList().size()));
                     }
+
+
+
+
 
                     @Override
                     public void onError(Response<AppResponse<LoginUser.DataBean>> response) {

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,12 +65,18 @@ public class TaoCanDetailsActivity extends BaseActivity {
     Banner banner;
     @BindView(R.id.tv_taocanmingcheng)
     TextView tvTaocanmingcheng;
-    @BindView(R.id.iv_nopic)
-    ImageView ivNopic;
     @BindView(R.id.tv_leimu)
     TextView tvLeimu;
     @BindView(R.id.ll_choose_leimu)
     LinearLayout llChooseLeimu;
+    @BindView(R.id.iv_img)
+    ImageView ivImg;
+    @BindView(R.id.tv_taocan_ming_huashu)
+    TextView tvTaocanMingHuashu;
+    @BindView(R.id.rl_none)
+    RelativeLayout rlNone;
+    @BindView(R.id.iv_nopic)
+    ImageView ivNopic;
     private String waresId;
 
 
@@ -156,10 +163,10 @@ public class TaoCanDetailsActivity extends BaseActivity {
         List<TaoCanDetailsModel.DataBean.ImgListBean> img_list = response.body().data.get(0).getImg_list();
 
         if (img_list.size() == 0) {
-            ivNopic.setVisibility(View.VISIBLE);
+            rlNone.setVisibility(View.VISIBLE);
             banner.setVisibility(View.GONE);
         } else {
-            ivNopic.setVisibility(View.GONE);
+            rlNone.setVisibility(View.GONE);
             banner.setVisibility(View.VISIBLE);
 
         }
@@ -408,7 +415,13 @@ public class TaoCanDetailsActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse>() {
                     @Override
                     public void onSuccess(Response<AppResponse> response) {
-                        UIHelper.ToastMessage(mContext, "执行操作成功");
+                        //下架传1 上架传2
+                        if (shangxiajia.equals("1")) {
+                            UIHelper.ToastMessage(mContext, "下架成功");
+                        } else {
+                            UIHelper.ToastMessage(mContext, "上架成功");
+                        }
+
                         finish();
 
                     }

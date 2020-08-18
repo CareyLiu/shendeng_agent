@@ -48,4 +48,5 @@ public class Urls {
     public final static String code_04204 = "04204";//删除规则
     public final static String code_04205 = "04205";//添加套餐
     public final static String code_04207 = "04207";//团购经营项  例如 美食 - 早餐
+    public final static String code_04200 = "04200";//订单列表
 }

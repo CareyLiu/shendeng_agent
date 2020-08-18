@@ -105,7 +105,7 @@ public class AddTaoCanActivity extends BaseActivity {
                     return;
                 }
 
-                UIHelper.ToastMessage(mContext, "点击了确定");
+              //  UIHelper.ToastMessage(mContext, "点击了确定");
 
                 tianJiaTaoCan();
             }

@@ -46,7 +46,7 @@ public class TuanGouSaoMaActivity extends BaseActivity implements QRCodeView.Del
 
     @Override
     public int getContentViewResId() {
-        return R.layout.act_ewm;
+        return R.layout.tuangou_act_ewm;
     }
 
     @Override
@@ -121,7 +121,7 @@ public class TuanGouSaoMaActivity extends BaseActivity implements QRCodeView.Del
         });
 
         UIHelper.ToastMessage(mContext, result);
-        // getNet(result);
+        getNet(result);
         finish();
     }
 

@@ -24,6 +24,8 @@ public class TuanGouDingDanDetails extends BaseActivity {
     SmartRefreshLayout srLSmart;
     @BindView(R.id.ll_taocan_neirong)
     LinearLayout llTaocanNeirong;
+    @BindView(R.id.ll_guize)
+    LinearLayout llGuize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,11 @@ public class TuanGouDingDanDetails extends BaseActivity {
         for (int i = 0; i < 5; i++) {
             View view = View.inflate(mContext, R.layout.item_taocan_neirong, null);
             llTaocanNeirong.addView(view);
+        }
+
+        for (int i = 0; i < 4; i++) {
+            View view = View.inflate(mContext, R.layout.layout_tuangou_guize, null);
+            llGuize.addView(view);
         }
     }
 
