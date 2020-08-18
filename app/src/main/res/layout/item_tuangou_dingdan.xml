@@ -25,6 +25,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tv_zhuangtai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
@@ -71,6 +72,7 @@
         app:layout_constraintTop_toTopOf="@+id/iv_product" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_youxiaoqi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
