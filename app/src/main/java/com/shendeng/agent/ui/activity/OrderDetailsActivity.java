@@ -404,5 +404,4 @@ public class OrderDetailsActivity extends BaseActivity {
         } else if (title.equals("已评价")) {//查看评价
             OrderPingjiaActivity.actionStart(mContext, shop_form_id);
         }
-    }
-}
+    }}

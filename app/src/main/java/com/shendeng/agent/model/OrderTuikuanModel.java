@@ -9,7 +9,7 @@ public class OrderTuikuanModel {
      * msg_code : 0000
      * msg : ok
      * row_num : 0
-     * data : [{"shop_form_id":"3053","inst_worker_name":"月亮 18249030297","form_no":"20200620141356000004","refund_express_url":"","refund_type":"1","shop_product_title":"横版数码按键开关","refund_express_name":"","user_name":"王大力","refund_rate":"1","refund_over_time":"2020-06-23 14:14:24","refund_no":"rollback_20200620141356000004","index_photo_url":"https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9931","pay_money":"0.50","refund_index":"0","product_title":"套餐1","refund_cause":"1238788488","refund_express_no":"","refund_arr":["发起退款","审核通过","退款"],"inst_addr_all":"黑龙江省哈尔滨市南岗区花园街道哈哈哈哈","user_phone":"15236586932","user_addr_all":"北京北京市东城区丽景花园1栋301","order_info_arr":["订单备注：","订单编号：20200620141356000004","下单时间：2020-06-20 14:13:56","支付方式：微信支付","付款时间：2020-06-20 14:14:03"]}]
+     * data : [{"shop_form_id":"1761","pay_count":"1","inst_worker_name":"未设置 18249030234","form_no":"2020326185257379","refund_express_url":"","refund_type":"1","shop_product_title":"美食三","refund_express_name":"","user_name":"","refund_rate":"5","refund_over_time":"","refund_no":"rollback_2020326185257379","index_photo_url":"https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480","pay_money":"230.90","refund_index":"2","product_title":"","refund_cause":"111","refund_express_no":"","refund_arr":["发起退款","审核通过","退款"],"inst_addr_all":"黑龙江省绥化市北林区东富乡黑龙江省绥化市","user_phone":"","user_addr_all":"","order_info_arr":["订单编号：2020326185257379","下单时间：2020-03-26 18:52:57","支付方式：支付宝","付款时间：2020-03-26 18:53:30"]}]
      */
 
     private String msg_code;
@@ -51,31 +51,33 @@ public class OrderTuikuanModel {
 
     public static class DataBean {
         /**
-         * shop_form_id : 3053
-         * inst_worker_name : 月亮 18249030297
-         * form_no : 20200620141356000004
+         * shop_form_id : 1761
+         * pay_count : 1
+         * inst_worker_name : 未设置 18249030234
+         * form_no : 2020326185257379
          * refund_express_url :
          * refund_type : 1
-         * shop_product_title : 横版数码按键开关
+         * shop_product_title : 美食三
          * refund_express_name :
-         * user_name : 王大力
-         * refund_rate : 1
-         * refund_over_time : 2020-06-23 14:14:24
-         * refund_no : rollback_20200620141356000004
-         * index_photo_url : https://shop.hljsdkj.com/Frame/uploadFile/showImg?file_id=9931
-         * pay_money : 0.50
-         * refund_index : 0
-         * product_title : 套餐1
-         * refund_cause : 1238788488
+         * user_name :
+         * refund_rate : 5
+         * refund_over_time :
+         * refund_no : rollback_2020326185257379
+         * index_photo_url : https://jy.hljsdkj.com/Frame/uploadFile/showImg?file_id=6480
+         * pay_money : 230.90
+         * refund_index : 2
+         * product_title :
+         * refund_cause : 111
          * refund_express_no :
          * refund_arr : ["发起退款","审核通过","退款"]
-         * inst_addr_all : 黑龙江省哈尔滨市南岗区花园街道哈哈哈哈
-         * user_phone : 15236586932
-         * user_addr_all : 北京北京市东城区丽景花园1栋301
-         * order_info_arr : ["订单备注：","订单编号：20200620141356000004","下单时间：2020-06-20 14:13:56","支付方式：微信支付","付款时间：2020-06-20 14:14:03"]
+         * inst_addr_all : 黑龙江省绥化市北林区东富乡黑龙江省绥化市
+         * user_phone :
+         * user_addr_all :
+         * order_info_arr : ["订单编号：2020326185257379","下单时间：2020-03-26 18:52:57","支付方式：支付宝","付款时间：2020-03-26 18:53:30"]
          */
 
         private String shop_form_id;
+        private String pay_count;
         private String inst_worker_name;
         private String form_no;
         private String refund_express_url;
@@ -104,6 +106,14 @@ public class OrderTuikuanModel {
 
         public void setShop_form_id(String shop_form_id) {
             this.shop_form_id = shop_form_id;
+        }
+
+        public String getPay_count() {
+            return pay_count;
+        }
+
+        public void setPay_count(String pay_count) {
+            this.pay_count = pay_count;
         }
 
         public String getInst_worker_name() {

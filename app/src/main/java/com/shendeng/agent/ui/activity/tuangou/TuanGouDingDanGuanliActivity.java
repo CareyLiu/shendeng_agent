@@ -45,9 +45,12 @@ public class TuanGouDingDanGuanliActivity extends BaseActivity {
         tagList = new ArrayList<>();
         tagList.add("全部");
         tagList.add("待付款");
-        tagList.add("待使用");
+        tagList.add("到店消费");
         tagList.add("待评价");
-        tagList.add("退款");
+        tagList.add("已评价");
+        tagList.add("退款申请");
+        tagList.add("退款中");
+        tagList.add("已关闭");
 
         setTopAdapter();
         initMagicIndicator1(tagList);
@@ -58,10 +61,6 @@ public class TuanGouDingDanGuanliActivity extends BaseActivity {
         int count = tagList.size();
         for (int i = 0; i < count; i++) {
             Bundle data = new Bundle();
-//            if (tagList.get(i).id != null) {
-//                data("id", tagList.get(i) + "");
-//            }
-            //  data.putInt("type", list.get(i).type);
             data.putString("title", tagList.get(i));
             OrderListFragment newfragment = new OrderListFragment();
             newfragment.setArguments(data);
@@ -132,10 +131,8 @@ public class TuanGouDingDanGuanliActivity extends BaseActivity {
                 return linePagerIndicator;
             }
         });
-        commonNavigator.setAdjustMode(true);
+//        commonNavigator.setAdjustMode(true);
         magicIndicator.setNavigator(commonNavigator);
         ViewPagerHelper.bind(magicIndicator, viewPager);
-
     }
-
 }

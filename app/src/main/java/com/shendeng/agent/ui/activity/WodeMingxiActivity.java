@@ -22,6 +22,7 @@ import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.MingxiModel;
 import com.shendeng.agent.ui.view.SelectTabView;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -112,7 +113,6 @@ public class WodeMingxiActivity extends BaseActivity {
             }
         });
 
-
         smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -129,15 +129,19 @@ public class WodeMingxiActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (data != null && data.size() > position) {
-                    String pay_cost_id = data.get(position).getPay_cost_id();
-                    Intent intent = new Intent(WodeMingxiActivity.this, WodeMingxiDetailsActivity.class);
-                    intent.putExtra("pay_cost_id", pay_cost_id);
-                    startActivity(intent);
+                    String pay_user_state = data.get(position).getPay_user_state();
+                    if (pay_user_state.equals("3")) {
+                        Y.t("交易已关闭");
+                    } else {
+                        String pay_cost_id = data.get(position).getPay_cost_id();
+                        Intent intent = new Intent(WodeMingxiActivity.this, WodeMingxiDetailsActivity.class);
+                        intent.putExtra("pay_cost_id", pay_cost_id);
+                        startActivity(intent);
+                    }
                 }
             }
         });
     }
-
 
     /**
      * shop_pay_check 类型：0.全部1.收入 2.支出 3.提现
@@ -199,10 +203,9 @@ public class WodeMingxiActivity extends BaseActivity {
                 });
     }
 
-
     private void getLoad() {
         Map<String, String> map = new HashMap<>();
-        map.put("code",Urls.code_04333);
+        map.put("code", Urls.code_04333);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(this).getAppToken());
         map.put("pay_cost_type", pay_cost_type + "");

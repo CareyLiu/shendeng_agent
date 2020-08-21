@@ -1,8 +1,8 @@
 package com.shendeng.agent.util;
 
 public class Urls {
-   public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
-  //  public static String SERVER_URL = "https://test.hljsdkj.com/";//基本地址
+    //   public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
+    public static String SERVER_URL = "https://test.hljsdkj.com/";//基本地址
 
     public static String KEY = "20180305124455yu";//全局请求key
 
@@ -42,4 +42,8 @@ public class Urls {
     public final static String code_04334 = "04334";//支付宝：提现账号设置
     public final static String code_04338 = "04338";//提现
     public final static String code_00005 = "00005";//参数查询
+
+
+    public final static String code_04200 = "04200";//团购订单列表
+    public final static String code_04201 = "04201";//团购订单详情
 }

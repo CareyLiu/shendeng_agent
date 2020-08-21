@@ -5,16 +5,15 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-
     <View
-        android:background="@color/grayfff5f5f5"
         android:layout_width="match_parent"
-        android:layout_height="6dp"/>
+        android:layout_height="3dp"
+        android:background="@color/grayfff5f5f5" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp">
-
+        android:layout_height="45dp"
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/tv_caidan_title"
@@ -30,6 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
+            android:id="@+id/tv_fenshu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="6dp"
@@ -41,8 +41,8 @@
             app:layout_constraintLeft_toRightOf="@+id/tv_caidan_title"
             app:layout_constraintTop_toTopOf="parent" />
 
-
         <TextView
+            android:id="@+id/tv_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
@@ -55,4 +55,8 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/grayfff5f5f5" />
 </LinearLayout>

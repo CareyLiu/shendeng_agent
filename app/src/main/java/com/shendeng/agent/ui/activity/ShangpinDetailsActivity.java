@@ -83,6 +83,7 @@ public class ShangpinDetailsActivity extends BaseActivity {
     private List<ShangpinDetailsModel.DataBean.PackageListBean> package_list_use = new ArrayList<>();
     private ShangpinDetailsZiAdapter ziAdapter;
     private boolean isShowAll = false;
+    private MyCarCaoZuoDialog_CaoZuoTIshi caoZuoTIshi;
 
     @Override
     public int getContentViewResId() {
@@ -145,6 +146,23 @@ public class ShangpinDetailsActivity extends BaseActivity {
         getNet();
     }
 
+    private void showTishi() {
+        if (caoZuoTIshi == null) {
+            caoZuoTIshi = new MyCarCaoZuoDialog_CaoZuoTIshi(mContext, "提示", "上架销售的商品不能直接修改，请您先下架商品，完成修改操作", "知道了", new MyCarCaoZuoDialog_CaoZuoTIshi.OnDialogItemClickListener() {
+                @Override
+                public void clickLeft() {
+
+                }
+
+                @Override
+                public void clickRight() {
+
+                }
+            });
+        }
+        caoZuoTIshi.show();
+    }
+
     private void initHuidiao() {
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -167,7 +185,11 @@ public class ShangpinDetailsActivity extends BaseActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (package_list_use != null && package_list_use.size() > position) {
                     ShangpinDetailsModel.DataBean.PackageListBean bean = package_list_use.get(position);
-                    actionStart(dataBean.getWares_id(), bean);
+                    if (bean.getProduct_state().equals("1")) {
+                        showTishi();
+                    } else {
+                        actionStart(dataBean.getWares_id(), bean);
+                    }
                 }
             }
         });
@@ -265,29 +287,32 @@ public class ShangpinDetailsActivity extends BaseActivity {
     }
 
     private void showBotoomm() {
-        List<String> names = new ArrayList<>();
-        names.add("商品封面图");
-        names.add("商品详情图");
-        final BottomDialog bottomDialog = new BottomDialog(this);
-        bottomDialog.setModles(names);
-        bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
-            @Override
-            public void onClickItem(int pos) {
-                bottomDialog.dismiss();
-                if (pos == 0) {
-                    clickFengmian();
-                } else {
-                    clickTuwen();
+        if (dataBean.getWares_state().equals("1")) {
+            showTishi();
+        } else {
+            List<String> names = new ArrayList<>();
+            names.add("商品封面图");
+            names.add("商品详情图");
+            final BottomDialog bottomDialog = new BottomDialog(this);
+            bottomDialog.setModles(names);
+            bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
+                @Override
+                public void onClickItem(int pos) {
+                    bottomDialog.dismiss();
+                    if (pos == 0) {
+                        clickFengmian();
+                    } else {
+                        clickTuwen();
+                    }
                 }
-            }
 
-            @Override
-            public void onClickCancel(View v) {
-                bottomDialog.dismiss();
-            }
-        });
-        bottomDialog.showBottom();
-
+                @Override
+                public void onClickCancel(View v) {
+                    bottomDialog.dismiss();
+                }
+            });
+            bottomDialog.showBottom();
+        }
     }
 
     private void clickFengmian() {
@@ -393,7 +418,11 @@ public class ShangpinDetailsActivity extends BaseActivity {
     }
 
     private void cliickEdit() {
-        ShangpinEditActivity.actionStartD(mContext, dataBean);
+        if (dataBean.getWares_state().equals("1")) {
+            showTishi();
+        } else {
+            ShangpinEditActivity.actionStartD(mContext, dataBean);
+        }
     }
 
     private void initBanner() {//初始化banner

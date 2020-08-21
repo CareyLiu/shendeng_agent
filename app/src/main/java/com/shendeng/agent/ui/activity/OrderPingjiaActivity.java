@@ -36,7 +36,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class OrderPingjiaActivity extends BaseActivity {
 
-
     @BindView(R.id.iv_head)
     ImageView iv_head;
     @BindView(R.id.tv_name)
@@ -108,7 +107,6 @@ public class OrderPingjiaActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
-
         shop_form_id = getIntent().getStringExtra("shop_form_id");
         shop_to_score = "3";
         shop_to_text = "";
@@ -147,10 +145,7 @@ public class OrderPingjiaActivity extends BaseActivity {
                         tv_title_name.setText(dataBean.getShop_product_title());
                         tv_taocan.setText(dataBean.getProduct_title());
                         Glide.with(mContext).load(dataBean.getIndex_photo_url()).into(iv_img);
-
-
                         String shop_to_text = dataBean.getShop_to_text();
-
                         if (TextUtils.isEmpty(shop_to_text)) {
                             ll_pinglun.setVisibility(View.GONE);
                             ll_pinglun_send.setVisibility(View.VISIBLE);
@@ -204,7 +199,6 @@ public class OrderPingjiaActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<PingjiaModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<PingjiaModel.DataBean>> response) {
-
                         TishiDialog dialog = new TishiDialog(mContext, new TishiDialog.TishiDialogListener() {
                             @Override
                             public void onClickCancel(View v, TishiDialog dialog) {
@@ -225,7 +219,6 @@ public class OrderPingjiaActivity extends BaseActivity {
                                 tv_name_shang.setText(dataBean.getInst_name());
                                 tv_time_shang.setText(TimeUtils.getCurrentTime());
                                 tv_pingjia_shang.setText(shop_to_text);
-
                             }
                         });
                         dialog.setTextTitle("成功");
@@ -233,7 +226,6 @@ public class OrderPingjiaActivity extends BaseActivity {
                         dialog.setTextConfirm("知道了");
                         dialog.setTextCancel("");
                         dialog.show();
-
                     }
 
                     @Override

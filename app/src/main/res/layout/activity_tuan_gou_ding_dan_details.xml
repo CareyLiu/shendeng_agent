@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/srL_smart"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="@dimen/dp_15"
-    android:layout_weight="1"
+    android:background="@color/bg"
     app:layout_constraintTop_toBottomOf="@+id/view_title_line"
     app:layout_constraintTop_toTopOf="parent"
     tools:context=".ui.activity.tuangou.TuanGouDingDanDetails">
@@ -22,7 +19,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         tools:context=".ui.activity.tuangou.TuanGouDingDanDetails">
 
         <LinearLayout
@@ -30,10 +26,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,7 +61,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:background="@color/white">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,6 +75,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_title_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -97,9 +95,7 @@
                 android:id="@+id/iv_image"
                 android:layout_width="match_parent"
                 android:layout_height="281dp"
-                android:background="@color/red"
                 android:scaleType="centerCrop" />
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -115,9 +111,7 @@
                     android:textColor="#ff000000"
                     android:textSize="15sp"
                     android:textStyle="bold" />
-
             </RelativeLayout>
-
 
             <LinearLayout
                 android:id="@+id/ll_taocan_neirong"
@@ -127,10 +121,29 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/grayfff5f5f5">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp"
+                    android:text="使用规则"
+                    android:textColor="#ff000000"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_shiyongguize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
         </LinearLayout>
-
-
     </androidx.core.widget.NestedScrollView>
-
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

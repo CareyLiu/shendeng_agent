@@ -1,4 +1,4 @@
-package com.shendeng.agent.ui.activity;
+package com.shendeng.agent.ui.activity.tuangou;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,8 +25,8 @@ import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.TishiDialog;
 import com.shendeng.agent.dialog.tishi.MyCarCaoZuoDialog_Success;
-import com.shendeng.agent.model.OrderDetailsModel;
 import com.shendeng.agent.model.OrderTuikuanModel;
+import com.shendeng.agent.ui.activity.DefaultX5WebViewActivity;
 import com.shendeng.agent.util.FullyLinearLayoutManager;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
@@ -37,13 +37,12 @@ import java.util.List;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderTuikuanActivity extends BaseActivity {
+public class TuanOrderTuikuanActivity extends BaseActivity {
 
     @BindView(R.id.tv_danhao_tuihuo)
     TextView tv_danhao_tuihuo;
@@ -130,19 +129,9 @@ public class OrderTuikuanActivity extends BaseActivity {
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context) {
-        Intent intent = new Intent();
-        intent.setClass(context, OrderTuikuanActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
-    }
-
-    /**
-     * 用于其他Activty跳转到该Activity
-     */
     public static void actionStart(Context context, String shop_form_id) {
         Intent intent = new Intent();
-        intent.setClass(context, OrderTuikuanActivity.class);
+        intent.setClass(context, TuanOrderTuikuanActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("shop_form_id", shop_form_id);
         context.startActivity(intent);
@@ -350,7 +339,7 @@ public class OrderTuikuanActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse>() {
                     @Override
                     public void onSuccess(Response<AppResponse> response) {
-                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(OrderTuikuanActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(TuanOrderTuikuanActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                             @Override
                             public void onDismiss() {
                                 finish();
@@ -393,7 +382,7 @@ public class OrderTuikuanActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse>() {
                     @Override
                     public void onSuccess(Response<AppResponse> response) {
-                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(OrderTuikuanActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
+                        MyCarCaoZuoDialog_Success dialog = new MyCarCaoZuoDialog_Success(TuanOrderTuikuanActivity.this, new MyCarCaoZuoDialog_Success.OnDialogItemClickListener() {
                             @Override
                             public void onDismiss() {
                                 finish();
