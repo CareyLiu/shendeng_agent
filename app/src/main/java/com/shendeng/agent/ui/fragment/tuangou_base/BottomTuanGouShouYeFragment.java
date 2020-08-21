@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.ui.activity.MaiDanShouKuanActivity;
 import com.shendeng.agent.ui.activity.OrderSaoyisaoActivity;
 import com.shendeng.agent.ui.activity.tuangou.HandAddActivity;
 import com.shendeng.agent.ui.activity.tuangou.TuanGouDingDanGuanliActivity;
@@ -121,6 +122,8 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
     RelativeLayout rlDingdanGuanli;
     @BindView(R.id.view)
     View view;
+    @BindView(R.id.rl_maidanshoukuan)
+    RelativeLayout rlMaidanshoukuan;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -223,6 +226,12 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
                 TuanGouDingDanGuanliActivity.actionStart(getActivity());
             }
         });
+        rlMaidanshoukuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MaiDanShouKuanActivity.actionStart(getActivity());
+            }
+        });
         srLSmart.setEnableLoadMore(false);
     }
 
@@ -294,5 +303,8 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
     protected boolean immersionEnabled() {
         return true;
     }
+
+
+
 
 }

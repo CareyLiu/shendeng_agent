@@ -66,8 +66,8 @@ public class UserManager {
             PreferenceHelper.getInstance(mContext).putString("user_name", user.getUser_name());
             PreferenceHelper.getInstance(mContext).putString("token_rong", user.getToken_rong());
             PreferenceHelper.getInstance(mContext).putString("accid", user.getAccid());
-            PreferenceHelper.getInstance(mContext).putString("enter_type", user.getEnter_type());
             PreferenceHelper.getInstance(mContext).putString("user_img", user.getUser_img());
+
         }
     }
 

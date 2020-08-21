@@ -9,6 +9,7 @@ import androidx.multidex.MultiDex;
 import com.blankj.utilcode.util.StringUtils;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.util.RxBus;
+import com.tencent.bugly.Bugly;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -30,6 +31,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        Bugly.init(getApplicationContext(), "85634cc1f8", false);
         initRongYun();
     }
 

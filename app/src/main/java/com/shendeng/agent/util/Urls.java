@@ -42,7 +42,12 @@ public class Urls {
     public final static String code_04334 = "04334";//支付宝：提现账号设置
     public final static String code_04338 = "04338";//提现
     public final static String code_00005 = "00005";//参数查询
-
+    public final static String code_04202 = "04202";//团购套餐列表
+    public final static String code_04203 = "04203";//套餐详情
+    public final static String code_04206 = "04206";//添加规则
+    public final static String code_04204 = "04204";//删除规则
+    public final static String code_04205 = "04205";//添加套餐
+    public final static String code_04207 = "04207";//团购经营项  例如 美食 - 早餐
 
     public final static String code_04200 = "04200";//团购订单列表
     public final static String code_04201 = "04201";//团购订单详情

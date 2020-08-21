@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grayfff5f5f5"
+    tools:context=".ui.activity.MaiDanShouKuanActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="14dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/bg_white_6dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_icon_1"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:background="@mipmap/tuangou_icon1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:includeFontPadding="false"
+            android:text="买单收款"
+            android:textColor="#ff111111"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_icon_1"
+            app:layout_constraintLeft_toRightOf="@+id/iv_icon_1"
+            app:layout_constraintTop_toTopOf="@+id/iv_icon_1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="14dp"
+            android:includeFontPadding="false"
+            android:text="保存图片"
+            android:textColor="#ff111111"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_icon_1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_icon_1" />
+
+        <TextView
+            android:id="@+id/huashu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:text="无需加好友，扫二维码向我付款"
+            android:textColor="#ff111111"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_icon_1" />
+
+        <ImageView
+            android:id="@+id/iv_erweima"
+            android:layout_width="192dp"
+            android:layout_height="192dp"
+            android:layout_marginTop="26dp"
+            android:background="@color/red"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/huashu" />
+
+
+        <View
+            android:id="@+id/view_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="20dp"
+            android:background="#cccccc"
+            app:layout_constraintTop_toBottomOf="@+id/iv_erweima" />
+
+
+        <ImageView
+            android:id="@+id/iv_icon_2"
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="18dp"
+            android:background="@mipmap/shoukuanxiaozhangben"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:includeFontPadding="false"
+            android:text="收款小账本"
+            android:textColor="#ff111111"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_icon_2"
+            app:layout_constraintLeft_toRightOf="@+id/iv_icon_2"
+            app:layout_constraintTop_toTopOf="@+id/iv_icon_2" />
+
+
+        <ImageView
+            android:layout_width="21dp"
+            android:layout_height="21dp"
+            android:layout_marginRight="@dimen/dp_14"
+            android:src="@mipmap/tuangou_back"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_icon_2"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_icon_2" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/iv_icon_2" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

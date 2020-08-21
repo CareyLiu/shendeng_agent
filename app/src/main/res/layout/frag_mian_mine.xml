@@ -166,7 +166,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="1dp"
                                         android:includeFontPadding="false"
-                                        android:text="被关注数"
+                                        android:text="关注数"
                                         android:textColor="@color/text_color_6"
                                         android:textSize="13sp" />
                                 </LinearLayout>
@@ -193,7 +193,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="1dp"
                                         android:includeFontPadding="false"
-                                        android:text="被收藏数"
+                                        android:text="收藏数"
                                         android:textColor="@color/text_color_6"
                                         android:textSize="13sp" />
                                 </LinearLayout>
@@ -370,6 +370,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:visibility="visible"
                             android:id="@+id/ll_qiehuan"
                             android:layout_width="match_parent"
                             android:layout_height="54dp"

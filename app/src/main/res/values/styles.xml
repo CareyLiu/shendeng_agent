@@ -128,4 +128,12 @@
         //显示区域以外是否使用黑色半透明背景
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+
+    <!-- 自定义给店铺列表评分的星星 room_rating_bar-->
+    <style name="storeRatingBarPink1" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/custom4_ratingbar_nearby_store_list</item>
+        <item name="android:minHeight">10dp</item>
+        <item name="android:maxHeight">10dp</item>
+    </style>
 </resources>

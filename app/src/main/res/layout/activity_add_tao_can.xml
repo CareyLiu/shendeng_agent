@@ -31,6 +31,8 @@
 
 
         <EditText
+            android:maxLength="20"
+            android:id="@+id/et_mingcheng"
             android:layout_width="272dp"
             android:layout_height="35dp"
             android:layout_marginRight="19dp"
@@ -62,6 +64,8 @@
 
 
         <EditText
+            android:inputType="number"
+            android:id="@+id/et_shuliang"
             android:layout_width="272dp"
             android:layout_height="35dp"
             android:layout_marginRight="19dp"
@@ -92,6 +96,7 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_shuliang" />
 
         <EditText
+            android:inputType="numberDecimal"
             android:id="@+id/et_jiage"
             android:layout_width="272dp"
             android:layout_height="35dp"

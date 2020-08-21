@@ -54,7 +54,7 @@ public class TaoCanGuanLiActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         UIHelper.ToastMessage(mContext, "点击了");
-                        AddTaoCanActivity.actionStart(mContext, "1");
+
                     }
                 });
                 llTaocan.addView(view);
@@ -94,9 +94,10 @@ public class TaoCanGuanLiActivity extends BaseActivity {
      *
      * @param context
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String waresId) {
         Intent intent = new Intent(context, TaoCanGuanLiActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("waresId", waresId);
         context.startActivity(intent);
     }
 }

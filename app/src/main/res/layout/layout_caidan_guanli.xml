@@ -53,6 +53,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/tv_riqi" />
 
     <TextView
+        android:textStyle="bold"
         android:id="@+id/tv_xianjia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

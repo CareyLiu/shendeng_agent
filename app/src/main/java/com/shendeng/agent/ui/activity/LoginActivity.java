@@ -34,9 +34,11 @@ import com.shendeng.agent.dialog.BottomDialogView;
 import com.shendeng.agent.model.LoginUser;
 import com.shendeng.agent.model.Message;
 import com.shendeng.agent.ui.HomeBasicActivity;
+import com.shendeng.agent.ui.HomeBasicTuanGouActivity;
 import com.shendeng.agent.ui.widget.DoubleClickExitHelper;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.TimeCount;
+import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 
@@ -255,15 +257,34 @@ public class LoginActivity extends BaseActivity {
                     public void onSuccess(Response<AppResponse<LoginUser.DataBean>> response) {
                         PreferenceHelper.getInstance(LoginActivity.this).putString("user_phone", ed_phone.getText().toString() + "");
                         UserManager.getManager(LoginActivity.this).saveUser(response.body().data.get(0));
-                        startActivity(new Intent(LoginActivity.this, HomeBasicActivity.class));
+
                         String rongYunTouken = UserManager.getManager(mContext).getRongYun();
 
                         if (!StringUtils.isEmpty(rongYunTouken)) {
                             connectRongYun(response.body().data.get(0).getToken_rong());
+                        }
+                        //typeList	business_type   	商家类型
+                        //1.商城  2.团购
+                        if (response.body().data.get(0).getTypeList().size() > 1) {
 
+                            ChooseRoleActivity.actionStart(mContext);
+
+                        }else {
+
+                            if (response.body().data.get(0).getTypeList().get(0).getBusiness_type().equals("1")) {
+                                startActivity(new Intent(LoginActivity.this, HomeBasicActivity.class));
+                            } else if (response.body().data.get(0).getTypeList().get(0).getBusiness_type().equals("2")) {
+                                HomeBasicTuanGouActivity.actionStart(LoginActivity.this);
+                            }
 
                         }
+
+                        PreferenceHelper.getInstance(mContext).putString(AppConfig.ROLE_NUMBER, String.valueOf(response.body().data.get(0).getTypeList().size()));
                     }
+
+
+
+
 
                     @Override
                     public void onError(Response<AppResponse<LoginUser.DataBean>> response) {

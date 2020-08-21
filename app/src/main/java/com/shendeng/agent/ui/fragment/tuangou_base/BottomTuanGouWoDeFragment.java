@@ -22,6 +22,8 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
+import com.shendeng.agent.app.AppConfig;
+import com.shendeng.agent.app.PreferenceHelper;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
@@ -125,7 +127,12 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
 
     @Override
     protected void initLogic() {
-
+        int roleNumber = Integer.parseInt(PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ROLE_NUMBER, "0"));
+        if (roleNumber == 2) {//双角色时候展示切换按钮
+            ll_qiehuan.setVisibility(View.VISIBLE);
+        } else {
+            ll_qiehuan.setVisibility(View.GONE);
+        }
 
     }
 

@@ -16,24 +16,26 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/tv_chushouzhong"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="出售中(16)"
+            tools:text="出售中(16)"
             android:textColor="#fffc0100"
             android:textSize="15sp" />
 
         <TextView
+            android:textStyle="bold"
             android:id="@+id/tv_yixiajia"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:includeFontPadding="false"
-            android:text="已下架(16)"
+            tools:text="已下架(16)"
             android:textColor="#ff999999"
             android:textSize="15sp" />
 
@@ -70,7 +72,7 @@
 
 
     <TextView
-
+android:textStyle="bold"
         android:id="@+id/tv_xinjian_taocan"
         android:layout_width="match_parent"
         android:layout_height="48dp"

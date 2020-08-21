@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.shendeng.agent.R;
+import com.shendeng.agent.model.MessageModel;
 import com.shendeng.agent.model.tuangou.TOrderModel;
 
 import java.util.List;
@@ -26,5 +27,7 @@ public class TuanGouDingDanListAdapter extends BaseQuickAdapter<TOrderModel.Data
         helper.setText(R.id.tv_state, item.getShop_pay_check_name());
         Glide.with(mContext).load(item.getIndex_photo_url()).into((ImageView) helper.getView(R.id.iv_product));
         helper.addOnClickListener(R.id.constrain);
+//        helper.addOnLongClickListener(R.id.constrain);
+
     }
 }

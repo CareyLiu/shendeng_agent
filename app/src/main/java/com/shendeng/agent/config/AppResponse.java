@@ -29,4 +29,5 @@ public class AppResponse<T> implements Serializable {
     public String next;//0 否 1 是
     public List<T> data;
     public String wares_id_data;//商品列表
+    public String typyNext;// 返回0，说明下页没有数据，返回1，说明下页有数据
 }
