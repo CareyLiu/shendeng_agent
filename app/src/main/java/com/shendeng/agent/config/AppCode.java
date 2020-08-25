@@ -12,7 +12,11 @@ public class AppCode {
     public final static String code_weixin = "2";//2微信
     public final static String code_weixin_jie = "3";//微信解绑
     public final static String code_pwd_zhifu = "4";//修改支付密码
-    public final static String code_pwd_login = "5";//修改蜜蜜
+    public final static String code_pwd_login = "5";//修改密码
+
+
+    public final static String msg_maijia = "1";//商家端消息
+    public final static String msg_tuangou = "2";//买家端消息
 
     public final static String mod_zhifu_admin = "0111";//修改 支付宝  微信
     public final static String mod_login_pwd = "0112";//修改登录密码

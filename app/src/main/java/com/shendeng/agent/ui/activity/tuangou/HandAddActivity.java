@@ -8,9 +8,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.OrderModel;
 import com.shendeng.agent.util.UIHelper;
+import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,10 +49,47 @@ public class HandAddActivity extends BaseActivity {
                     UIHelper.ToastMessage(mContext, "请输入校验码");
                     return;
                 }
-
-
+                getNet(etNumber.getText().toString());
             }
         });
+    }
+
+    private void getNet(String result) {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04318);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("pay_code", result);
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<OrderModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<OrderModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<OrderModel.DataBean>> response) {
+                        Y.t("验证成功");
+                        finish();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<OrderModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<OrderModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
     }
 
     @Override

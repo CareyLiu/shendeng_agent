@@ -14,11 +14,14 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
+import com.shendeng.agent.app.App;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.MessageModel;
@@ -50,7 +53,8 @@ public class MsgIMActivity extends BaseActivity {
     ImageView ivNone;
 
     private MessageListAdapter messageListAdapter;
-    String notifyId = "";
+    private String appCode;
+    private String notifyId;
 
     @Override
     public int getContentViewResId() {
@@ -72,10 +76,11 @@ public class MsgIMActivity extends BaseActivity {
     /**
      * 用于其他Activty跳转到该Activity
      */
-    public static void actionStart(Context context) {
+    public static void actionStart(Context context, String appCode) {
         Intent intent = new Intent();
         intent.setClass(context, MsgIMActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("appCode", appCode);
         context.startActivity(intent);
     }
 
@@ -88,6 +93,7 @@ public class MsgIMActivity extends BaseActivity {
     }
 
     private void init() {
+        appCode = getIntent().getStringExtra("appCode");
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
             public void call(Notice message) {
@@ -96,12 +102,21 @@ public class MsgIMActivity extends BaseActivity {
         }));
         initAdapter();
         getNet();
+        initSM();
+    }
 
+    private void initSM() {
+        srLSmart.setEnableLoadMore(true);
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                notifyId = "";
                 getNet();
+            }
+        });
+        srLSmart.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                getMore();
             }
         });
     }
@@ -132,12 +147,16 @@ public class MsgIMActivity extends BaseActivity {
     }
 
     private void getNet() {
+        notifyId = "";
         Map<String, String> map = new HashMap<>();
-        map.put("code", "04341");
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-
-
+        if (appCode.equals(AppCode.msg_maijia)) {
+            map.put("code", Urls.code_04341);
+        } else {
+            map.put("code", Urls.code_04218);
+        }
+        map.put("type", "1");
         Gson gson = new Gson();
         OkGo.<AppResponse<MessageModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//
@@ -172,7 +191,62 @@ public class MsgIMActivity extends BaseActivity {
                         }
                         srLSmart.finishLoadMore();
                         srLSmart.finishRefresh();
+                    }
 
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                    }
+                });
+    }
+
+
+    private void getMore() {
+        notifyId = "";
+        Map<String, String> map = new HashMap<>();
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        if (appCode.equals(AppCode.msg_maijia)) {
+            map.put("code", Urls.code_04341);
+        } else {
+            map.put("code", Urls.code_04218);
+        }
+        map.put("type", "1");
+        map.put("notify_id", notifyId);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<MessageModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<MessageModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<MessageModel.DataBean>> response) {
+                        if (response.body().data.size() > 0) {
+                            if (StringUtils.isEmpty(notifyId)) {
+                                mDatas.clear();
+                                mDatas.addAll(response.body().data);
+                                messageListAdapter.setNewData(mDatas);
+
+                            } else {
+                                srLSmart.setEnableLoadMore(true);
+                                mDatas.addAll(response.body().data);
+                            }
+
+                            notifyId = mDatas.get(mDatas.size() - 1).getNotify_id();
+                            messageListAdapter.notifyDataSetChanged();
+
+                            recyclerView.setVisibility(View.VISIBLE);
+                            ivNone.setVisibility(View.GONE);
+                            srLSmart.setEnableLoadMore(true);
+                        } else {
+                            srLSmart.setEnableLoadMore(false);
+                        }
+
+                        if (mDatas.size() == 0) {
+                            recyclerView.setVisibility(View.GONE);
+                            ivNone.setVisibility(View.VISIBLE);
+                        }
+                        srLSmart.finishLoadMore();
+                        srLSmart.finishRefresh();
                     }
 
                     @Override

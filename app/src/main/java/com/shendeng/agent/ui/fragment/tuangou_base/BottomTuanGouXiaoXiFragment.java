@@ -27,6 +27,7 @@ import com.shendeng.agent.adapter.MsgAdapter;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.MessageModel;
@@ -161,19 +162,19 @@ public class BottomTuanGouXiaoXiFragment extends BaseFragment {
                     String name = models.get(position).getName();
                     switch (name) {
                         case "订单消息":
-                            MsgOrderActivity.actionStart(getContext());
+                            MsgOrderActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                         case "聚易佳公告":
-                            MsgGonggaoActivity.actionStart(getContext());
+                            MsgGonggaoActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                         case "精选活动":
-                            MsgHuodongActivity.actionStart(getContext());
+                            MsgHuodongActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                         case "新功能":
-                            MsgNewActivity.actionStart(getContext());
+                            MsgNewActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                         case "私聊消息":
-                            MsgIMActivity.actionStart(getContext());
+                            MsgIMActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                     }
                 }

@@ -322,6 +322,11 @@
             android:name=".ui.activity.tuangou.TaoCanGuanLiActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!--    买单收款    -->
+        <activity
+            android:name=".ui.activity.MaiDanShouKuanActivity"
+            android:screenOrientation="portrait"></activity>
+
 
         <activity
             android:name=".ui.FeedBackActivity"

@@ -449,8 +449,6 @@ public class TianJiaTaoCanActivity extends BaseActivity {
                         tvTupNum.setText(response.body().data.get(0).getImg_list().size() + "张");
 
                         tvLeimu.setText(response.body().data.get(0).getItem_name());
-
-
                     }
 
                     @Override
@@ -564,7 +562,6 @@ public class TianJiaTaoCanActivity extends BaseActivity {
         map.put("item_id_one_name", item_id_one_name);
         map.put("item_id_two", item_id_two);
         map.put("item_id_two_name", item_id_two_name);
-
 
         if (!StringUtils.isEmpty(taoCanId)) {
             map.put("wares_id", taoCanId);

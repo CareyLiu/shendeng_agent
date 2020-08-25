@@ -11,26 +11,42 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.tuangou.TuanMainModel;
 import com.shendeng.agent.ui.activity.MaiDanShouKuanActivity;
 import com.shendeng.agent.ui.activity.OrderSaoyisaoActivity;
 import com.shendeng.agent.ui.activity.tuangou.HandAddActivity;
 import com.shendeng.agent.ui.activity.tuangou.TuanGouDingDanGuanliActivity;
 import com.shendeng.agent.ui.activity.tuangou.TuanGouSaoMaActivity;
 import com.shendeng.agent.util.UIHelper;
+import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 import com.tbruyelle.rxpermissions.RxPermissions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.CompositeDisposable;
+import retrofit2.http.Url;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 
@@ -120,21 +136,13 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
     SmartRefreshLayout srLSmart;
     @BindView(R.id.rl_dingdan_guanli)
     RelativeLayout rlDingdanGuanli;
-    @BindView(R.id.view)
-    View view;
     @BindView(R.id.rl_maidanshoukuan)
     RelativeLayout rlMaidanshoukuan;
+    @BindView(R.id.view)
+    View view;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
-            @Override
-            public void call(Notice message) {
-
-            }
-        }));
-    }
+    private String date_type = "1";
+    private TuanMainModel.DataBean homeModel;
 
 
     public static BottomTuanGouShouYeFragment newInstance() {
@@ -155,29 +163,32 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
 
     }
 
-
     @Override
     protected void initLogic() {
+        initHuidiao();
+        getNet();
+        initSM();
 
 
         tvJinqitian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                UIHelper.ToastMessage(getActivity(), "点击了近七天");
+                date_type = "3";
                 viewJinqitianLine.setVisibility(View.VISIBLE);
                 viewJintianLine.setVisibility(View.GONE);
                 viewZuotianLine.setVisibility(View.GONE);
+                getNet();
             }
         });
 
         tvJintian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "点击了今天");
+                date_type = "1";
                 viewJinqitianLine.setVisibility(View.GONE);
                 viewJintianLine.setVisibility(View.VISIBLE);
                 viewZuotianLine.setVisibility(View.GONE);
+                getNet();
             }
         });
 
@@ -185,10 +196,11 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
         tvZuotian.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "点击了昨天");
+                date_type = "2";
                 viewJinqitianLine.setVisibility(View.GONE);
                 viewJintianLine.setVisibility(View.GONE);
                 viewZuotianLine.setVisibility(View.VISIBLE);
+                getNet();
             }
         });
 
@@ -222,7 +234,6 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
         rlDingdanGuanli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //UIHelper.ToastMessage(getActivity(), "点击了订单管理");
                 TuanGouDingDanGuanliActivity.actionStart(getActivity());
             }
         });
@@ -232,15 +243,61 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
                 MaiDanShouKuanActivity.actionStart(getActivity());
             }
         });
-        srLSmart.setEnableLoadMore(false);
     }
 
+    private void initSM() {
+        srLSmart.setEnableLoadMore(false);
+        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
+    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
 
+            }
+        }));
+    }
 
+    private void getNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04210);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(getContext()).getAppToken());
+        map.put("date_type", date_type);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<TuanMainModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<TuanMainModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<TuanMainModel.DataBean>> response) {
+                        homeModel = response.body().data.get(0);
+
+                        tvMoney.setText(homeModel.getReceivable());
+                        tvYingshoujine.setText(homeModel.getActual_use());
+
+                        tvDingdanshu.setText("订单数  " + homeModel.getP_order_count());
+                        tvMaidanDingdanshu.setText("订单数  " + homeModel.getB_order_count());
+
+                        tvShishoujine.setText(homeModel.getP_actual_use());
+                        tvYingshoujineHuashu.setText(homeModel.getP_receivable());
+
+                        tvMaidanShishoujine.setText(homeModel.getB_actual_use());
+                        tvMaidanYingshoujineHuashu.setText(homeModel.getB_receivable());
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        srLSmart.finishRefresh();
+                    }
+                });
     }
 
     @Override
@@ -248,33 +305,8 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
         // TODO: inflate a fragment view
         rootView = super.onCreateView(inflater, container, savedInstanceState);
         ButterKnife.bind(this, rootView);
-
         return rootView;
     }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
 
     private void ewm() {
         RxPermissions rxPermissions = new RxPermissions(getActivity());
@@ -303,8 +335,4 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
     protected boolean immersionEnabled() {
         return true;
     }
-
-
-
-
 }

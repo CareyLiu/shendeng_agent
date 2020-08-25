@@ -57,7 +57,7 @@ public class TuanGouSaoMaActivity extends BaseActivity implements QRCodeView.Del
     @Override
     protected void initToolbar() {
         super.initToolbar();
-        tv_title.setText("扫描快递单号");
+        tv_title.setText("扫一扫");
     }
 
     /**

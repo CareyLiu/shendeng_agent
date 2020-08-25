@@ -123,14 +123,12 @@ public class BottomWoDeFragment extends BaseFragment {
 
     @Override
     protected void initLogic() {
-
-        int roleNumber = Integer.parseInt(PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ROLE_NUMBER, "0"));
-
-        if (roleNumber == 2) {//双角色时候展示切换按钮
-            ll_qiehuan.setVisibility(View.VISIBLE);
-        } else {
-            ll_qiehuan.setVisibility(View.GONE);
-        }
+//        int roleNumber = Integer.parseInt(PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ROLE_NUMBER, "0"));
+//        if (roleNumber == 2) {//双角色时候展示切换按钮
+//            ll_qiehuan.setVisibility(View.VISIBLE);
+//        } else {
+//            ll_qiehuan.setVisibility(View.GONE);
+//        }
     }
 
 
@@ -223,36 +221,10 @@ public class BottomWoDeFragment extends BaseFragment {
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
     public void onStart() {
         super.onStart();
         tvChangeMoshi.setText("点击切换到团购商家模式");
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
 
     @OnClick({R.id.iv_set, R.id.ll_qianbao, R.id.ll_about, R.id.ll_dizhi, R.id.ll_yuangong, R.id.ll_qiehuan})
     public void onViewClicked(View view) {
@@ -273,61 +245,7 @@ public class BottomWoDeFragment extends BaseFragment {
             case R.id.ll_yuangong:
                 break;
             case R.id.ll_qiehuan:
-//                ProgressDialog progressDialog = new ProgressDialog(getActivity());//网页没加载出来时显示的dialog提示
-//                progressDialog.setMessage("正在切换模式，请稍后...");
-//
-//                progressDialog.setCancelable(false);
-//                progressDialog.show();
-//
-//                Handler handler = new Handler();
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        /**
-//                         *要执行的操作
-//                         */
-//                        progressDialog.setMessage("正在加载全局变量，初始化应用环境");
-//
-//                    }
-//                }, 1000);//3秒后执行Runnable中的run方法
-//
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        /**
-//                         *要执行的操作
-//                         */
-//                        progressDialog.setMessage("正在执行切换操作，请稍后");
-//
-//                    }
-//                }, 2500);//3秒后执行Runnable中的run方法
-//
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        /**
-//                         *要执行的操作
-//                         */
-//                        progressDialog.setMessage("切换成功");
-//
-//                    }
-//                }, 4000);//3秒后执行Runnable中的run方法
-//
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        /**
-//                         *要执行的操作
-//                         */
-//
-//                        progressDialog.dismiss();
-//                    }
-//                }, 5000);//3秒后执行Runnable中的run方法
-
                 HomeBasicTuanGouActivity.actionStart(getActivity());
-
-//                DisplayNextView displayNextView = new DisplayNextView(getActivity(), Constants.KEY_SECOND_CLOCKWISE);
-//                displayNextView.doSomethingOnEnd(Constants.KEY_FIRST_INVERSE);
                 break;
             case R.id.iv_set:
                 SettingActivity.actionStart(getContext(), inst_owner);

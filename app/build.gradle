@@ -137,6 +137,7 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.9'
     //二维码
     implementation 'cn.bingoogolapple:bga-qrcode-zbar:1.2.1'
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.1'
     implementation 'org.devio.takephoto:takephoto_library:4.1.0'
     implementation 'com.flyco.dialog:FlycoDialog_Lib:1.2.2@aar'
     implementation 'com.flyco.animation:FlycoAnimation_Lib:1.0.0@aar'

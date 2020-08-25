@@ -137,7 +137,7 @@ public class OrderListFragment extends BaseFragment {
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("shop_pay_check", shop_pay_check);
-        map.put("form_id", "");
+        map.put("shop_form_id", "");
         Gson gson = new Gson();
         OkGo.<AppResponse<TOrderModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//
@@ -171,7 +171,7 @@ public class OrderListFragment extends BaseFragment {
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("shop_pay_check", shop_pay_check);
-        map.put("form_id", form_id);
+        map.put("shop_form_id", form_id);
         Gson gson = new Gson();
         OkGo.<AppResponse<TOrderModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//

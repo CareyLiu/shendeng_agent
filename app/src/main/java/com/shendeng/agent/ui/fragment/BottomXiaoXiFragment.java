@@ -12,6 +12,7 @@ import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.MsgAdapter;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.model.MsgModel;
 import com.shendeng.agent.ui.activity.MsgGonggaoActivity;
 import com.shendeng.agent.ui.activity.MsgHuodongActivity;
@@ -139,19 +140,19 @@ public class BottomXiaoXiFragment extends BaseFragment {
                     String name = models.get(position).getName();
                     switch (name) {
                         case "订单消息":
-                            MsgOrderActivity.actionStart(getContext());
+                            MsgOrderActivity.actionStart(getContext(), AppCode.msg_tuangou);
                             break;
                         case "聚易佳公告":
-                            MsgGonggaoActivity.actionStart(getContext());
+                            MsgGonggaoActivity.actionStart(getContext(), AppCode.msg_tuangou);
                             break;
                         case "精选活动":
-                            MsgHuodongActivity.actionStart(getContext());
+                            MsgHuodongActivity.actionStart(getContext(), AppCode.msg_tuangou);
                             break;
                         case "新功能":
-                            MsgNewActivity.actionStart(getContext());
+                            MsgNewActivity.actionStart(getContext(), AppCode.msg_tuangou);
                             break;
                         case "私聊消息":
-                            MsgIMActivity.actionStart(getContext());
+                            MsgIMActivity.actionStart(getContext(), AppCode.msg_tuangou);
                             break;
                     }
                 }

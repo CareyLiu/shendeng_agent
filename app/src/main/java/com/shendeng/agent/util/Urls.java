@@ -42,6 +42,7 @@ public class Urls {
     public final static String code_04334 = "04334";//支付宝：提现账号设置
     public final static String code_04338 = "04338";//提现
     public final static String code_00005 = "00005";//参数查询
+
     public final static String code_04202 = "04202";//团购套餐列表
     public final static String code_04203 = "04203";//套餐详情
     public final static String code_04206 = "04206";//添加规则
@@ -51,4 +52,10 @@ public class Urls {
 
     public final static String code_04200 = "04200";//团购订单列表
     public final static String code_04201 = "04201";//团购订单详情
+    public final static String code_04217 = "04217";//团购商家：评论详情及列表
+    public final static String code_04210 = "04210";//团购商家：团购首页
+    public final static String code_04181 = "04181";//团购商家：生成商家支付二维码
+
+    public final static String code_04341 = "04341";//商家：消息
+    public final static String code_04218 = "04218";//团购：消息
 }
