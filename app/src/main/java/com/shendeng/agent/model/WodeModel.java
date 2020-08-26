@@ -84,6 +84,17 @@ public class WodeModel {
         private String shop_collection_count;
         private String shop_browsing_count;
 
+        private String of_user_id;
+        private String subsystem_id;
+
+        public String getOf_user_id() {
+            return of_user_id;
+        }
+
+        public String getSubsystem_id() {
+            return subsystem_id;
+        }
+
         public String getWx_user_name() {
             return wx_user_name;
         }

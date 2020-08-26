@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp">
+
+        <TextView
+            android:id="@+id/tv_zaizhi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="在职员工(0)"
+            android:textColor="@color/text_red"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_lizhi"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="离职员工(0)"
+            android:textColor="@color/text_color_9"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/split" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smartRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_line"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlTextSizeTime="10sp"
+                app:srlTextSizeTitle="@dimen/sp_12" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_yuangong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srlTextSizeTime="10sp"
+                app:srlTextSizeTitle="@dimen/sp_12" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_no_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ImageView
+                android:layout_width="211dp"
+                android:layout_height="211dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/tuangou_nopic" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂无员工"
+                android:textColor="@color/text_color_6"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="18dp"
+            android:src="@mipmap/product_tianjiasahngpin"></ImageView>
+    </FrameLayout>
+</LinearLayout>

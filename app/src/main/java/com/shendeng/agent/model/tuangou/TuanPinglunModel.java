@@ -77,7 +77,16 @@ public class TuanPinglunModel {
         private String low_assess_percent;
         private String assess_reply_percent;
         private String low_assess_reply_percent;
+        private String average_score;
         private List<AssessListBean> assess_list;
+
+        public String getAverage_score() {
+            return average_score;
+        }
+
+        public void setAverage_score(String average_score) {
+            this.average_score = average_score;
+        }
 
         public String getTotal_assess_count() {
             return total_assess_count;

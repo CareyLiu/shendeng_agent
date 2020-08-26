@@ -199,9 +199,14 @@ public class MenDianFragment2 extends BaseFragment {
                         tv_zongpingshu.setText("总评价数 " + total_assess_count);
                         tv_haoping.setText("好评 " + high_assess_count);
                         tv_zhongchaping.setText("中差评 " + low_assess_count);
+                        tvPingfenNumber.setText(pinglunModel.getAverage_score());
 
-                        setHaopinglv(high_assess_count, total_assess_count);
-                        setZhongcha(low_assess_count, total_assess_count);
+                        try {
+                            setHaopinglv(high_assess_count, total_assess_count);
+                            setZhongcha(low_assess_count, total_assess_count);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         tv_haopinglv.setText(pinglunModel.getHigh_assess_percent());
                         tv_zhongchapinglv.setText(pinglunModel.getLow_assess_percent());
@@ -306,7 +311,7 @@ public class MenDianFragment2 extends BaseFragment {
             }
         });
         dialog.setDismissAfterClick(false);
-        dialog.setTextInput(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
         dialog.setTextTitle("请输入评论内容");
         dialog.show();
     }

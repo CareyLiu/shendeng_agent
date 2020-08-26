@@ -35,6 +35,7 @@ import com.shendeng.agent.ui.activity.AboutActivity;
 import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
 import com.shendeng.agent.ui.activity.WodeTuihuoActivity;
+import com.shendeng.agent.ui.activity.yuangong.YuangongActivity;
 import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
@@ -123,12 +124,12 @@ public class BottomWoDeFragment extends BaseFragment {
 
     @Override
     protected void initLogic() {
-//        int roleNumber = Integer.parseInt(PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ROLE_NUMBER, "0"));
-//        if (roleNumber == 2) {//双角色时候展示切换按钮
-//            ll_qiehuan.setVisibility(View.VISIBLE);
-//        } else {
-//            ll_qiehuan.setVisibility(View.GONE);
-//        }
+        int roleNumber = Integer.parseInt(PreferenceHelper.getInstance(getActivity()).getString(AppConfig.ROLE_NUMBER, "0"));
+        if (roleNumber == 2) {//双角色时候展示切换按钮
+            ll_qiehuan.setVisibility(View.VISIBLE);
+        } else {
+            ll_qiehuan.setVisibility(View.GONE);
+        }
     }
 
 
@@ -192,8 +193,7 @@ public class BottomWoDeFragment extends BaseFragment {
                         tv_title.setText(userMain.getInst_name());
                         inst_owner = userMain.getInst_owner();
                         if (inst_owner.equals("1")) {//员工管理
-//                            ll_yuangong.setVisibility(View.VISIBLE);
-                            ll_yuangong.setVisibility(View.GONE);
+                            ll_yuangong.setVisibility(View.VISIBLE);
                             iv_shenfen.setImageResource(R.mipmap.mine_boss);
                         } else {
                             ll_yuangong.setVisibility(View.GONE);
@@ -243,6 +243,7 @@ public class BottomWoDeFragment extends BaseFragment {
                 WodeTuihuoActivity.actionStart(getContext());
                 break;
             case R.id.ll_yuangong:
+                YuangongActivity.actionStart(getContext(),userMain.getOf_user_id(),userMain.getInst_id(),userMain.getSubsystem_id());
                 break;
             case R.id.ll_qiehuan:
                 HomeBasicTuanGouActivity.actionStart(getActivity());

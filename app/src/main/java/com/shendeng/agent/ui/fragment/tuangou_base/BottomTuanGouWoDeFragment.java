@@ -35,6 +35,7 @@ import com.shendeng.agent.ui.activity.AboutActivity;
 import com.shendeng.agent.ui.activity.SettingActivity;
 import com.shendeng.agent.ui.activity.WodeQainbaoActivity;
 import com.shendeng.agent.ui.activity.WodeTuihuoActivity;
+import com.shendeng.agent.ui.activity.yuangong.YuangongActivity;
 import com.shendeng.agent.util.Urls;
 
 import java.util.HashMap;
@@ -263,6 +264,7 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
                 WodeTuihuoActivity.actionStart(getContext());
                 break;
             case R.id.ll_yuangong:
+                YuangongActivity.actionStart(getContext(),userMain.getOf_user_id(),userMain.getInst_id(),userMain.getSubsystem_id());
                 break;
             case R.id.ll_qiehuan:
 //                ProgressDialog progressDialog = new ProgressDialog(getActivity());//网页没加载出来时显示的dialog提示

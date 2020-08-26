@@ -59,4 +59,7 @@ public class Urls {
 
     public final static String code_04341 = "04341";//商家：消息
     public final static String code_04218 = "04218";//团购：消息
+
+
+    public final static String code_04219 = "04219";//团购商家：机构员工列表
 }
