@@ -273,8 +273,10 @@ public class LoginActivity extends BaseActivity {
 
                             if (response.body().data.get(0).getTypeList().get(0).getBusiness_type().equals("1")) {
                                 startActivity(new Intent(LoginActivity.this, HomeBasicActivity.class));
+                                PreferenceHelper.getInstance(mContext).putString(AppConfig.ROLE, String.valueOf(response.body().data.get(0).getTypeList().get(0).getBusiness_type()));
                             } else if (response.body().data.get(0).getTypeList().get(0).getBusiness_type().equals("2")) {
                                 HomeBasicTuanGouActivity.actionStart(LoginActivity.this);
+                                PreferenceHelper.getInstance(mContext).putString(AppConfig.ROLE, String.valueOf(response.body().data.get(0).getTypeList().get(0).getBusiness_type()));
                             }
 
                         }

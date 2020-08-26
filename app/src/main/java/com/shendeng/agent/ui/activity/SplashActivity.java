@@ -18,7 +18,9 @@ import com.lzy.okgo.OkGo;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.AppConfig;
 import com.shendeng.agent.app.PreferenceHelper;
+import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.ui.HomeBasicActivity;
+import com.shendeng.agent.ui.HomeBasicTuanGouActivity;
 import com.tbruyelle.rxpermissions.Permission;
 import com.tbruyelle.rxpermissions.RxPermissions;
 
@@ -75,7 +77,14 @@ public class SplashActivity extends Activity {
                 if (PreferenceHelper.getInstance(mWeakReference.get()).getString("app_token", "").equals("")) {
                     LoginActivity.actionStart(mWeakReference.get());
                 } else {
-                    HomeBasicActivity.actionStart(mWeakReference.get());
+
+                    String str = PreferenceHelper.getInstance(mWeakReference.get()).getString(AppConfig.ROLE, "0");
+                    if (str.equals("1")) {
+                        HomeBasicActivity.actionStart(mWeakReference.get());
+                    } else if (str.equals("2")) {
+                        HomeBasicTuanGouActivity.actionStart(mWeakReference.get());
+                    }
+
                 }
                 mWeakReference.get().finish();
             }
@@ -91,7 +100,7 @@ public class SplashActivity extends Activity {
 
         setContentView(R.layout.activity_splash);
         RelativeLayout logoView = findViewById(R.id.iv_welcome);
-        ImmersionBar.with(this) .statusBarColor(R.color.colorPrimary) .init();
+        ImmersionBar.with(this).statusBarColor(R.color.colorPrimary).init();
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.1f, 1.0f);
         // 动画效果时间为2秒
         alphaAnimation.setDuration(2000);

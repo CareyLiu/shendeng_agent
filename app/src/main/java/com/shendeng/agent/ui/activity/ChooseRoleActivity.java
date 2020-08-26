@@ -46,6 +46,7 @@ public class ChooseRoleActivity extends BaseActivity {
                 UIHelper.ToastMessage(mContext, "店铺");
 
                 startActivity(new Intent(mContext, HomeBasicActivity.class));
+                PreferenceHelper.getInstance(mContext).putString(AppConfig.ROLE, String.valueOf("1"));
             }
         });
 
@@ -57,6 +58,7 @@ public class ChooseRoleActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         HomeBasicTuanGouActivity.actionStart(mContext);
+                        PreferenceHelper.getInstance(mContext).putString(AppConfig.ROLE, String.valueOf("2"));
                     }
                 });
             }

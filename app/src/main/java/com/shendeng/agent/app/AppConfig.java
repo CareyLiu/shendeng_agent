@@ -8,6 +8,7 @@ public class AppConfig {
     public static String RONGYUN_TOKEN = "0x1113";//融云token
 
     public static String ROLE_NUMBER = "0x1114";//当前角色的数量
+    public static String ROLE = "0x1115";//当前选择角色
 
     /**
      * 基本权限管理
