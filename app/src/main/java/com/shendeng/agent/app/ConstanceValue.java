@@ -13,12 +13,14 @@ public interface ConstanceValue {
     int WX_JIECHU_F = 0x10005;//微信绑定解除失败
 
 
-    int shangpin_details_use = 0x10006;
-    int shangpin_edit_use = 0x10007;
-    int shangpin_frag = 0x10008;
+    int shangpin_details_use = 0x10006;//商家端 详情
+    int shangpin_edit_use = 0x10007;//商家端 编辑
+    int shangpin_frag = 0x10008;//商家端 图片
 
 
-    int order_fahuo = 0x10009;
+    int order_fahuo = 0x10009;//订单发货
+
+    int ADD_YUANGONG = 0x10010;//团购  添加员工
 
 
 }

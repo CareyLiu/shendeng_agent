@@ -60,6 +60,9 @@ public class Urls {
     public final static String code_04341 = "04341";//商家：消息
     public final static String code_04218 = "04218";//团购：消息
 
-
     public final static String code_04219 = "04219";//团购商家：机构员工列表
+    public final static String code_04220 = "04220";//团购商家：员工手机验证
+    public final static String code_04221 = "04221";//团购商家：添加新员工
+    public final static String code_04222 = "04222";//团购商家：修改员工信息
+    public final static String code_04223 = "04223";//团购商家：机构角色菜单
 }

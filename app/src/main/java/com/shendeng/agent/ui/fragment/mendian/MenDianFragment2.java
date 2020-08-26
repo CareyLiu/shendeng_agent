@@ -147,7 +147,7 @@ public class MenDianFragment2 extends BaseFragment {
                     if (assess_list != null && assess_list.size() > position) {
                         pinglunBeen = assess_list.get(position);
                         huiPosition = position;
-                        shop_form_id = pinglunBeen.getOf_user_id();
+                        shop_form_id = pinglunBeen.getShop_form_id();
                         clickPinglun();
                     }
                 }

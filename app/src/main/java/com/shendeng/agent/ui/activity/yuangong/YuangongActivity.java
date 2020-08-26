@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -18,11 +19,14 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.app.ConstanceValue;
+import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.WodeModel;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,6 +39,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class YuangongActivity extends BaseActivity {
 
@@ -50,11 +56,12 @@ public class YuangongActivity extends BaseActivity {
     LinearLayout ll_no_data;
     @BindView(R.id.iv_add)
     ImageView iv_add;
-    private YuangongAdapter adapter;
     private String of_user_id;
     private String subsystem_id;
     private String inst_id;
     private String sub_state;
+    private List<YuangongModel.DataBean> yuangongModels = new ArrayList<>();
+    private YuangongAdapter adapter;
 
     @Override
     public int getContentViewResId() {
@@ -94,22 +101,50 @@ public class YuangongActivity extends BaseActivity {
         inst_id = getIntent().getStringExtra("inst_id");
         of_user_id = getIntent().getStringExtra("of_user_id");
         subsystem_id = getIntent().getStringExtra("subsystem_id");
+        sub_state = "1";
 
         initAdapter();
         initSM();
         getNet();
+
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.ADD_YUANGONG) {
+                    getNet();
+                }
+            }
+        }));
     }
 
     private void initAdapter() {
-        List<String> strings = new ArrayList<>();
-        strings.add("");
-        strings.add("");
-        strings.add("");
-        strings.add("");
-
-        adapter = new YuangongAdapter(R.layout.item_yuangong, strings);
+        adapter = new YuangongAdapter(R.layout.item_yuangong, yuangongModels);
         rv_yuangong.setLayoutManager(new LinearLayoutManager(mContext));
         rv_yuangong.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (yuangongModels != null && yuangongModels.size() > position) {
+                    YuangongModel.DataBean dataBean = yuangongModels.get(position);
+                    YuangongEditActivity.actionStart(mContext,
+                            of_user_id,
+                            inst_id,
+                            subsystem_id,
+                            dataBean.getUser_phone(),
+                            dataBean.getUser_name(),
+                            dataBean.getState(),
+                            dataBean.getSub_user_no(),
+                            dataBean.getBranch_id(),
+                            dataBean.getRole_id(),
+                            dataBean.getBranch_name(),
+                            dataBean.getRole_name());
+                }
+            }
+        });
     }
 
     private void initSM() {
@@ -132,12 +167,21 @@ public class YuangongActivity extends BaseActivity {
         map.put("inst_id", inst_id);
         map.put("sub_state", sub_state);
         Gson gson = new Gson();
-        OkGo.<AppResponse<WodeModel.DataBean>>post(Urls.WORKER)
+        OkGo.<AppResponse<YuangongModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//
                 .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<WodeModel.DataBean>>() {
+                .execute(new JsonCallback<AppResponse<YuangongModel.DataBean>>() {
                     @Override
-                    public void onSuccess(Response<AppResponse<WodeModel.DataBean>> response) {
+                    public void onSuccess(Response<AppResponse<YuangongModel.DataBean>> response) {
+                        yuangongModels = response.body().data;
+                        if (yuangongModels.size() > 0) {
+                            ll_no_data.setVisibility(View.GONE);
+                        } else {
+                            ll_no_data.setVisibility(View.VISIBLE);
+                        }
+                        adapter.setNewData(yuangongModels);
+                        adapter.notifyDataSetChanged();
+
 
                     }
 
@@ -153,12 +197,30 @@ public class YuangongActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_zaizhi:
+                clickZaizhi();
                 break;
             case R.id.tv_lizhi:
+                clickLizhi();
                 break;
             case R.id.iv_add:
-                YuangongAddActivity.actionStart(mContext,of_user_id,inst_id,subsystem_id);
+                YuangongAddActivity.actionStart(mContext, of_user_id, inst_id, subsystem_id);
                 break;
         }
+    }
+
+    private void clickLizhi() {
+        sub_state = "2";
+        getNet();
+
+        tv_lizhi.setTextColor(Y.getColor(R.color.text_red));
+        tv_zaizhi.setTextColor(Y.getColor(R.color.text_color_9));
+    }
+
+    private void clickZaizhi() {
+        sub_state = "1";
+        getNet();
+
+        tv_zaizhi.setTextColor(Y.getColor(R.color.text_red));
+        tv_lizhi.setTextColor(Y.getColor(R.color.text_color_9));
     }
 }

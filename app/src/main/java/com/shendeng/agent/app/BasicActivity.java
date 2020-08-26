@@ -99,7 +99,7 @@ public abstract class BasicActivity<T extends BasicPresenter, E extends BasicMod
         }
 
         tv_title.setTextSize(17);
-        tv_title.setTextColor(this.getResources().getColor(R.color.color_494949));
+        tv_title.setTextColor(this.getResources().getColor(R.color.text_color_3));
         tv_title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         mToolbar.setNavigationIcon(R.mipmap.backbutton);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

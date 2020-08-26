@@ -38,7 +38,7 @@ public class TuanGouAccessAdapter extends BaseQuickAdapter<TuanPinglunModel.Data
         View ll_huifu = helper.getView(R.id.ll_huifu);
         if (reply_state.equals("1")) {
             ll_huifu.setVisibility(View.VISIBLE);
-            helper.setText(R.id.tv_access, item.getShop_to_text());
+            helper.setText(R.id.tv_access, "商家回复：" + item.getShop_to_text());
         } else {
             ll_huifu.setVisibility(View.GONE);
             helper.setText(R.id.tv_access, "");

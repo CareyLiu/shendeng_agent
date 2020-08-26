@@ -172,6 +172,15 @@ public class TuanPinglunModel {
             private String user_name;
             private String user_img_url;
             private String user_to_score;
+            private String shop_form_id;
+
+            public String getShop_form_id() {
+                return shop_form_id;
+            }
+
+            public void setShop_form_id(String shop_form_id) {
+                this.shop_form_id = shop_form_id;
+            }
 
             public String getUser_to_text() {
                 return user_to_text;

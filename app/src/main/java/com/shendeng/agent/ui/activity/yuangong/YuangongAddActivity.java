@@ -9,14 +9,38 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.app.ConstanceValue;
+import com.shendeng.agent.bean.Notice;
+import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.BottomDialog;
+import com.shendeng.agent.dialog.BottomDialogView;
 import com.shendeng.agent.dialog.InputDialog;
+import com.shendeng.agent.model.ChandiModel;
+import com.shendeng.agent.model.WodeModel;
+import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 
 public class YuangongAddActivity extends BaseActivity {
 
@@ -44,9 +68,16 @@ public class YuangongAddActivity extends BaseActivity {
     private String inst_id;
     private String of_user_id;
     private String subsystem_id;
+
+    private List<BumenModel.DataBean> bumenModels;
+    private OptionsPickerView<Object> bumenPicker;
+
     private String phone;
     private String name;
     private String num;
+    private String state;
+    private String branch_id;
+    private String role_id;
 
     @Override
     public int getContentViewResId() {
@@ -65,13 +96,53 @@ public class YuangongAddActivity extends BaseActivity {
         tv_rightTitle.setText("下一步");
         tv_rightTitle.setVisibility(View.VISIBLE);
         tv_rightTitle.setTextSize(17);
-        tv_rightTitle.setTextColor(this.getResources().getColor(R.color.text_red));
+        tv_rightTitle.setTextColor(this.getResources().getColor(R.color.text_color_3));
         tv_rightTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                xiayibu();
             }
         });
+    }
+
+    private void xiayibu() {
+        if (TextUtils.isEmpty(phone)) {
+            Y.t("请输入员工手机号");
+            return;
+        }
+
+        if (TextUtils.isEmpty(name)) {
+            Y.t("请输入员工姓名");
+            return;
+        }
+
+        if (TextUtils.isEmpty(state)) {
+            Y.t("请选择员工状态");
+            return;
+        }
+
+        if (TextUtils.isEmpty(num)) {
+            Y.t("请输入员工编号");
+            return;
+        }
+
+        if (TextUtils.isEmpty(branch_id)) {
+            Y.t("请选择员工部门角色");
+            return;
+        }
+
+        YuangongCheckActivity.actionStart(
+                mContext,
+                of_user_id,
+                inst_id,
+                subsystem_id,
+                phone,
+                name,
+                state,
+                num,
+                branch_id,
+                role_id);
+
     }
 
     /**
@@ -96,6 +167,18 @@ public class YuangongAddActivity extends BaseActivity {
         inst_id = getIntent().getStringExtra("inst_id");
         of_user_id = getIntent().getStringExtra("of_user_id");
         subsystem_id = getIntent().getStringExtra("subsystem_id");
+        initHuidiao();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.ADD_YUANGONG) {
+                    finish();
+                }
+            }
+        }));
     }
 
     @OnClick({R.id.ll_phone, R.id.ll_name, R.id.ll_state, R.id.ll_num, R.id.ll_bumen})
@@ -128,10 +211,10 @@ public class YuangongAddActivity extends BaseActivity {
 
             @Override
             public void onClickConfirm(View v, InputDialog dialog) {
-                phone = dialog.getTextContent();
-                if (TextUtils.isEmpty(phone)) {
+                if (TextUtils.isEmpty(dialog.getTextContent())) {
                     Y.t("请输入员工手机号");
                 } else {
+                    phone = dialog.getTextContent();
                     tv_phone.setText(phone);
                     dialog.dismiss();
                 }
@@ -158,10 +241,10 @@ public class YuangongAddActivity extends BaseActivity {
 
             @Override
             public void onClickConfirm(View v, InputDialog dialog) {
-                name = dialog.getTextContent();
-                if (TextUtils.isEmpty(name)) {
+                if (TextUtils.isEmpty(dialog.getTextContent())) {
                     Y.t("请输入员工姓名");
                 } else {
+                    name = dialog.getTextContent();
                     tv_name.setText(name);
                     dialog.dismiss();
                 }
@@ -180,7 +263,30 @@ public class YuangongAddActivity extends BaseActivity {
     }
 
     private void clickState() {
+        List<String> names = new ArrayList<>();
+        names.add("正常");
+        names.add("离职");
+        final BottomDialog bottomDialog = new BottomDialog(this);
+        bottomDialog.setModles(names);
+        bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
+            @Override
+            public void onClickItem(int pos) {
+                bottomDialog.dismiss();
+                if (pos == 0) {
+                    state = "1";
+                    tv_state.setText("正常");
+                } else {
+                    state = "2";
+                    tv_state.setText("离职");
+                }
+            }
 
+            @Override
+            public void onClickCancel(View v) {
+                bottomDialog.dismiss();
+            }
+        });
+        bottomDialog.showBottom();
     }
 
     private void clickNum() {
@@ -192,10 +298,10 @@ public class YuangongAddActivity extends BaseActivity {
 
             @Override
             public void onClickConfirm(View v, InputDialog dialog) {
-                num = dialog.getTextContent();
-                if (TextUtils.isEmpty(num)) {
+                if (TextUtils.isEmpty(dialog.getTextContent())) {
                     Y.t("请输入员工编号");
                 } else {
+                    num = dialog.getTextContent();
                     tv_num.setText(num);
                     dialog.dismiss();
                 }
@@ -214,6 +320,66 @@ public class YuangongAddActivity extends BaseActivity {
     }
 
     private void clickBumen() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04223);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("inst_id", inst_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<BumenModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<BumenModel.DataBean>> response) {
+                        bumenModels = response.body().data;
+                        if (bumenModels.size() > 0) {
+                            showBumenSelect();
+                        }
+                    }
 
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<BumenModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
+    }
+
+    private void showBumenSelect() {
+        List<Object> names1 = new ArrayList<>();
+        List<List<Object>> names2 = new ArrayList<>();
+        for (int i = 0; i < bumenModels.size(); i++) {
+            BumenModel.DataBean dataBean = bumenModels.get(i);
+            names1.add(dataBean.getBranch_name());
+
+            List<BumenModel.DataBean.BranchBean> branch = dataBean.getBranch();
+            List<Object> names2Beans = new ArrayList<>();
+            for (int j = 0; j < branch.size(); j++) {
+                BumenModel.DataBean.BranchBean branchBean = branch.get(j);
+                names2Beans.add(branchBean.getRole_name());
+            }
+            names2.add(names2Beans);
+        }
+
+        //条件选择器
+        bumenPicker = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int option2, int options3, View v) {
+                BumenModel.DataBean dataBean = bumenModels.get(options1);
+                BumenModel.DataBean.BranchBean branchBean = dataBean.getBranch().get(option2);
+                tv_bumen.setText(dataBean.getBranch_name() + "·" + branchBean.getRole_name());
+                branch_id = dataBean.getBranch_id();
+                role_id = branchBean.getRole_id();
+            }
+        }).build();
+        bumenPicker.setPicker(names1, names2);
+        bumenPicker.show();
     }
 }

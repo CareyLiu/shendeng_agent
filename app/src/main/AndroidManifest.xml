@@ -347,6 +347,13 @@
             android:name=".ui.activity.yuangong.YuangongAddActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!--    员工添加    -->
+        <activity
+            android:name=".ui.activity.yuangong.YuangongCheckActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"></activity>
+
         <!--    选择页面    -->
         <activity
             android:name=".ui.activity.ChooseRoleActivity"
