@@ -84,7 +84,7 @@ public class Y {
     public static int getInt(String content) {
         if (!TextUtils.isEmpty(content)) {
             try {
-                return Integer.parseInt(content);
+                return (int) getDouble(content);
             } catch (Exception e) {
                 return 0;
             }
@@ -132,7 +132,6 @@ public class Y {
         String format = new DecimalFormat("#.##").format(money);
         return format;
     }
-
 
 
     /**

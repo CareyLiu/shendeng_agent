@@ -526,7 +526,6 @@
                     app:layout_constraintRight_toLeftOf="@+id/cl_yingshoujine"
                     app:layout_constraintTop_toTopOf="parent">
 
-
                     <TextView
                         android:id="@+id/tv_shishoujine"
                         android:layout_width="wrap_content"
@@ -629,12 +628,10 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-
                     <TextView
                         android:id="@+id/tv_maidan_yingshoujine_huashu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
                         android:includeFontPadding="false"
                         android:text="0"
                         android:textColor="#ff333333"
@@ -664,7 +661,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/cl_maidan_yingshoujine"
                     app:layout_constraintTop_toTopOf="parent">
-
 
                     <TextView
                         android:id="@+id/tv_maidan_shishoujine"

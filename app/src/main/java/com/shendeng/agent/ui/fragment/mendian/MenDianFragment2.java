@@ -1,5 +1,7 @@
 package com.shendeng.agent.ui.fragment.mendian;
 
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -8,9 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -21,10 +26,15 @@ import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.dialog.InputDialog;
+import com.shendeng.agent.dialog.TishiDialog;
+import com.shendeng.agent.model.PingjiaModel;
 import com.shendeng.agent.model.tuangou.TuanPinglunModel;
 import com.shendeng.agent.ui.view.sys.ScreenUtil;
+import com.shendeng.agent.util.TimeUtils;
 import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -75,9 +85,14 @@ public class MenDianFragment2 extends BaseFragment {
     private List<TuanPinglunModel.DataBean.AssessListBean> assess_list = new ArrayList<>();
     private TuanGouAccessAdapter tuanGouAccessAdapter;
 
+    private String shop_to_text;
+    private String shop_to_score;
+    private String shop_form_id;
+    private TuanPinglunModel.DataBean.AssessListBean pinglunBeen;
+    private int huiPosition;
+
     @Override
     protected void initLogic() {
-
         chooseHaoping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +128,7 @@ public class MenDianFragment2 extends BaseFragment {
             }
         });
 
+        shop_to_score = "5";
         initAdapter();
         initSM();
         getNet();
@@ -124,6 +140,19 @@ public class MenDianFragment2 extends BaseFragment {
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rlvList.setLayoutManager(linearLayoutManager);
         rlvList.setAdapter(tuanGouAccessAdapter);
+        tuanGouAccessAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.ll_huifu_bt) {
+                    if (assess_list != null && assess_list.size() > position) {
+                        pinglunBeen = assess_list.get(position);
+                        huiPosition = position;
+                        shop_form_id = pinglunBeen.getOf_user_id();
+                        clickPinglun();
+                    }
+                }
+            }
+        });
     }
 
     private void initSM() {
@@ -169,7 +198,7 @@ public class MenDianFragment2 extends BaseFragment {
                         String low_assess_count = pinglunModel.getLow_assess_count();
                         tv_zongpingshu.setText("总评价数 " + total_assess_count);
                         tv_haoping.setText("好评 " + high_assess_count);
-                            tv_zhongchaping.setText("中差评 " + low_assess_count);
+                        tv_zhongchaping.setText("中差评 " + low_assess_count);
 
                         setHaopinglv(high_assess_count, total_assess_count);
                         setZhongcha(low_assess_count, total_assess_count);
@@ -218,7 +247,6 @@ public class MenDianFragment2 extends BaseFragment {
         viewZhongchaping.setLayoutParams(linearParams);
     }
 
-
     private void getLoad() {
         page_number++;
         Map<String, String> map = new HashMap<>();
@@ -254,5 +282,89 @@ public class MenDianFragment2 extends BaseFragment {
 
     }
 
+    private void clickPinglun() {
+        InputDialog dialog = new InputDialog(getContext(), new InputDialog.TishiDialogListener() {
+            @Override
+            public void onClickCancel(View v, InputDialog dialog) {
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onClickConfirm(View v, InputDialog dialog) {
+                shop_to_text = dialog.getTextContent();
+                if (TextUtils.isEmpty(shop_to_text)) {
+                    Y.t("请输入评价内容");
+                } else {
+                    dialog.dismiss();
+                    pinglun();
+                }
+            }
+
+            @Override
+            public void onDismiss(InputDialog dialog) {
+
+            }
+        });
+        dialog.setDismissAfterClick(false);
+        dialog.setTextInput(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        dialog.setTextTitle("请输入评论内容");
+        dialog.show();
+    }
+
+    private void pinglun() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04317);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(getContext()).getAppToken());
+        map.put("shop_form_id", shop_form_id);
+        map.put("shop_to_score", shop_to_score);
+        map.put("shop_to_text", shop_to_text);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<PingjiaModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<PingjiaModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<PingjiaModel.DataBean>> response) {
+                        TishiDialog dialog = new TishiDialog(getContext(), new TishiDialog.TishiDialogListener() {
+                            @Override
+                            public void onClickCancel(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onClickConfirm(View v, TishiDialog dialog) {
+
+                            }
+
+                            @Override
+                            public void onDismiss(TishiDialog dialog) {
+                                pinglunBeen.setReply_state("1");
+                                pinglunBeen.setShop_to_text(shop_to_text);
+                                assess_list.set(huiPosition, pinglunBeen);
+                                tuanGouAccessAdapter.setNewData(assess_list);
+                                tuanGouAccessAdapter.notifyDataSetChanged();
+                            }
+                        });
+                        dialog.setTextTitle("成功");
+                        dialog.setTextCont("已成功回复评论");
+                        dialog.setTextConfirm("知道了");
+                        dialog.setTextCancel("");
+                        dialog.show();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<PingjiaModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
+    }
 
 }

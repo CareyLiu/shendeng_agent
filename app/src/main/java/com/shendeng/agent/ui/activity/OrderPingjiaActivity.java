@@ -108,7 +108,7 @@ public class OrderPingjiaActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         shop_form_id = getIntent().getStringExtra("shop_form_id");
-        shop_to_score = "3";
+        shop_to_score = "5";
         shop_to_text = "";
         getNet();
     }

@@ -327,6 +327,10 @@
             android:name=".ui.activity.MaiDanShouKuanActivity"
             android:screenOrientation="portrait"></activity>
 
+        <!--    团购明细    -->
+        <activity
+            android:name=".ui.activity.tuangou.TuanMingxiActivity"
+            android:screenOrientation="portrait"></activity>
 
         <activity
             android:name=".ui.FeedBackActivity"

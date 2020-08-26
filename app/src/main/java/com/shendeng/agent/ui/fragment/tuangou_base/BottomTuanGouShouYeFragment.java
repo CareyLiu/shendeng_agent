@@ -27,6 +27,7 @@ import com.shendeng.agent.R;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.tuangou.TuanMainModel;
@@ -35,6 +36,7 @@ import com.shendeng.agent.ui.activity.OrderSaoyisaoActivity;
 import com.shendeng.agent.ui.activity.tuangou.HandAddActivity;
 import com.shendeng.agent.ui.activity.tuangou.TuanGouDingDanGuanliActivity;
 import com.shendeng.agent.ui.activity.tuangou.TuanGouSaoMaActivity;
+import com.shendeng.agent.ui.activity.tuangou.TuanMingxiActivity;
 import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
@@ -214,14 +216,14 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
         clTuangou.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "团购");
+                TuanMingxiActivity.actionStart(getContext(), AppCode.mingxi_tuangou);
             }
         });
 
         clMaidan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "买单");
+                TuanMingxiActivity.actionStart(getContext(), AppCode.mingxi_maidan);
             }
         });
 

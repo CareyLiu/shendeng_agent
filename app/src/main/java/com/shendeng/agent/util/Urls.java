@@ -55,6 +55,7 @@ public class Urls {
     public final static String code_04217 = "04217";//团购商家：评论详情及列表
     public final static String code_04210 = "04210";//团购商家：团购首页
     public final static String code_04181 = "04181";//团购商家：生成商家支付二维码
+    public final static String code_04215 = "04215";//团购商家：买单列表
 
     public final static String code_04341 = "04341";//商家：消息
     public final static String code_04218 = "04218";//团购：消息

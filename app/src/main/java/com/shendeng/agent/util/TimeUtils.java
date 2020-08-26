@@ -65,6 +65,13 @@ public class TimeUtils {
     }
 
     /**
+     * 获取当前月
+     */
+    public static String getCurrentTimeYue() {
+        return getFormatedDateTimeYue(System.currentTimeMillis());
+    }
+
+    /**
      * 将long转换为日期（yyyy-MM-dd HH:mm）
      *
      * @param dateTime
@@ -75,6 +82,25 @@ public class TimeUtils {
         String time = "";
         try {
             SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            time = sDateFormat.format(new Date(dateTime + 0));
+        } catch (Exception e) {
+
+        }
+        return time;
+    }
+
+
+    /**
+     * 将long转换为日期（yyyy-MM）
+     *
+     * @param dateTime
+     * @return 到分
+     */
+    @SuppressLint("SimpleDateFormat")
+    public static String getFormatedDateTimeYue(long dateTime) {
+        String time = "";
+        try {
+            SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM");
             time = sDateFormat.format(new Date(dateTime + 0));
         } catch (Exception e) {
 

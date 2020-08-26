@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -16,10 +17,12 @@ import com.lzy.okgo.model.Response;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppCode;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.TishiDialog;
 import com.shendeng.agent.model.tuangou.EwmModel;
+import com.shendeng.agent.ui.activity.tuangou.TuanMingxiActivity;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 import com.tbruyelle.rxpermissions.RxPermissions;
@@ -42,6 +45,8 @@ public class MaiDanShouKuanActivity extends BaseActivity {
     ImageView iv_erweima;
     @BindView(R.id.tv_save)
     TextView tv_save;
+    @BindView(R.id.ll_zhangdan)
+    LinearLayout llZhangdan;
     private Bitmap bitmap;
 
     @Override
@@ -100,9 +105,12 @@ public class MaiDanShouKuanActivity extends BaseActivity {
         tv_title.setText("买单收款");
     }
 
-    @OnClick({R.id.tv_save, R.id.iv_erweima})
+    @OnClick({R.id.tv_save, R.id.iv_erweima, R.id.ll_zhangdan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.ll_zhangdan:
+                TuanMingxiActivity.actionStart(mContext, AppCode.mingxi_maidan);
+                break;
             case R.id.tv_save:
             case R.id.iv_erweima:
                 getP();
@@ -137,9 +145,9 @@ public class MaiDanShouKuanActivity extends BaseActivity {
                 try {
                     String name = "jyj_tuan_" + System.currentTimeMillis();
                     boolean save = save(bitmap, name);
-                    if (save){
+                    if (save) {
                         Y.t("保存成功");
-                    }else {
+                    } else {
                         Y.t("保存失败");
                     }
                 } catch (IOException e) {
