@@ -706,7 +706,7 @@ public class TianJiaTaoCanActivity extends BaseActivity {
             @Override
             public void onClickConfirm(View v, InputDialog dialog) {
                 if (TextUtils.isEmpty(dialog.getTextContent())) {
-                    Y.t("请输入商品标题");
+                    Y.t("请输入套餐标题");
                 } else {
                     etTaocanmingcheng.setText(dialog.getTextContent());
                     dialog.dismiss();
@@ -721,7 +721,7 @@ public class TianJiaTaoCanActivity extends BaseActivity {
         });
         dialog.setDismissAfterClick(false);
         dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
-        dialog.setTextTitle("请输入商品标题");
+        dialog.setTextTitle("请输入套餐标题");
         dialog.setTextContent(etTaocanmingcheng.getText().toString());
         dialog.show();
     }

@@ -2,22 +2,39 @@ package com.shendeng.agent.ui.fragment.mendian;
 
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.TaoCanGuanLiAdapter;
 import com.shendeng.agent.basicmvp.BaseFragment;
-import com.shendeng.agent.model.JiesuanModel;
+import com.shendeng.agent.callback.JsonCallback;
+import com.shendeng.agent.config.AppResponse;
+import com.shendeng.agent.config.UserManager;
+import com.shendeng.agent.model.MenDianGuanLiModel;
+import com.shendeng.agent.ui.activity.MenDianHeiSeActivity;
+import com.shendeng.agent.ui.activity.MenDianXinXiActivity;
 import com.shendeng.agent.ui.activity.tuangou.TaoCanGuanLi_HomeActivity;
+import com.shendeng.agent.util.GlideShowImageUtils;
+import com.shendeng.agent.util.UIHelper;
+import com.shendeng.agent.util.Urls;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -74,51 +91,57 @@ public class MenDianFragment1 extends BaseFragment {
     SmartRefreshLayout srLSmart;
 
     TaoCanGuanLiAdapter taoCanGuanLiAdapter;
-    List<JiesuanModel.DataBean> mDatas;
+
     @BindView(R.id.taocan_bianji)
     TextView taocanBianji;
+
+    List<MenDianGuanLiModel.DataBean.TaoCanListBean> mDatas;
+    @BindView(R.id.cl_mendian_tupian)
+    ConstraintLayout clMendianTupian;
+    @BindView(R.id.iv_mendian_tupian)
+    ImageView ivMendianTupian;
+    @BindView(R.id.ll_mendian_xinxi_bianji)
+    LinearLayout llMendianXinxiBianji;
+    @BindView(R.id.tv_shanghufenlei)
+    TextView tvShanghufenlei;
+    @BindView(R.id.tv_yingyezhuagntai)
+    TextView tvYingyezhuagntai;
+    @BindView(R.id.tv_rongnarenshu_1)
+    TextView tvRongnarenshu1;
+    @BindView(R.id.tv_mendianmianji_1)
+    TextView tvMendianmianji1;
+    @BindView(R.id.tv_baoxiangxinxi_1)
+    TextView tvBaoxiangxinxi1;
+
 
     @Override
     protected void initLogic() {
         srLSmart.setEnableLoadMore(false);
-
-
-        //list
-
-
         mDatas = new ArrayList<>();
-        JiesuanModel.DataBean jiesuanModel = new JiesuanModel.DataBean();
-
-
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-        mDatas.add(jiesuanModel);
-
-        mDatas.add(jiesuanModel);
-
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rlvList.setLayoutManager(linearLayoutManager);
-
-
         taoCanGuanLiAdapter = new TaoCanGuanLiAdapter(R.layout.layout_caidan_guanli, mDatas);
         rlvList.setAdapter(taoCanGuanLiAdapter);
+        UIHelper.ToastMessage(getActivity(), "门店");
 
+        srLSmart.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                getNet();
+            }
+        });
+//        GridLayoutManager linearLayoutManager1 = new GridLayoutManager(getActivity(), 3);
+//        rlvTupiancaidan.setLayoutManager(linearLayoutManager1);
+//        taoCanGuanLiAdapter = new TaoCanGuanLiAdapter(R.layout.item_caidan_list, mDatas);
+//        rlvTupiancaidan.setAdapter(taoCanGuanLiAdapter);
 
-        GridLayoutManager linearLayoutManager1 = new GridLayoutManager(getActivity(), 3);
-        rlvTupiancaidan.setLayoutManager(linearLayoutManager1);
-
-
-        taoCanGuanLiAdapter = new TaoCanGuanLiAdapter(R.layout.item_caidan_list, mDatas);
-        rlvTupiancaidan.setAdapter(taoCanGuanLiAdapter);
+        llMendianXinxiBianji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenDianXinXiActivity.actionStart(getActivity());
+            }
+        });
 
         taocanBianji.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +151,15 @@ public class MenDianFragment1 extends BaseFragment {
                 TaoCanGuanLi_HomeActivity.actionStart(getActivity());
             }
         });
+
+        clMendianTupian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenDianHeiSeActivity.actionStart(getActivity(), response_1.body().data.get(0).getInst_photo_url());
+            }
+        });
+        getNet();
+
 
     }
 
@@ -140,4 +172,53 @@ public class MenDianFragment1 extends BaseFragment {
     protected void initView(View rootView) {
 
     }
+
+    private Response<AppResponse<MenDianGuanLiModel.DataBean>> response_1;
+
+    private void getNet() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04214);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(getContext()).getAppToken());
+        Gson gson = new Gson();
+        OkGo.<AppResponse<MenDianGuanLiModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<MenDianGuanLiModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<MenDianGuanLiModel.DataBean>> response) {
+                        srLSmart.finishRefresh();
+                        tvShanghufenlei.setText(response.body().data.get(0).getMerchant_type_name());
+
+//                        if (response.body().data.get(0).getBusiness_status().equals("1")) {
+//                            tvYingyezhuagntai.setText("门店开启");
+//                        } else {
+//                            tvYingyezhuagntai.setText("门店关闭");
+//                        }
+                        tvYingyezhuagntai.setText(response.body().data.get(0).getShop_state_name());
+                        tvData.setText(response.body().data.get(0).getInst_hours_begin() + "-" + response.body().data.get(0).getInst_hours_end());
+
+
+                        tvRongnarenshu1.setText(response.body().data.get(0).getShop_capacity());
+                        tvMendianmianji1.setText(response.body().data.get(0).getShop_area());
+
+
+                        tvBaoxiangxinxi1.setText(response.body().data.get(0).getIs_box_name());
+
+//                        if (response.body().data.get(0).getIs_box().equals("1")) {
+//                            tvBaoxiangxinxi1.setText("有包厢");
+//                        } else {
+//                            tvBaoxiangxinxi1.setText("无包厢");
+//                        }
+
+                        response_1 = response;
+                        Glide.with(getActivity()).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(response.body().data.get(0).getInst_photo_url()).into(ivMendianTupian);
+                        mDatas.clear();
+                        mDatas.addAll(response.body().data.get(0).getTao_can_list());
+                        taoCanGuanLiAdapter.setNewData(mDatas);
+                        taoCanGuanLiAdapter.notifyDataSetChanged();
+                    }
+                });
+    }
+
 }

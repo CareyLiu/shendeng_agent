@@ -64,6 +64,7 @@
         app:layout_constraintLeft_toRightOf="@+id/tv_renminbifu" />
 
     <TextView
+        android:id="@+id/tv_yuanjia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
