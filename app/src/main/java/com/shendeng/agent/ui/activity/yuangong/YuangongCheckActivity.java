@@ -163,6 +163,8 @@ public class YuangongCheckActivity extends BaseActivity {
         map.put("sms_num", sms_num);
         map.put("of_user_id", of_user_id);
         map.put("subsystem_id", subsystem_id);
+        map.put("sub_state", state);
+        map.put("sub_user_id", state);
         map.put("inst_id", inst_id);
         Gson gson = new Gson();
         OkGo.<AppResponse<Message.DataBean>>post(Urls.WORKER)

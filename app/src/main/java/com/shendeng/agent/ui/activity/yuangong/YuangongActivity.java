@@ -141,7 +141,8 @@ public class YuangongActivity extends BaseActivity {
                             dataBean.getBranch_id(),
                             dataBean.getRole_id(),
                             dataBean.getBranch_name(),
-                            dataBean.getRole_name());
+                            dataBean.getRole_name(),
+                            dataBean.getSub_user_id());
                 }
             }
         });

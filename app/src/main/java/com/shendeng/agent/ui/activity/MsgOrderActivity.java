@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
-import com.blankj.utilcode.util.StringUtils;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
@@ -39,6 +39,8 @@ public class MsgOrderActivity extends BaseActivity {
     RecyclerView rv_content;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
     private MsgOrderAdapter orderAdapter;
     private String appCode;
     private String notifyId;
@@ -130,6 +132,9 @@ public class MsgOrderActivity extends BaseActivity {
                         models = response.body().data;
                         if (models != null && models.size() > 0) {
                             notifyId = models.get(models.size() - 1).getNotify_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        }else {
+                            ll_no_data.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -165,6 +170,9 @@ public class MsgOrderActivity extends BaseActivity {
                         models.addAll(data);
                         if (models != null && models.size() > 0) {
                             notifyId = models.get(models.size() - 1).getNotify_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        }else {
+                            ll_no_data.setVisibility(View.VISIBLE);
                         }
                     }
 

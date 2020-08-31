@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,7 +16,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
-import com.shendeng.agent.app.App;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
@@ -49,8 +47,9 @@ public class MsgIMActivity extends BaseActivity {
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
     List<MessageModel.DataBean> mDatas = new ArrayList<>();
-    @BindView(R.id.iv_none)
-    ImageView ivNone;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
+
 
     private MessageListAdapter messageListAdapter;
     private String appCode;
@@ -179,7 +178,6 @@ public class MsgIMActivity extends BaseActivity {
                             messageListAdapter.notifyDataSetChanged();
 
                             recyclerView.setVisibility(View.VISIBLE);
-                            ivNone.setVisibility(View.GONE);
                             srLSmart.setEnableLoadMore(true);
                         } else {
                             srLSmart.setEnableLoadMore(false);
@@ -187,7 +185,9 @@ public class MsgIMActivity extends BaseActivity {
 
                         if (mDatas.size() == 0) {
                             recyclerView.setVisibility(View.GONE);
-                            ivNone.setVisibility(View.VISIBLE);
+                            ll_no_data.setVisibility(View.VISIBLE);
+                        }else {
+                            ll_no_data.setVisibility(View.GONE);
                         }
                         srLSmart.finishLoadMore();
                         srLSmart.finishRefresh();
@@ -235,7 +235,6 @@ public class MsgIMActivity extends BaseActivity {
                             messageListAdapter.notifyDataSetChanged();
 
                             recyclerView.setVisibility(View.VISIBLE);
-                            ivNone.setVisibility(View.GONE);
                             srLSmart.setEnableLoadMore(true);
                         } else {
                             srLSmart.setEnableLoadMore(false);
@@ -243,7 +242,9 @@ public class MsgIMActivity extends BaseActivity {
 
                         if (mDatas.size() == 0) {
                             recyclerView.setVisibility(View.GONE);
-                            ivNone.setVisibility(View.VISIBLE);
+                            ll_no_data.setVisibility(View.VISIBLE);
+                        }else {
+                            ll_no_data.setVisibility(View.GONE);
                         }
                         srLSmart.finishLoadMore();
                         srLSmart.finishRefresh();

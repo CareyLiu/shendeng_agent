@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
@@ -50,6 +51,8 @@ public class WodeMingxiActivity extends BaseActivity {
     RecyclerView rv_content;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
     private int pay_cost_type;
     private String pay_cost_id;
 
@@ -192,6 +195,9 @@ public class WodeMingxiActivity extends BaseActivity {
 
                         if (data.size() > 0) {
                             pay_cost_id = WodeMingxiActivity.this.data.get(WodeMingxiActivity.this.data.size() - 1).getPay_cost_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        } else {
+                            ll_no_data.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -224,6 +230,9 @@ public class WodeMingxiActivity extends BaseActivity {
 
                         if (data.size() > 0) {
                             pay_cost_id = WodeMingxiActivity.this.data.get(WodeMingxiActivity.this.data.size() - 1).getPay_cost_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        } else {
+                            ll_no_data.setVisibility(View.VISIBLE);
                         }
                     }
 

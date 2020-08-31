@@ -3,6 +3,8 @@ package com.shendeng.agent.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -30,7 +32,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.http.Url;
 
 public class WodeJiesuanActivity extends BaseActivity {
 
@@ -38,6 +39,8 @@ public class WodeJiesuanActivity extends BaseActivity {
     RecyclerView rv_content;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
 
     private String shop_form_id;
     private List<JiesuanModel.DataBean> data = new ArrayList<>();
@@ -131,6 +134,9 @@ public class WodeJiesuanActivity extends BaseActivity {
 
                         if (data.size() > 0) {
                             shop_form_id = WodeJiesuanActivity.this.data.get(WodeJiesuanActivity.this.data.size() - 1).getShop_form_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        } else {
+                            ll_no_data.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -162,6 +168,9 @@ public class WodeJiesuanActivity extends BaseActivity {
 
                         if (data.size() > 0) {
                             shop_form_id = WodeJiesuanActivity.this.data.get(WodeJiesuanActivity.this.data.size() - 1).getShop_form_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        } else {
+                            ll_no_data.setVisibility(View.VISIBLE);
                         }
                     }
 

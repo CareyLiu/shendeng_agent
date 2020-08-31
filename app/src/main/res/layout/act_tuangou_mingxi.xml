@@ -108,15 +108,15 @@
             android:visibility="visible">
 
             <ImageView
-                android:layout_width="240dp"
-                android:layout_height="240dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/gouwuche_empty" />
+                android:src="@mipmap/mingxi_pic_none" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="暂无明细信息"
+                android:text="暂无明细"
                 android:textColor="@color/text_color_6"
                 android:textSize="14sp" />
         </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.shendeng.agent.R;
@@ -18,8 +19,8 @@ public class MsgNewActivity extends BaseActivity {
     RecyclerView recyclerView;
     @BindView(R.id.srL_smart)
     SmartRefreshLayout srLSmart;
-    @BindView(R.id.iv_none)
-    ImageView ivNone;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
     private String appCode;
 
     @Override

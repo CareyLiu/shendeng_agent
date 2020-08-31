@@ -78,6 +78,7 @@ public class YuangongEditActivity extends BaseActivity {
     private String role_id;
     private String role_name;
     private String branch_name;
+    private String sub_user_id;
 
     @Override
     public int getContentViewResId() {
@@ -118,6 +119,8 @@ public class YuangongEditActivity extends BaseActivity {
         map.put("role_id", role_id);
         map.put("of_user_id", of_user_id);
         map.put("subsystem_id", subsystem_id);
+        map.put("sub_state", state);
+        map.put("sub_user_id", sub_user_id);
         map.put("inst_id", inst_id);
 
         Gson gson = new Gson();
@@ -168,7 +171,8 @@ public class YuangongEditActivity extends BaseActivity {
                                    String branch_id,
                                    String role_id,
                                    String branch_name,
-                                   String role_name) {
+                                   String role_name,
+                                   String sub_user_id) {
         Intent intent = new Intent();
         intent.setClass(context, YuangongEditActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -183,6 +187,7 @@ public class YuangongEditActivity extends BaseActivity {
         intent.putExtra("role_id", role_id);
         intent.putExtra("branch_name", branch_name);
         intent.putExtra("role_name", role_name);
+        intent.putExtra("sub_user_id", sub_user_id);
         context.startActivity(intent);
     }
 
@@ -203,6 +208,7 @@ public class YuangongEditActivity extends BaseActivity {
         role_id = getIntent().getStringExtra("role_id");
         branch_name = getIntent().getStringExtra("branch_name");
         role_name = getIntent().getStringExtra("role_name");
+        sub_user_id = getIntent().getStringExtra("sub_user_id");
 
         tv_phone.setText(phone);
         tv_name.setText(name);
@@ -240,33 +246,35 @@ public class YuangongEditActivity extends BaseActivity {
     }
 
     private void clickPhone() {
-        InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
-            @Override
-            public void onClickCancel(View v, InputDialog dialog) {
-                dialog.dismiss();
-            }
+        Y.t("员工手机号无法修改");
 
-            @Override
-            public void onClickConfirm(View v, InputDialog dialog) {
-                if (TextUtils.isEmpty(dialog.getTextContent())) {
-                    Y.t("请输入员工手机号");
-                } else {
-                    phone = dialog.getTextContent();
-                    tv_phone.setText(phone);
-                    dialog.dismiss();
-                }
-            }
-
-            @Override
-            public void onDismiss(InputDialog dialog) {
-
-            }
-        });
-        dialog.setDismissAfterClick(false);
-        dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
-        dialog.setTextTitle("请输入员工手机号");
-        dialog.setTextContent(tv_phone.getText().toString());
-        dialog.show();
+//        InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
+//            @Override
+//            public void onClickCancel(View v, InputDialog dialog) {
+//                dialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onClickConfirm(View v, InputDialog dialog) {
+//                if (TextUtils.isEmpty(dialog.getTextContent())) {
+//                    Y.t("请输入员工手机号");
+//                } else {
+//                    phone = dialog.getTextContent();
+//                    tv_phone.setText(phone);
+//                    dialog.dismiss();
+//                }
+//            }
+//
+//            @Override
+//            public void onDismiss(InputDialog dialog) {
+//
+//            }
+//        });
+//        dialog.setDismissAfterClick(false);
+//        dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
+//        dialog.setTextTitle("请输入员工手机号");
+//        dialog.setTextContent(tv_phone.getText().toString());
+//        dialog.show();
     }
 
     private void clickName() {

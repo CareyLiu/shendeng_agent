@@ -111,6 +111,7 @@ public class OrderListFragment extends BaseFragment {
         } else {
             shop_pay_check = "0";
         }
+
     }
 
     private void initSM() {

@@ -71,6 +71,8 @@ public class BottomShangPinFragment extends BaseFragment {
     ImageView iv_left_select;
     @BindView(R.id.iv_right_select)
     ImageView iv_right_select;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
 
     private String wares_id;
     private String wares_state;
@@ -296,6 +298,9 @@ public class BottomShangPinFragment extends BaseFragment {
 
                         if (shangpinModels != null && shangpinModels.size() > 0) {
                             wares_id = shangpinModels.get(shangpinModels.size() - 1).getWares_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        }else {
+                            ll_no_data.setVisibility(View.VISIBLE);
                         }
 
                         adapter.setNewData(shangpinModels);
@@ -328,9 +333,14 @@ public class BottomShangPinFragment extends BaseFragment {
                     public void onSuccess(Response<AppResponse<ShangpinModel.DataBean>> response) {
                         List<ShangpinModel.DataBean> data = response.body().data;
                         shangpinModels.addAll(data);
+
                         if (shangpinModels != null && shangpinModels.size() > 0) {
                             wares_id = shangpinModels.get(shangpinModels.size() - 1).getWares_id();
+                            ll_no_data.setVisibility(View.GONE);
+                        }else {
+                            ll_no_data.setVisibility(View.VISIBLE);
                         }
+
                         adapter.setNewData(shangpinModels);
                         adapter.notifyDataSetChanged();
                     }
