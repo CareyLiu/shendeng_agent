@@ -106,6 +106,7 @@ public class YuangongAddActivity extends BaseActivity {
     }
 
     private void xiayibu() {
+        state = "1";
         if (TextUtils.isEmpty(phone)) {
             Y.t("请输入员工手机号");
             return;
@@ -168,6 +169,8 @@ public class YuangongAddActivity extends BaseActivity {
         of_user_id = getIntent().getStringExtra("of_user_id");
         subsystem_id = getIntent().getStringExtra("subsystem_id");
         initHuidiao();
+
+        ll_state.setVisibility(View.GONE);
     }
 
     private void initHuidiao() {

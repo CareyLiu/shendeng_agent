@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -132,8 +133,8 @@ public class YuangongActivity extends BaseActivity {
                     YuangongModel.DataBean dataBean = yuangongModels.get(position);
                     YuangongEditActivity.actionStart(mContext,
                             of_user_id,
-                            inst_id,
-                            subsystem_id,
+                            dataBean.getInst_id(),
+                            dataBean.getSubsystem_id(),
                             dataBean.getUser_phone(),
                             dataBean.getUser_name(),
                             dataBean.getState(),
@@ -182,14 +183,19 @@ public class YuangongActivity extends BaseActivity {
                         }
                         adapter.setNewData(yuangongModels);
                         adapter.notifyDataSetChanged();
-
-
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
                         smartRefreshLayout.finishRefresh();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<YuangongModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
                     }
                 });
     }

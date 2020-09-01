@@ -107,7 +107,7 @@ public class TuanGouDingDanDetails extends BaseActivity {
 
                         List<TOrderDetailsModel.DataBean.RulesListBean> rules_list = tuanModel.getRules_list();
                         ll_shiyongguize.removeAllViews();
-                        for (int i = 0; i < taocan_list.size(); i++) {
+                        for (int i = 0; i < rules_list.size(); i++) {
                             TuanRuleView tuantaocanView = new TuanRuleView(mContext);
                             tuantaocanView.setModel(rules_list.get(i));
                             ll_shiyongguize.addView(tuantaocanView);

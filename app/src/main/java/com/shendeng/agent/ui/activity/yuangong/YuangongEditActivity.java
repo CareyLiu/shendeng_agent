@@ -116,12 +116,12 @@ public class YuangongEditActivity extends BaseActivity {
         map.put("sub_user_no", num);
         map.put("branch_id_one", branch_id);
         map.put("branch_id_two", "");
-        map.put("role_id", role_id);
-        map.put("of_user_id", of_user_id);
-        map.put("subsystem_id", subsystem_id);
         map.put("sub_state", state);
+        map.put("role_id", role_id);
         map.put("sub_user_id", sub_user_id);
-        map.put("inst_id", inst_id);
+        map.put("of_user_id", of_user_id);
+//        map.put("subsystem_id", subsystem_id);
+//        map.put("inst_id", inst_id);
 
         Gson gson = new Gson();
         OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)
@@ -246,7 +246,7 @@ public class YuangongEditActivity extends BaseActivity {
     }
 
     private void clickPhone() {
-        Y.t("员工手机号无法修改");
+//        Y.t("员工手机号无法修改");
 
 //        InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
 //            @Override
