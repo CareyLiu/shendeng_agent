@@ -3,7 +3,6 @@ package com.shendeng.agent.ui.activity.tuangou;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -11,11 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,6 +65,10 @@ public class MenDianCaiDanActivity extends BaseActivity implements TakePhoto.Tak
     ImageView ivDelete;
     @BindView(R.id.rv_content)
     RecyclerView rvContent;
+    @BindView(R.id.tv_shanchu)
+    TextView tvShanchu;
+    @BindView(R.id.tv_sheweifengmian)
+    TextView tvSheweifengmian;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     String chooseItem;//0 第一个 1 第二个 2 第三个 3 第四个
@@ -173,6 +173,24 @@ public class MenDianCaiDanActivity extends BaseActivity implements TakePhoto.Tak
             @Override
             public void onClick(View v) {
                 deletePicture();
+            }
+        });
+
+
+        tvSheweifengmian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sheWeiFengMian();
+            }
+        });
+        tvShanchu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDatas.size() == 1) {
+                    UIHelper.ToastMessage(mContext, "暂无封面图片");
+                } else {
+                    deletePicture();
+                }
             }
         });
     }
@@ -350,6 +368,42 @@ public class MenDianCaiDanActivity extends BaseActivity implements TakePhoto.Tak
                 });
     }
 
+
+    private void sheZhiFengMian() {
+        OkGo.<AppResponse<Upload.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .isMultipart(true)
+                .params("code", Urls.code_04195)
+                .params("key", Urls.KEY)
+                .params("token", UserManager.getManager(mContext).getAppToken())
+                .params("wares_id", waresId)
+                .params("type", "1")
+
+                .execute(new JsonCallback<AppResponse<Upload.DataBean>>() {
+                    @Override
+                    public void onSuccess(final Response<AppResponse<Upload.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "上传成功");
+                        dismissProgressDialog();
+
+                        //    mDatas.add(response.body().data.get(0).)
+
+                        getDetailsNet();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<Upload.DataBean>> response) {
+                        Y.tError(response);
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<Upload.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
+    }
+
     private void getDetailsNet() {
         Map<String, String> map = new HashMap<>();
         map.put("code", Urls.code_04203);
@@ -409,9 +463,46 @@ public class MenDianCaiDanActivity extends BaseActivity implements TakePhoto.Tak
                 .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
-
+                        Glide.with(mContext).load(R.mipmap.nopic_preview_shop).into(ivMain);
                         photoAdapter.remove(choose_position);
                         photoAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<ShangpinDetailsModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
+                });
+    }
+
+    private void sheWeiFengMian() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04216);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(this).getAppToken());
+        map.put("wares_img_id", mDatas.get(choose_position).getWares_img_id());
+
+        Gson gson = new Gson();
+        OkGo.<AppResponse<ShangpinDetailsModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<ShangpinDetailsModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<ShangpinDetailsModel.DataBean>> response) {
+                        UIHelper.ToastMessage(mContext, "设为封面成功");
                     }
 
                     @Override

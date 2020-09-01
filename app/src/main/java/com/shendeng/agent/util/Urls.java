@@ -68,4 +68,6 @@ public class Urls {
     public final static String code_04214 = "04214";//团购商家：门店管理
     public final static String code_04211 = "04211";//团购商家：门店图片
     public final static String code_04212 = "04212";//团购商家：修改门店信息
+    public final static String code_04213 = "04213";//团购商家：图片菜单编辑
+    public final static String code_04216 = "04216";//设置封面图
 }
