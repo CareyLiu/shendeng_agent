@@ -162,6 +162,10 @@ public class YuangongCheckActivity extends BaseActivity {
         map.put("role_id", role_id);
         map.put("sms_id", smsId);
         map.put("sms_num", sms_num);
+
+        map.put("subsystem_id", subsystem_id);
+        map.put("inst_id", inst_id);
+
         Gson gson = new Gson();
         OkGo.<AppResponse<Message.DataBean>>post(Urls.WORKER)
                 .tag(this)//

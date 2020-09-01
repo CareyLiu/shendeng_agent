@@ -36,11 +36,14 @@ public class TuanGouAccessAdapter extends BaseQuickAdapter<TuanPinglunModel.Data
 
         String reply_state = item.getReply_state();
         View ll_huifu = helper.getView(R.id.ll_huifu);
+        View ll_huifu_bt = helper.getView(R.id.ll_huifu_bt);
         if (reply_state.equals("1")) {
             ll_huifu.setVisibility(View.VISIBLE);
+            ll_huifu_bt.setVisibility(View.GONE);
             helper.setText(R.id.tv_access, "商家回复：" + item.getShop_to_text());
         } else {
             ll_huifu.setVisibility(View.GONE);
+            ll_huifu.setVisibility(View.VISIBLE);
             helper.setText(R.id.tv_access, "");
         }
 

@@ -77,8 +77,6 @@ public class BottomTuanGouMenDianFragment extends BaseFragment {
             public void onClick(View v) {
                 viewMendianguanliLine.setVisibility(View.VISIBLE);
                 viewPingjiaxiangqingLine.setVisibility(View.GONE);
-
-                UIHelper.ToastMessage(getActivity(), "点击了门店管理");
                 vpViewpager.setCurrentItem(0);
             }
         });
@@ -88,8 +86,6 @@ public class BottomTuanGouMenDianFragment extends BaseFragment {
             public void onClick(View v) {
                 viewMendianguanliLine.setVisibility(View.GONE);
                 viewPingjiaxiangqingLine.setVisibility(View.VISIBLE);
-
-                UIHelper.ToastMessage(getActivity(), "点击了评价详情");
                 vpViewpager.setCurrentItem(1);
             }
         });

@@ -120,8 +120,8 @@ public class YuangongEditActivity extends BaseActivity {
         map.put("role_id", role_id);
         map.put("sub_user_id", sub_user_id);
         map.put("of_user_id", of_user_id);
-//        map.put("subsystem_id", subsystem_id);
-//        map.put("inst_id", inst_id);
+        map.put("subsystem_id", subsystem_id);
+        map.put("inst_id", inst_id);
 
         Gson gson = new Gson();
         OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)

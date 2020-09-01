@@ -79,7 +79,6 @@ public class MenDianFragment2 extends BaseFragment {
     TextView chooseQuanbu;
     @BindView(R.id.rlv_list)
     RecyclerView rlvList;
-    private String wares_id = "";//wares_id 这是id
 
     private TuanPinglunModel.DataBean pinglunModel;
     private List<TuanPinglunModel.DataBean.AssessListBean> assess_list = new ArrayList<>();
@@ -96,7 +95,6 @@ public class MenDianFragment2 extends BaseFragment {
         chooseHaoping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "点击了好评");
                 chooseHaoping.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
                 chooseZhongchaping.setBackgroundResource(R.drawable.gray_broad_radius_12);
                 chooseQuanbu.setBackgroundResource(R.drawable.gray_broad_radius_12);
@@ -106,10 +104,7 @@ public class MenDianFragment2 extends BaseFragment {
         chooseZhongchaping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "点击了中差评");
                 chooseZhongchaping.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
-
-
                 chooseHaoping.setBackgroundResource(R.drawable.gray_broad_radius_12);
                 chooseQuanbu.setBackgroundResource(R.drawable.gray_broad_radius_12);
 
@@ -119,10 +114,7 @@ public class MenDianFragment2 extends BaseFragment {
         chooseQuanbu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.ToastMessage(getActivity(), "点击了全部");
                 chooseQuanbu.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
-
-
                 chooseHaoping.setBackgroundResource(R.drawable.gray_broad_radius_12);
                 chooseZhongchaping.setBackgroundResource(R.drawable.gray_broad_radius_12);
             }
