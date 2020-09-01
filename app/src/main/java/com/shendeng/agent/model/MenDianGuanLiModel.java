@@ -183,7 +183,7 @@ public class MenDianGuanLiModel implements Serializable {
             this.tao_can_list = tao_can_list;
         }
 
-        public static class LunBoListBean {
+        public static class LunBoListBean implements Serializable {
             /**
              * inst_state : 1
              * img_order : 1
@@ -275,6 +275,7 @@ public class MenDianGuanLiModel implements Serializable {
             private String shop_money_old;
             private String wares_name;
             private String wares_photo_url;
+
 
             public String getWares_id() {
                 return wares_id;

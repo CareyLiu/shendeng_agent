@@ -27,7 +27,7 @@ public class TaoCanGuanLiAdapter extends BaseQuickAdapter<MenDianGuanLiModel.Dat
 
         Glide.with(mContext).load(item.getWares_photo_url()).into((ImageView) helper.getView(R.id.iv_product));
         helper.setText(R.id.tv_product_name, item.getWares_name());
-        helper.setText(R.id.tv_riqi, "这里添加介绍");
+        helper.setText(R.id.tv_riqi, item.getShop_product_title());
         helper.setText(R.id.tv_yuanjia, item.getShop_money_old());
         helper.setText(R.id.tv_xianjia, item.getShop_money_now());
     }

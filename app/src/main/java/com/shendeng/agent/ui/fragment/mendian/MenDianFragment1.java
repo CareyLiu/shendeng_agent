@@ -1,5 +1,6 @@
 package com.shendeng.agent.ui.fragment.mendian;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,11 +16,13 @@ import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.adapter.TaoCanGuanLiAdapter;
+import com.shendeng.agent.adapter.TuPianCaiDanAdapter;
 import com.shendeng.agent.basicmvp.BaseFragment;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
@@ -26,6 +30,7 @@ import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.MenDianGuanLiModel;
 import com.shendeng.agent.ui.activity.MenDianHeiSeActivity;
 import com.shendeng.agent.ui.activity.MenDianXinXiActivity;
+import com.shendeng.agent.ui.activity.TuPianCaiDanActivity;
 import com.shendeng.agent.ui.activity.tuangou.TaoCanGuanLi_HomeActivity;
 import com.shendeng.agent.util.GlideShowImageUtils;
 import com.shendeng.agent.util.UIHelper;
@@ -112,7 +117,10 @@ public class MenDianFragment1 extends BaseFragment {
     TextView tvMendianmianji1;
     @BindView(R.id.tv_baoxiangxinxi_1)
     TextView tvBaoxiangxinxi1;
-
+    @BindView(R.id.tv_tupian_caidan_bianji)
+    TextView tvTupianCaidanBianji;
+    private TuPianCaiDanAdapter tuPianCaiDanAdapter;
+    List<MenDianGuanLiModel.DataBean.LunBoListBean> tuPianCaiDanList;
 
     @Override
     protected void initLogic() {
@@ -123,7 +131,6 @@ public class MenDianFragment1 extends BaseFragment {
         rlvList.setLayoutManager(linearLayoutManager);
         taoCanGuanLiAdapter = new TaoCanGuanLiAdapter(R.layout.layout_caidan_guanli, mDatas);
         rlvList.setAdapter(taoCanGuanLiAdapter);
-        UIHelper.ToastMessage(getActivity(), "门店");
 
         srLSmart.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -160,7 +167,33 @@ public class MenDianFragment1 extends BaseFragment {
         });
         getNet();
 
+        GridLayoutManager linearLayoutManager1 = new GridLayoutManager(getActivity(), 3);
+        linearLayoutManager1.setOrientation(LinearLayoutManager.VERTICAL);
+        rlvTupiancaidan.setLayoutManager(linearLayoutManager1);
+        tuPianCaiDanList = new ArrayList<>();
+        tuPianCaiDanAdapter = new TuPianCaiDanAdapter(R.layout.item_taocantupian, tuPianCaiDanList);
+        rlvTupiancaidan.setAdapter(tuPianCaiDanAdapter);
 
+
+        tvTupianCaidanBianji.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TuPianCaiDanActivity.actionStart(getActivity(), tuPianCaiDanList);
+            }
+        });
+
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            Log.i("isVisibleToUser", "true");
+          //  getNet();
+        } else {
+            Log.i("isVisibleToUser", "false");
+        }
     }
 
     @Override
@@ -217,6 +250,28 @@ public class MenDianFragment1 extends BaseFragment {
                         mDatas.addAll(response.body().data.get(0).getTao_can_list());
                         taoCanGuanLiAdapter.setNewData(mDatas);
                         taoCanGuanLiAdapter.notifyDataSetChanged();
+
+                        if (response.body().data.get(0).getLun_bo_list().size() == 0) {
+                            View view = View.inflate(getActivity(), R.layout.layout_tupiancaidan_empty, null);
+                            tuPianCaiDanAdapter.setEmptyView(view);
+                        } else {
+                            tuPianCaiDanList.clear();
+                            tuPianCaiDanList.addAll(response.body().data.get(0).getLun_bo_list());
+                            tuPianCaiDanAdapter.setNewData(tuPianCaiDanList);
+                            tuPianCaiDanAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onStart(Request<AppResponse<MenDianGuanLiModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
                     }
                 });
     }
