@@ -190,7 +190,7 @@ public class MenDianFragment1 extends BaseFragment {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             Log.i("isVisibleToUser", "true");
-          //  getNet();
+            //  getNet();
         } else {
             Log.i("isVisibleToUser", "false");
         }
@@ -248,8 +248,16 @@ public class MenDianFragment1 extends BaseFragment {
                         Glide.with(getActivity()).applyDefaultRequestOptions(GlideShowImageUtils.showZhengFangXing()).load(response.body().data.get(0).getInst_photo_url()).into(ivMendianTupian);
                         mDatas.clear();
                         mDatas.addAll(response.body().data.get(0).getTao_can_list());
-                        taoCanGuanLiAdapter.setNewData(mDatas);
-                        taoCanGuanLiAdapter.notifyDataSetChanged();
+
+                        if (mDatas.size() == 0) {
+                            View view = View.inflate(getActivity(), R.layout.layout_taocan_empty, null);
+                            taoCanGuanLiAdapter.setEmptyView(view);
+
+                        } else {
+                            taoCanGuanLiAdapter.setNewData(mDatas);
+                            taoCanGuanLiAdapter.notifyDataSetChanged();
+                        }
+
 
                         if (response.body().data.get(0).getLun_bo_list().size() == 0) {
                             View view = View.inflate(getActivity(), R.layout.layout_tupiancaidan_empty, null);
@@ -260,6 +268,8 @@ public class MenDianFragment1 extends BaseFragment {
                             tuPianCaiDanAdapter.setNewData(tuPianCaiDanList);
                             tuPianCaiDanAdapter.notifyDataSetChanged();
                         }
+
+                        tvTupianCaidan.setText("图片菜单(" + response.body().data.get(0).getLun_bo_list().size() + ")");
                     }
 
                     @Override
