@@ -230,7 +230,7 @@ public class BottomTuanGouShouYeFragment extends BaseFragment {
         rlSaomayanzheng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TuanGouSaoMaActivity.actionStart(getActivity());
+                ewm();
             }
         });
         rlDingdanGuanli.setOnClickListener(new View.OnClickListener() {

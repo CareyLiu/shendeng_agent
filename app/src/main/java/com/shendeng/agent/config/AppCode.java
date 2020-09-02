@@ -14,7 +14,7 @@ public class AppCode {
     public final static String code_pwd_login = "5";//修改密码
 
     public final static String msg_maijia = "1";//商家端消息
-    public final static String msg_tuangou = "2";//买家端消息
+    public final static String msg_tuangou = "2";//团购端消息
     public final static String mingxi_tuangou = "3";//团购团购明细
     public final static String mingxi_maidan = "4";//团购买单明细
 

@@ -61,7 +61,7 @@ public class YuangongActivity extends BaseActivity {
     private String subsystem_id;
     private String inst_id;
     private String sub_state;
-    private List<YuangongModel.DataBean> yuangongModels = new ArrayList<>();
+    private List<YuangongModel.DataBean.UserListBean> yuangongModels = new ArrayList<>();
     private YuangongAdapter adapter;
 
     @Override
@@ -130,7 +130,7 @@ public class YuangongActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (yuangongModels != null && yuangongModels.size() > position) {
-                    YuangongModel.DataBean dataBean = yuangongModels.get(position);
+                    YuangongModel.DataBean.UserListBean dataBean = yuangongModels.get(position);
                     YuangongEditActivity.actionStart(mContext,
                             of_user_id,
                             dataBean.getInst_id(),
@@ -175,7 +175,12 @@ public class YuangongActivity extends BaseActivity {
                 .execute(new JsonCallback<AppResponse<YuangongModel.DataBean>>() {
                     @Override
                     public void onSuccess(Response<AppResponse<YuangongModel.DataBean>> response) {
-                        yuangongModels = response.body().data;
+                        YuangongModel.DataBean dataBean = response.body().data.get(0);
+                        yuangongModels = dataBean.getUserList();
+                        String active_count = dataBean.getCountMap().getActive_count();
+                        String separated_count = dataBean.getCountMap().getSeparated_count();
+                        tv_zaizhi.setText("在职员工(" + active_count + ")");
+                        tv_lizhi.setText("离职员工(" + separated_count + ")");
                         if (yuangongModels.size() > 0) {
                             ll_no_data.setVisibility(View.GONE);
                         } else {

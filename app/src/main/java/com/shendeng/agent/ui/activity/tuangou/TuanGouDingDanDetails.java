@@ -1,10 +1,10 @@
 package com.shendeng.agent.ui.activity.tuangou;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,11 +23,11 @@ import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.model.tuangou.TOrderDetailsModel;
-import com.shendeng.agent.ui.activity.ShangpinDetailsActivity;
 import com.shendeng.agent.ui.activity.sample.ImageShowActivity;
 import com.shendeng.agent.ui.view.tuangou.TuanRuleView;
 import com.shendeng.agent.ui.view.tuangou.TuantaocanView;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +52,8 @@ public class TuanGouDingDanDetails extends BaseActivity {
     TextView tv_title_name;
     @BindView(R.id.ll_shiyongguize)
     LinearLayout ll_shiyongguize;
+    @BindView(R.id.bt_anniu)
+    TextView bt_anniu;
 
     private String shop_form_id;
     private TOrderDetailsModel.DataBean tuanModel;
@@ -92,6 +94,13 @@ public class TuanGouDingDanDetails extends BaseActivity {
                         if (shop_pay_check_name.equals("已完成")) {
                             tv_dingdanzhuangtai.setTextColor(Color.parseColor("#15D78E"));
                         }
+
+                        if (shop_pay_check_name.equals("待付款")) {
+                            bt_anniu.setVisibility(View.VISIBLE);
+                        } else {
+                            bt_anniu.setVisibility(View.GONE);
+                        }
+
                         tv_dingdanzhuangtai.setText(shop_pay_check_name);
                         tv_title_name.setText(tuanModel.getShop_product_title());
                         tv_title.setText(tuanModel.getShop_product_title());
@@ -160,10 +169,22 @@ public class TuanGouDingDanDetails extends BaseActivity {
         context.startActivity(intent);
     }
 
-    @OnClick(R.id.iv_image)
-    public void onViewClicked() {
-        ArrayList<String> imagePath = new ArrayList<String>();
-        imagePath.add(tuanModel.getIndex_photo_url());
-        ImageShowActivity.actionStart(mContext, imagePath);
+
+    @OnClick({R.id.iv_image, R.id.bt_anniu})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_image:
+                ArrayList<String> imagePath = new ArrayList<String>();
+                imagePath.add(tuanModel.getIndex_photo_url());
+                ImageShowActivity.actionStart(mContext, imagePath);
+                break;
+            case R.id.bt_anniu:
+                clicktui();
+                break;
+        }
+    }
+
+    private void clicktui() {
+        Y.t("代付款");
     }
 }

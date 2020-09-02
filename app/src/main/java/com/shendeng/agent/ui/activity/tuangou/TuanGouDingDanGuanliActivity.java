@@ -48,9 +48,9 @@ public class TuanGouDingDanGuanliActivity extends BaseActivity {
         tagList.add("到店消费");
         tagList.add("待评价");
         tagList.add("已评价");
-        tagList.add("退款申请");
-        tagList.add("退款中");
-        tagList.add("已关闭");
+        tagList.add("退款");
+//        tagList.add("退款中");
+//        tagList.add("已关闭");
 
         setTopAdapter();
         initMagicIndicator1(tagList);

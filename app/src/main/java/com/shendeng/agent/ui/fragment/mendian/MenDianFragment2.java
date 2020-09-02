@@ -79,6 +79,8 @@ public class MenDianFragment2 extends BaseFragment {
     TextView chooseQuanbu;
     @BindView(R.id.rlv_list)
     RecyclerView rlvList;
+    @BindView(R.id.ll_no_data)
+    LinearLayout ll_no_data;
 
     private TuanPinglunModel.DataBean pinglunModel;
     private List<TuanPinglunModel.DataBean.AssessListBean> assess_list = new ArrayList<>();
@@ -89,40 +91,60 @@ public class MenDianFragment2 extends BaseFragment {
     private String shop_form_id;
     private TuanPinglunModel.DataBean.AssessListBean pinglunBeen;
     private int huiPosition;
+    private String assess_type;
 
     @Override
     protected void initLogic() {
         chooseHaoping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseHaoping.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
-                chooseZhongchaping.setBackgroundResource(R.drawable.gray_broad_radius_12);
-                chooseQuanbu.setBackgroundResource(R.drawable.gray_broad_radius_12);
-
+                selectHaoping();
             }
         });
         chooseZhongchaping.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseZhongchaping.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
-                chooseHaoping.setBackgroundResource(R.drawable.gray_broad_radius_12);
-                chooseQuanbu.setBackgroundResource(R.drawable.gray_broad_radius_12);
-
+                selectZhongping();
             }
         });
 
         chooseQuanbu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chooseQuanbu.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
-                chooseHaoping.setBackgroundResource(R.drawable.gray_broad_radius_12);
-                chooseZhongchaping.setBackgroundResource(R.drawable.gray_broad_radius_12);
+                selectQuanbu();
             }
         });
 
         shop_to_score = "5";
         initAdapter();
         initSM();
+        selectQuanbu();
+    }
+
+    private void selectQuanbu() {
+        showProgressDialog();
+        assess_type = "1";
+        chooseQuanbu.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
+        chooseHaoping.setBackgroundResource(R.drawable.gray_broad_radius_12);
+        chooseZhongchaping.setBackgroundResource(R.drawable.gray_broad_radius_12);
+        getNet();
+    }
+
+    private void selectZhongping() {
+        showProgressDialog();
+        assess_type = "3";
+        chooseZhongchaping.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
+        chooseHaoping.setBackgroundResource(R.drawable.gray_broad_radius_12);
+        chooseQuanbu.setBackgroundResource(R.drawable.gray_broad_radius_12);
+        getNet();
+    }
+
+    private void selectHaoping() {
+        showProgressDialog();
+        assess_type = "2";
+        chooseHaoping.setBackgroundResource(R.drawable.bg_fe3332b_radius_12);
+        chooseZhongchaping.setBackgroundResource(R.drawable.gray_broad_radius_12);
+        chooseQuanbu.setBackgroundResource(R.drawable.gray_broad_radius_12);
         getNet();
     }
 
@@ -138,9 +160,14 @@ public class MenDianFragment2 extends BaseFragment {
                 if (view.getId() == R.id.ll_huifu_bt) {
                     if (assess_list != null && assess_list.size() > position) {
                         pinglunBeen = assess_list.get(position);
-                        huiPosition = position;
-                        shop_form_id = pinglunBeen.getShop_form_id();
-                        clickPinglun();
+                        String reply_state = pinglunBeen.getReply_state();
+                        if (reply_state.equals("1")) {
+                            Y.t("已回复评论");
+                        } else {
+                            huiPosition = position;
+                            shop_form_id = pinglunBeen.getShop_form_id();
+                            clickPinglun();
+                        }
                     }
                 }
             }
@@ -175,6 +202,7 @@ public class MenDianFragment2 extends BaseFragment {
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("page_number", page_number + "");
+        map.put("assess_type", assess_type);
         Gson gson = new Gson();
         OkGo.<AppResponse<TuanPinglunModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//
@@ -205,12 +233,29 @@ public class MenDianFragment2 extends BaseFragment {
 
                         tuanGouAccessAdapter.setNewData(assess_list);
                         tuanGouAccessAdapter.notifyDataSetChanged();
+
+                        chooseZhongchaping.setText("中差评 " + pinglunModel.getLow_assess_count());
+                        chooseHaoping.setText("好评 " + pinglunModel.getHigh_assess_count());
+                        chooseQuanbu.setText("全部 " + pinglunModel.getTotal_assess_count());
+
+                        if (assess_list.size() > 0) {
+                            ll_no_data.setVisibility(View.GONE);
+                        } else {
+                            ll_no_data.setVisibility(View.VISIBLE);
+                        }
+
+                        if (response.body().next.equals("0")) {
+                            smartRefreshLayout.setEnableLoadMore(false);
+                        } else {
+                            smartRefreshLayout.setEnableLoadMore(true);
+                        }
                     }
 
                     @Override
                     public void onFinish() {
                         super.onFinish();
                         smartRefreshLayout.finishRefresh();
+                        dismissProgressDialog();
                     }
                 });
     }
@@ -251,6 +296,7 @@ public class MenDianFragment2 extends BaseFragment {
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(getContext()).getAppToken());
         map.put("page_number", page_number + "");
+        map.put("assess_type", assess_type);
         Gson gson = new Gson();
         OkGo.<AppResponse<TuanPinglunModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//
@@ -259,6 +305,46 @@ public class MenDianFragment2 extends BaseFragment {
                     @Override
                     public void onSuccess(Response<AppResponse<TuanPinglunModel.DataBean>> response) {
 
+                        pinglunModel = response.body().data.get(0);
+                        List<TuanPinglunModel.DataBean.AssessListBean> pinglunModelAssess_list = pinglunModel.getAssess_list();
+                        assess_list.addAll(pinglunModelAssess_list);
+
+                        String total_assess_count = pinglunModel.getTotal_assess_count();
+                        String high_assess_count = pinglunModel.getHigh_assess_count();
+                        String low_assess_count = pinglunModel.getLow_assess_count();
+                        tv_zongpingshu.setText("总评价数 " + total_assess_count);
+                        tv_haoping.setText("好评 " + high_assess_count);
+                        tv_zhongchaping.setText("中差评 " + low_assess_count);
+                        tvPingfenNumber.setText(pinglunModel.getAverage_score());
+
+                        try {
+                            setHaopinglv(high_assess_count, total_assess_count);
+                            setZhongcha(low_assess_count, total_assess_count);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        tv_haopinglv.setText(pinglunModel.getHigh_assess_percent());
+                        tv_zhongchapinglv.setText(pinglunModel.getLow_assess_percent());
+
+                        tuanGouAccessAdapter.setNewData(MenDianFragment2.this.assess_list);
+                        tuanGouAccessAdapter.notifyDataSetChanged();
+
+                        chooseZhongchaping.setText("中差评 " + pinglunModel.getLow_assess_count());
+                        chooseHaoping.setText("好评 " + pinglunModel.getHigh_assess_count());
+                        chooseQuanbu.setText("全部 " + pinglunModel.getTotal_assess_count());
+
+                        if (assess_list.size() > 0) {
+                            ll_no_data.setVisibility(View.GONE);
+                        } else {
+                            ll_no_data.setVisibility(View.VISIBLE);
+                        }
+
+                        if (response.body().next.equals("0")) {
+                            smartRefreshLayout.setEnableLoadMore(false);
+                        } else {
+                            smartRefreshLayout.setEnableLoadMore(true);
+                        }
                     }
 
                     @Override

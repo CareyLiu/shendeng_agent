@@ -7,6 +7,7 @@ public class Urls {
     public static String KEY = "20180305124455yu";//全局请求key
 
     public static String APP = SERVER_URL + "shop_new/app/";//APP端
+    public static String USER = APP + "user/";//APP端user
     public static String WORKER = APP + "worker/";//卖家端
     public static String UPLOAD = WORKER + "upload/";//卖家端上传
     public static String LOGIN = WORKER + "login";//卖家端登录接口
