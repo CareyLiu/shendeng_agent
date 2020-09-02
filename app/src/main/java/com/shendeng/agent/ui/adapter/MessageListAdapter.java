@@ -1,8 +1,11 @@
 package com.shendeng.agent.ui.adapter;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -29,5 +32,38 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageModel.DataBean, 
         helper.addOnClickListener(R.id.constrain);
         helper.addOnLongClickListener(R.id.constrain);
 
+
+        Conversation.ConversationType conversationType = Conversation.ConversationType.PRIVATE;
+        String targetId = item.getLt_user_accid();
+        RongIMClient.getInstance().getUnreadCount(conversationType, targetId,
+                new RongIMClient.ResultCallback<Integer>() {
+                    /**
+                     * 成功回调
+                     * @param unReadCount 未读数
+                     */
+                    @Override
+                    public void onSuccess(Integer unReadCount) {
+                        View tv_num = helper.getView(R.id.tv_num);
+                        if (unReadCount > 0) {
+                            tv_num.setVisibility(View.VISIBLE);
+                            if (unReadCount > 99) {
+                                helper.setText(R.id.tv_num, "99+");
+                            } else {
+                                helper.setText(R.id.tv_num, unReadCount + "");
+                            }
+                        } else {
+                            tv_num.setVisibility(View.GONE);
+                            helper.setText(R.id.tv_num, unReadCount + "");
+                        }
+                    }
+
+                    /**
+                     * 错误回调
+                     */
+                    @Override
+                    public void onError(RongIMClient.ErrorCode ErrorCode) {
+
+                    }
+                });
     }
 }

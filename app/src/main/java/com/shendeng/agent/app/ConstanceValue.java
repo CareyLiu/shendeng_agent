@@ -17,10 +17,8 @@ public interface ConstanceValue {
     int shangpin_edit_use = 0x10007;//商家端 编辑
     int shangpin_frag = 0x10008;//商家端 图片
 
-
     int order_fahuo = 0x10009;//订单发货
-
     int ADD_YUANGONG = 0x10010;//团购  添加员工
 
-
+    int MSG_RONGYUN_REVICE = 0x10011;//接收聊天消息
 }

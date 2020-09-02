@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.shendeng.agent.R;
 import com.shendeng.agent.app.BaseActivity;
+import com.shendeng.agent.app.ConstanceValue;
 import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppCode;
@@ -101,6 +102,35 @@ public class MsgIMActivity extends BaseActivity {
         initAdapter();
         getNet();
         initSM();
+        initHuidiao();
+    }
+
+    private boolean isOn = false;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOn = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isOn = true;
+        messageListAdapter.notifyDataSetChanged();
+    }
+
+    private void initHuidiao() {
+        _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
+            @Override
+            public void call(Notice message) {
+                if (message.type == ConstanceValue.MSG_RONGYUN_REVICE) {
+                    if (isOn) {
+                        messageListAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }));
     }
 
     private void initSM() {
@@ -137,9 +167,9 @@ public class MsgIMActivity extends BaseActivity {
                         bundle.putString("dianpuming", instName);
                         bundle.putString("inst_accid", mDatas.get(position).getLt_user_accid());
                         if (appCode.equals(AppCode.msg_maijia)) {
-                            bundle.putString("shoptype","1");
+                            bundle.putString("shoptype", "1");
                         } else {
-                            bundle.putString("shoptype","2");
+                            bundle.putString("shoptype", "2");
                         }
 
                         RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
@@ -190,7 +220,7 @@ public class MsgIMActivity extends BaseActivity {
                         if (mDatas.size() == 0) {
                             recyclerView.setVisibility(View.GONE);
                             ll_no_data.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             ll_no_data.setVisibility(View.GONE);
                         }
                         srLSmart.finishLoadMore();
@@ -246,7 +276,7 @@ public class MsgIMActivity extends BaseActivity {
                         if (mDatas.size() == 0) {
                             recyclerView.setVisibility(View.GONE);
                             ll_no_data.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             ll_no_data.setVisibility(View.GONE);
                         }
                         srLSmart.finishLoadMore();
