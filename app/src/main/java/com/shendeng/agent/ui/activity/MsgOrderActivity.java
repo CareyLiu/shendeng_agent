@@ -121,7 +121,7 @@ public class MsgOrderActivity extends BaseActivity {
         } else {
             map.put("code", Urls.code_04218);
         }
-        map.put("type", "1");
+        map.put("type", "2");
         Gson gson = new Gson();
         OkGo.<AppResponse<MessageModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//
@@ -136,6 +136,9 @@ public class MsgOrderActivity extends BaseActivity {
                         }else {
                             ll_no_data.setVisibility(View.VISIBLE);
                         }
+
+                        orderAdapter.setNewData(models);
+                        orderAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -157,7 +160,7 @@ public class MsgOrderActivity extends BaseActivity {
         } else {
             map.put("code", Urls.code_04218);
         }
-        map.put("type", "1");
+        map.put("type", "2");
         map.put("notify_id", notifyId);
         Gson gson = new Gson();
         OkGo.<AppResponse<MessageModel.DataBean>>post(Urls.WORKER)
@@ -174,6 +177,9 @@ public class MsgOrderActivity extends BaseActivity {
                         }else {
                             ll_no_data.setVisibility(View.VISIBLE);
                         }
+
+                        orderAdapter.setNewData(models);
+                        orderAdapter.notifyDataSetChanged();
                     }
 
                     @Override

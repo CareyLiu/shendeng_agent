@@ -20,6 +20,7 @@ import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.util.UIHelper;
 import com.shendeng.agent.util.Urls;
+import com.shendeng.agent.util.Y;
 
 
 import java.util.HashMap;
@@ -44,8 +45,9 @@ public class ConversationActivity extends BaseActivity {
         transaction.commit();
         String str = getIntent().getStringExtra("dianpuming");
         String inst_accid = getIntent().getStringExtra("inst_accid");
+        String shopType = getIntent().getStringExtra("shoptype");
         tv_title.setText(str);
-        getLiaoTian(mContext, inst_accid);
+        getLiaoTian(mContext, inst_accid, shopType);
 
         _subscriptions.add(toObservable().observeOn(AndroidSchedulers.mainThread()).subscribe(new Action1<Notice>() {
             @Override
@@ -114,16 +116,17 @@ public class ConversationActivity extends BaseActivity {
         });
     }
 
-    public void getLiaoTian(Context context, String inst_accid) {
+    public void getLiaoTian(Context context, String inst_accid, String shopType) {
         Map<String, String> map = new HashMap<>();
         map.put("token", UserManager.getManager(context).getAppToken());
         map.put("code", "04187");
         map.put("key", Urls.KEY);
         map.put("accid", inst_accid);
+        map.put("shop_type", shopType);
 
-        Gson gson = new Gson();
+//        Gson gson = new Gson();
 //        OkGo.<AppResponse<Object>>
-//                post(HOME_PICTURE_HOME).
+//                post(Urls.WORKER).
 //                tag(context).
 //                upJson(gson.toJson(map)).
 //                execute(new JsonCallback<AppResponse<Object>>() {
@@ -136,7 +139,7 @@ public class ConversationActivity extends BaseActivity {
 //
 //                    @Override
 //                    public void onError(Response<AppResponse<Object>> response) {
-//                       // AlertUtil.t(context, response.getException().getMessage());
+//                        Y.t("错误服务风刀霜剑");
 //                    }
 //
 //                    @Override

@@ -140,19 +140,19 @@ public class BottomXiaoXiFragment extends BaseFragment {
                     String name = models.get(position).getName();
                     switch (name) {
                         case "订单消息":
-                            MsgOrderActivity.actionStart(getContext(), AppCode.msg_tuangou);
+                            MsgOrderActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                         case "聚易佳公告":
-                            MsgGonggaoActivity.actionStart(getContext(), AppCode.msg_tuangou);
+                            MsgGonggaoActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                         case "精选活动":
-                            MsgHuodongActivity.actionStart(getContext(), AppCode.msg_tuangou);
+                            MsgHuodongActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                         case "新功能":
-                            MsgNewActivity.actionStart(getContext(), AppCode.msg_tuangou);
+                            MsgNewActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                         case "私聊消息":
-                            MsgIMActivity.actionStart(getContext(), AppCode.msg_tuangou);
+                            MsgIMActivity.actionStart(getContext(), AppCode.msg_maijia);
                             break;
                     }
                 }

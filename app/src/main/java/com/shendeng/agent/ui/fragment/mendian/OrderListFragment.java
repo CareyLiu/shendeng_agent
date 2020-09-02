@@ -102,7 +102,7 @@ public class OrderListFragment extends BaseFragment {
             shop_pay_check = "6";
         } else if (title.equals("已评价")) {
             shop_pay_check = "7";
-        } else if (title.equals("退款申请")) {
+        } else if (title.equals("退款")) {
             shop_pay_check = "8";
         } else if (title.equals("退款中")) {
             shop_pay_check = "9";

@@ -71,7 +71,6 @@ public class MsgIMActivity extends BaseActivity {
         tv_title.setText("私聊消息");
     }
 
-
     /**
      * 用于其他Activty跳转到该Activity
      */
@@ -120,7 +119,6 @@ public class MsgIMActivity extends BaseActivity {
         });
     }
 
-
     private void initAdapter() {
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         messageListAdapter = new MessageListAdapter(R.layout.item_messagelist, mDatas);
@@ -138,6 +136,12 @@ public class MsgIMActivity extends BaseActivity {
                         Bundle bundle = new Bundle();
                         bundle.putString("dianpuming", instName);
                         bundle.putString("inst_accid", mDatas.get(position).getLt_user_accid());
+                        if (appCode.equals(AppCode.msg_maijia)) {
+                            bundle.putString("shoptype","1");
+                        } else {
+                            bundle.putString("shoptype","2");
+                        }
+
                         RongIM.getInstance().startConversation(mContext, conversationType, targetId, instName, bundle);
                         break;
                 }
@@ -199,7 +203,6 @@ public class MsgIMActivity extends BaseActivity {
                     }
                 });
     }
-
 
     private void getMore() {
         notifyId = "";
