@@ -3,15 +3,10 @@ package com.shendeng.agent.ui.activity.yuangong;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
-import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
@@ -24,14 +19,11 @@ import com.shendeng.agent.bean.Notice;
 import com.shendeng.agent.callback.JsonCallback;
 import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
-import com.shendeng.agent.dialog.BottomDialog;
-import com.shendeng.agent.dialog.BottomDialogView;
-import com.shendeng.agent.dialog.InputDialog;
+import com.shendeng.agent.dialog.TishiDialog;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,10 +54,8 @@ public class YuangongEditActivity extends BaseActivity {
     TextView tv_bumen;
     @BindView(R.id.ll_bumen)
     LinearLayout ll_bumen;
-    @BindView(R.id.iv_shoujihao)
-    ImageView iv_shoujihao;
-    @BindView(R.id.iv_bumen)
-    ImageView iv_bumen;
+    @BindView(R.id.bt_delete)
+    TextView bt_delete;
 
     private String inst_id;
     private String of_user_id;
@@ -84,7 +74,7 @@ public class YuangongEditActivity extends BaseActivity {
 
     @Override
     public int getContentViewResId() {
-        return R.layout.act_yuangong_add;
+        return R.layout.act_yuangong_edit;
     }
 
     @Override
@@ -96,59 +86,8 @@ public class YuangongEditActivity extends BaseActivity {
     protected void initToolbar() {
         super.initToolbar();
         tv_title.setText("修改员工信息");
-        tv_rightTitle.setText("保存");
-        tv_rightTitle.setVisibility(View.VISIBLE);
-        tv_rightTitle.setTextSize(17);
-        tv_rightTitle.setTextColor(this.getResources().getColor(R.color.text_color_3));
-        tv_rightTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                xiayibu();
-            }
-        });
     }
 
-    private void xiayibu() {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", Urls.code_04222);
-        map.put("key", Urls.KEY);
-        map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("user_name", name);
-        map.put("sub_state", state);
-        map.put("sub_user_id", sub_user_id);
-        Gson gson = new Gson();
-        OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<BumenModel.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<BumenModel.DataBean>> response) {
-                        Y.t(response.body().msg);
-                        Notice n = new Notice();
-                        n.type = ConstanceValue.ADD_YUANGONG;
-                        RxBus.getDefault().sendRx(n);
-                        finish();
-                    }
-
-                    @Override
-                    public void onError(Response<AppResponse<BumenModel.DataBean>> response) {
-                        super.onError(response);
-                        Y.tError(response);
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                        dismissProgressDialog();
-                    }
-
-                    @Override
-                    public void onStart(Request<AppResponse<BumenModel.DataBean>, ? extends Request> request) {
-                        super.onStart(request);
-                        showProgressDialog();
-                    }
-                });
-    }
 
     /**
      * 用于其他Activty跳转到该Activity
@@ -207,10 +146,6 @@ public class YuangongEditActivity extends BaseActivity {
         tv_state.setText(state);
         tv_bumen.setText(branch_name + "·" + role_name);
 
-
-        iv_shoujihao.setVisibility(View.INVISIBLE);
-        iv_bumen.setVisibility(View.INVISIBLE);
-
         if (state.equals("正常")) {
             state = "1";
         } else {
@@ -219,205 +154,66 @@ public class YuangongEditActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_phone, R.id.ll_name, R.id.ll_state, R.id.ll_num, R.id.ll_bumen})
+    @OnClick({R.id.bt_delete})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.ll_phone:
-                clickPhone();
-                break;
-            case R.id.ll_name:
-                clickName();
-                break;
-            case R.id.ll_state:
-                clickState();
-                break;
-            case R.id.ll_num:
-                clickNum();
-                break;
-            case R.id.ll_bumen:
-                clickBumen();
-                break;
-        }
-    }
-
-    private void clickPhone() {
-//        Y.t("员工手机号无法修改");
-
-//        InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
-//            @Override
-//            public void onClickCancel(View v, InputDialog dialog) {
-//                dialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onClickConfirm(View v, InputDialog dialog) {
-//                if (TextUtils.isEmpty(dialog.getTextContent())) {
-//                    Y.t("请输入员工手机号");
-//                } else {
-//                    phone = dialog.getTextContent();
-//                    tv_phone.setText(phone);
-//                    dialog.dismiss();
-//                }
-//            }
-//
-//            @Override
-//            public void onDismiss(InputDialog dialog) {
-//
-//            }
-//        });
-//        dialog.setDismissAfterClick(false);
-//        dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
-//        dialog.setTextTitle("请输入员工手机号");
-//        dialog.setTextContent(tv_phone.getText().toString());
-//        dialog.show();
-    }
-
-    private void clickName() {
-        InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
+        TishiDialog dialog = new TishiDialog(mContext, new TishiDialog.TishiDialogListener() {
             @Override
-            public void onClickCancel(View v, InputDialog dialog) {
-                dialog.dismiss();
+            public void onClickCancel(View v, TishiDialog dialog) {
+
             }
 
             @Override
-            public void onClickConfirm(View v, InputDialog dialog) {
-                if (TextUtils.isEmpty(dialog.getTextContent())) {
-                    Y.t("请输入员工姓名");
-                } else {
-                    name = dialog.getTextContent();
-                    tv_name.setText(name);
-                    dialog.dismiss();
-                }
+            public void onClickConfirm(View v, TishiDialog dialog) {
+                xiayibu();
             }
 
             @Override
-            public void onDismiss(InputDialog dialog) {
+            public void onDismiss(TishiDialog dialog) {
 
             }
         });
-        dialog.setDismissAfterClick(false);
-        dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
-        dialog.setTextTitle("请输入员工姓名");
-        dialog.setTextContent(tv_name.getText().toString());
+        dialog.setTextCont("是否删除该员工");
         dialog.show();
     }
 
-    private void clickState() {
-        List<String> names = new ArrayList<>();
-        names.add("正常");
-        names.add("离职");
-        final BottomDialog bottomDialog = new BottomDialog(this);
-        bottomDialog.setModles(names);
-        bottomDialog.setClickListener(new BottomDialogView.ClickListener() {
-            @Override
-            public void onClickItem(int pos) {
-                bottomDialog.dismiss();
-                if (pos == 0) {
-                    state = "1";
-                    tv_state.setText("正常");
-                } else {
-                    state = "2";
-                    tv_state.setText("离职");
-                }
-            }
 
-            @Override
-            public void onClickCancel(View v) {
-                bottomDialog.dismiss();
-            }
-        });
-        bottomDialog.showBottom();
-    }
+    private void xiayibu() {
+        Map<String, String> map = new HashMap<>();
+        map.put("code", Urls.code_04222);
+        map.put("key", Urls.KEY);
+        map.put("token", UserManager.getManager(mContext).getAppToken());
+        map.put("sub_user_id", sub_user_id);
+        Gson gson = new Gson();
+        OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)
+                .tag(this)//
+                .upJson(gson.toJson(map))
+                .execute(new JsonCallback<AppResponse<BumenModel.DataBean>>() {
+                    @Override
+                    public void onSuccess(Response<AppResponse<BumenModel.DataBean>> response) {
+                        Y.t(response.body().msg);
+                        Notice n = new Notice();
+                        n.type = ConstanceValue.ADD_YUANGONG;
+                        RxBus.getDefault().sendRx(n);
+                        finish();
+                    }
 
-    private void clickNum() {
-//        InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
-//            @Override
-//            public void onClickCancel(View v, InputDialog dialog) {
-//                dialog.dismiss();
-//            }
-//
-//            @Override
-//            public void onClickConfirm(View v, InputDialog dialog) {
-//                if (TextUtils.isEmpty(dialog.getTextContent())) {
-//                    Y.t("请输入员工编号");
-//                } else {
-//                    num = dialog.getTextContent();
-//                    tv_num.setText(num);
-//                    dialog.dismiss();
-//                }
-//            }
-//
-//            @Override
-//            public void onDismiss(InputDialog dialog) {
-//
-//            }
-//        });
-//        dialog.setDismissAfterClick(false);
-//        dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
-//        dialog.setTextTitle("请输入员工编号");
-//        dialog.setTextContent(tv_num.getText().toString());
-//        dialog.show();
-    }
+                    @Override
+                    public void onError(Response<AppResponse<BumenModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
 
-    private void clickBumen() {
-//        Map<String, String> map = new HashMap<>();
-//        map.put("code", Urls.code_04223);
-//        map.put("key", Urls.KEY);
-//        map.put("token", UserManager.getManager(mContext).getAppToken());
-//        map.put("inst_id", inst_id);
-//        Gson gson = new Gson();
-//        OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)
-//                .tag(this)//
-//                .upJson(gson.toJson(map))
-//                .execute(new JsonCallback<AppResponse<BumenModel.DataBean>>() {
-//                    @Override
-//                    public void onSuccess(Response<AppResponse<BumenModel.DataBean>> response) {
-//                        bumenModels = response.body().data;
-//                        if (bumenModels.size() > 0) {
-//                            showBumenSelect();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFinish() {
-//                        super.onFinish();
-//                        dismissProgressDialog();
-//                    }
-//
-//                    @Override
-//                    public void onStart(Request<AppResponse<BumenModel.DataBean>, ? extends Request> request) {
-//                        super.onStart(request);
-//                        showProgressDialog();
-//                    }
-//                });
-    }
+                    @Override
+                    public void onFinish() {
+                        super.onFinish();
+                        dismissProgressDialog();
+                    }
 
-    private void showBumenSelect() {
-        List<Object> names1 = new ArrayList<>();
-        List<List<Object>> names2 = new ArrayList<>();
-        for (int i = 0; i < bumenModels.size(); i++) {
-            BumenModel.DataBean dataBean = bumenModels.get(i);
-            names1.add(dataBean.getBranch_name());
-
-            List<BumenModel.DataBean.BranchBean> branch = dataBean.getBranch();
-            List<Object> names2Beans = new ArrayList<>();
-            for (int j = 0; j < branch.size(); j++) {
-                BumenModel.DataBean.BranchBean branchBean = branch.get(j);
-                names2Beans.add(branchBean.getRole_name());
-            }
-            names2.add(names2Beans);
-        }
-
-        //条件选择器
-        bumenPicker = new OptionsPickerBuilder(mContext, new OnOptionsSelectListener() {
-            @Override
-            public void onOptionsSelect(int options1, int option2, int options3, View v) {
-                BumenModel.DataBean dataBean = bumenModels.get(options1);
-                BumenModel.DataBean.BranchBean branchBean = dataBean.getBranch().get(option2);
-                tv_bumen.setText(dataBean.getBranch_name() + "·" + branchBean.getRole_name());
-            }
-        }).build();
-        bumenPicker.setPicker(names1, names2);
-        bumenPicker.show();
+                    @Override
+                    public void onStart(Request<AppResponse<BumenModel.DataBean>, ? extends Request> request) {
+                        super.onStart(request);
+                        showProgressDialog();
+                    }
+                });
     }
 }

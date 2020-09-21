@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/ll_phone"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="员工手机号"
+            android:textColor="@color/text_color_3"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:hint="请输入员工手机号"
+            android:textColor="@color/text_color_9"
+            android:textColorHint="@color/text_color_9"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/split" />
+
+    <LinearLayout
+        android:id="@+id/ll_name"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="员工姓名"
+            android:textColor="@color/text_color_3"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:hint="请输入员工姓名"
+            android:textColor="@color/text_color_9"
+            android:textColorHint="@color/text_color_9"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/split" />
+
+    <LinearLayout
+        android:id="@+id/ll_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="47dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="员工状态"
+                android:textColor="@color/text_color_3"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_state"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="请选择员工状态"
+                android:textColor="@color/text_color_9"
+                android:textColorHint="@color/text_color_9"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/split" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_num"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="员工编号"
+            android:textColor="@color/text_color_3"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:hint="请输入员工编号"
+            android:textColor="@color/text_color_9"
+            android:textColorHint="@color/text_color_9"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/split" />
+
+    <LinearLayout
+        android:id="@+id/ll_bumen"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="员工部门角色"
+            android:textColor="@color/text_color_3"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_bumen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:hint="请选择员工部门角色"
+            android:textColor="@color/text_color_9"
+            android:textColorHint="@color/text_color_9"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/split" />
+
+
+    <TextView
+        android:id="@+id/bt_delete"
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:layout_marginHorizontal="15pt"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/bt_radius24_s"
+        android:gravity="center"
+        android:text="删除"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+</LinearLayout>

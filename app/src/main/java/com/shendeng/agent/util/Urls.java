@@ -1,8 +1,8 @@
 package com.shendeng.agent.util;
 
 public class Urls {
-       public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
-//    public static String SERVER_URL = "https://test.hljsdkj.com/";//基本地址
+//       public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
+    public static String SERVER_URL = "https://test.hljsdkj.com/";//基本地址
 
     public static String KEY = "20180305124455yu";//全局请求key
 

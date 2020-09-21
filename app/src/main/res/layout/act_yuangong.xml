@@ -8,8 +8,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="46dp"
         android:background="@color/white"
-        android:layout_height="46dp">
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_zaizhi"
@@ -33,11 +34,6 @@
             android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/split" />
 
     <FrameLayout
         android:layout_width="match_parent"
