@@ -33,6 +33,7 @@
             android:textSize="15sp" />
 
         <ImageView
+            android:id="@+id/iv_shoujihao"
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_marginLeft="10dp"
@@ -164,7 +165,8 @@
             android:layout_height="14dp"
             android:layout_marginLeft="10dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/sd_push_grey" />
+            android:src="@mipmap/sd_push_grey"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <View
@@ -200,6 +202,7 @@
             android:textSize="15sp" />
 
         <ImageView
+            android:id="@+id/iv_bumen"
             android:layout_width="14dp"
             android:layout_height="14dp"
             android:layout_marginLeft="10dp"

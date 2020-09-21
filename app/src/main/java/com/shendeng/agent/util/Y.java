@@ -61,6 +61,8 @@ public class Y {
         String[] msgToast = msg.split("：");
         if (msgToast.length == 3) {
             Y.t(msgToast[2]);
+        } else {
+            Y.t("网络异常");
         }
     }
 

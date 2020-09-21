@@ -52,12 +52,7 @@ public class YuangongCheckActivity extends BaseActivity {
     private TimeCount timeCount;
     private String smsId;
     private String user_phone;
-    private String of_user_id;
-    private String subsystem_id;
-    private String inst_id;
     private String name;
-    private String state;
-    private String num;
     private String branch_id;
     private String role_id;
     private String sms_num;
@@ -112,13 +107,8 @@ public class YuangongCheckActivity extends BaseActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
         timeCount = new TimeCount(60000, 1000, tv_send_code);
-        inst_id = getIntent().getStringExtra("inst_id");
-        of_user_id = getIntent().getStringExtra("of_user_id");
-        subsystem_id = getIntent().getStringExtra("subsystem_id");
         user_phone = getIntent().getStringExtra("phone");
         name = getIntent().getStringExtra("name");
-        state = getIntent().getStringExtra("state");
-        num = getIntent().getStringExtra("num");
         branch_id = getIntent().getStringExtra("branch_id");
         role_id = getIntent().getStringExtra("role_id");
 
@@ -153,19 +143,12 @@ public class YuangongCheckActivity extends BaseActivity {
         map.put("code", Urls.code_04221);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("of_user_id", of_user_id);
         map.put("user_phone", user_phone);
         map.put("user_name", name);
-        map.put("sub_user_no", num);
         map.put("branch_id_one", branch_id);
-        map.put("branch_id_two", "");
         map.put("role_id", role_id);
         map.put("sms_id", smsId);
         map.put("sms_num", sms_num);
-
-        map.put("subsystem_id", subsystem_id);
-        map.put("inst_id", inst_id);
-
         Gson gson = new Gson();
         OkGo.<AppResponse<Message.DataBean>>post(Urls.WORKER)
                 .tag(this)//
@@ -209,15 +192,13 @@ public class YuangongCheckActivity extends BaseActivity {
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put("code", Urls.code_04220);
+        map.put("code", Urls.code_00001);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(mContext).getAppToken());
         map.put("user_phone", user_phone);
-        map.put("of_user_id", of_user_id);
-        map.put("subsystem_id", subsystem_id);
-        map.put("inst_id", inst_id);
+        map.put("mod_id", "0324");
         Gson gson = new Gson();
-        OkGo.<AppResponse<Message.DataBean>>post(Urls.WORKER)
+        OkGo.<AppResponse<Message.DataBean>>post(Urls.MSG)
                 .tag(this)//
                 .upJson(gson.toJson(map))
                 .execute(new JsonCallback<AppResponse<Message.DataBean>>() {

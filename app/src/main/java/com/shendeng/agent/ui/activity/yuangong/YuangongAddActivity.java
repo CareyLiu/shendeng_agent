@@ -122,11 +122,6 @@ public class YuangongAddActivity extends BaseActivity {
             return;
         }
 
-        if (TextUtils.isEmpty(num)) {
-            Y.t("请输入员工编号");
-            return;
-        }
-
         if (TextUtils.isEmpty(branch_id)) {
             Y.t("请选择员工部门角色");
             return;
@@ -171,6 +166,7 @@ public class YuangongAddActivity extends BaseActivity {
         initHuidiao();
 
         ll_state.setVisibility(View.GONE);
+        ll_num.setVisibility(View.GONE);
     }
 
     private void initHuidiao() {

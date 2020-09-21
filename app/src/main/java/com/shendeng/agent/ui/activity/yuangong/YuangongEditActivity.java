@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -26,7 +27,6 @@ import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.BottomDialog;
 import com.shendeng.agent.dialog.BottomDialogView;
 import com.shendeng.agent.dialog.InputDialog;
-import com.shendeng.agent.model.Message;
 import com.shendeng.agent.util.RxBus;
 import com.shendeng.agent.util.Urls;
 import com.shendeng.agent.util.Y;
@@ -62,6 +62,10 @@ public class YuangongEditActivity extends BaseActivity {
     TextView tv_bumen;
     @BindView(R.id.ll_bumen)
     LinearLayout ll_bumen;
+    @BindView(R.id.iv_shoujihao)
+    ImageView iv_shoujihao;
+    @BindView(R.id.iv_bumen)
+    ImageView iv_bumen;
 
     private String inst_id;
     private String of_user_id;
@@ -74,8 +78,6 @@ public class YuangongEditActivity extends BaseActivity {
     private String name;
     private String num;
     private String state;
-    private String branch_id;
-    private String role_id;
     private String role_name;
     private String branch_name;
     private String sub_user_id;
@@ -111,18 +113,9 @@ public class YuangongEditActivity extends BaseActivity {
         map.put("code", Urls.code_04222);
         map.put("key", Urls.KEY);
         map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("user_phone", phone);
         map.put("user_name", name);
-        map.put("sub_user_no", num);
-        map.put("branch_id_one", branch_id);
-        map.put("branch_id_two", "");
         map.put("sub_state", state);
-        map.put("role_id", role_id);
         map.put("sub_user_id", sub_user_id);
-        map.put("of_user_id", of_user_id);
-        map.put("subsystem_id", subsystem_id);
-        map.put("inst_id", inst_id);
-
         Gson gson = new Gson();
         OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)
                 .tag(this)//
@@ -204,8 +197,6 @@ public class YuangongEditActivity extends BaseActivity {
         name = getIntent().getStringExtra("name");
         state = getIntent().getStringExtra("state");
         num = getIntent().getStringExtra("num");
-        branch_id = getIntent().getStringExtra("branch_id");
-        role_id = getIntent().getStringExtra("role_id");
         branch_name = getIntent().getStringExtra("branch_name");
         role_name = getIntent().getStringExtra("role_name");
         sub_user_id = getIntent().getStringExtra("sub_user_id");
@@ -215,6 +206,10 @@ public class YuangongEditActivity extends BaseActivity {
         tv_num.setText(num);
         tv_state.setText(state);
         tv_bumen.setText(branch_name + "·" + role_name);
+
+
+        iv_shoujihao.setVisibility(View.INVISIBLE);
+        iv_bumen.setVisibility(View.INVISIBLE);
 
         if (state.equals("正常")) {
             state = "1";
@@ -335,66 +330,66 @@ public class YuangongEditActivity extends BaseActivity {
     }
 
     private void clickNum() {
-        InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
-            @Override
-            public void onClickCancel(View v, InputDialog dialog) {
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onClickConfirm(View v, InputDialog dialog) {
-                if (TextUtils.isEmpty(dialog.getTextContent())) {
-                    Y.t("请输入员工编号");
-                } else {
-                    num = dialog.getTextContent();
-                    tv_num.setText(num);
-                    dialog.dismiss();
-                }
-            }
-
-            @Override
-            public void onDismiss(InputDialog dialog) {
-
-            }
-        });
-        dialog.setDismissAfterClick(false);
-        dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
-        dialog.setTextTitle("请输入员工编号");
-        dialog.setTextContent(tv_num.getText().toString());
-        dialog.show();
+//        InputDialog dialog = new InputDialog(mContext, new InputDialog.TishiDialogListener() {
+//            @Override
+//            public void onClickCancel(View v, InputDialog dialog) {
+//                dialog.dismiss();
+//            }
+//
+//            @Override
+//            public void onClickConfirm(View v, InputDialog dialog) {
+//                if (TextUtils.isEmpty(dialog.getTextContent())) {
+//                    Y.t("请输入员工编号");
+//                } else {
+//                    num = dialog.getTextContent();
+//                    tv_num.setText(num);
+//                    dialog.dismiss();
+//                }
+//            }
+//
+//            @Override
+//            public void onDismiss(InputDialog dialog) {
+//
+//            }
+//        });
+//        dialog.setDismissAfterClick(false);
+//        dialog.setTextInput(InputType.TYPE_CLASS_TEXT);
+//        dialog.setTextTitle("请输入员工编号");
+//        dialog.setTextContent(tv_num.getText().toString());
+//        dialog.show();
     }
 
     private void clickBumen() {
-        Map<String, String> map = new HashMap<>();
-        map.put("code", Urls.code_04223);
-        map.put("key", Urls.KEY);
-        map.put("token", UserManager.getManager(mContext).getAppToken());
-        map.put("inst_id", inst_id);
-        Gson gson = new Gson();
-        OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)
-                .tag(this)//
-                .upJson(gson.toJson(map))
-                .execute(new JsonCallback<AppResponse<BumenModel.DataBean>>() {
-                    @Override
-                    public void onSuccess(Response<AppResponse<BumenModel.DataBean>> response) {
-                        bumenModels = response.body().data;
-                        if (bumenModels.size() > 0) {
-                            showBumenSelect();
-                        }
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        super.onFinish();
-                        dismissProgressDialog();
-                    }
-
-                    @Override
-                    public void onStart(Request<AppResponse<BumenModel.DataBean>, ? extends Request> request) {
-                        super.onStart(request);
-                        showProgressDialog();
-                    }
-                });
+//        Map<String, String> map = new HashMap<>();
+//        map.put("code", Urls.code_04223);
+//        map.put("key", Urls.KEY);
+//        map.put("token", UserManager.getManager(mContext).getAppToken());
+//        map.put("inst_id", inst_id);
+//        Gson gson = new Gson();
+//        OkGo.<AppResponse<BumenModel.DataBean>>post(Urls.WORKER)
+//                .tag(this)//
+//                .upJson(gson.toJson(map))
+//                .execute(new JsonCallback<AppResponse<BumenModel.DataBean>>() {
+//                    @Override
+//                    public void onSuccess(Response<AppResponse<BumenModel.DataBean>> response) {
+//                        bumenModels = response.body().data;
+//                        if (bumenModels.size() > 0) {
+//                            showBumenSelect();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        super.onFinish();
+//                        dismissProgressDialog();
+//                    }
+//
+//                    @Override
+//                    public void onStart(Request<AppResponse<BumenModel.DataBean>, ? extends Request> request) {
+//                        super.onStart(request);
+//                        showProgressDialog();
+//                    }
+//                });
     }
 
     private void showBumenSelect() {
@@ -420,8 +415,6 @@ public class YuangongEditActivity extends BaseActivity {
                 BumenModel.DataBean dataBean = bumenModels.get(options1);
                 BumenModel.DataBean.BranchBean branchBean = dataBean.getBranch().get(option2);
                 tv_bumen.setText(dataBean.getBranch_name() + "·" + branchBean.getRole_name());
-                branch_id = dataBean.getBranch_id();
-                role_id = branchBean.getRole_id();
             }
         }).build();
         bumenPicker.setPicker(names1, names2);
