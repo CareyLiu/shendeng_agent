@@ -197,6 +197,12 @@ public class YuangongActivity extends BaseActivity {
                         super.onStart(request);
                         showProgressDialog();
                     }
+
+                    @Override
+                    public void onError(Response<AppResponse<YuangongModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
+                    }
                 });
     }
 
