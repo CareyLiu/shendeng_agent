@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 import com.shendeng.agent.R;
+import com.shendeng.agent.app.App;
 import com.shendeng.agent.app.AppConfig;
 import com.shendeng.agent.app.BaseActivity;
 import com.shendeng.agent.app.PreferenceHelper;
@@ -31,6 +32,7 @@ import com.shendeng.agent.config.AppResponse;
 import com.shendeng.agent.config.UserManager;
 import com.shendeng.agent.dialog.BottomDialog;
 import com.shendeng.agent.dialog.BottomDialogView;
+import com.shendeng.agent.dialog.FuWuDialog;
 import com.shendeng.agent.model.LoginUser;
 import com.shendeng.agent.model.Message;
 import com.shendeng.agent.ui.HomeBasicActivity;
@@ -87,6 +89,7 @@ public class LoginActivity extends BaseActivity {
     private String req_type;//登录场景:1.密码登陆2.手机验证码登陆
 
     DoubleClickExitHelper doubleClick;
+    private FuWuDialog fuWuDialog;
 
     @Override
     public int getContentViewResId() {
@@ -116,6 +119,41 @@ public class LoginActivity extends BaseActivity {
 
 
         doubleClick = new DoubleClickExitHelper(this);
+
+
+        String yonghuxieyi = PreferenceHelper.getInstance(mContext).getString("yonghuxieyi", "");
+        if (!yonghuxieyi.equals("1")) {
+            fuWuDialog = new FuWuDialog(mContext, new FuWuDialog.FuWuDiaLogClikListener() {
+                @Override
+                public void onClickCancel() {
+//                    AppManager.getAppManager().AppExit(getContext());
+                    fuWuDialog.dismiss();
+                }
+
+                @Override
+                public void onClickConfirm() {
+                    fuWuDialog.dismiss();
+                }
+
+                @Override
+                public void onDismiss(FuWuDialog dialog) {
+                    PreferenceHelper.getInstance(mContext).putString("yonghuxieyi", "1");
+                }
+
+                @Override
+                public void fuwu() {
+                    DefaultX5WebViewActivity.actionStart(mContext, "https://shop.hljsdkj.com/shop_new/user_agreement");
+                }
+
+                @Override
+                public void yinsixieyi() {
+                    DefaultX5WebViewActivity.actionStart(mContext, "https://shop.hljsdkj.com/shop_new/privacy_clause");
+                }
+            });
+
+            fuWuDialog.setCancelable(false);
+            fuWuDialog.show();
+        }
     }
 
     @OnClick({R.id.tv_yzm, R.id.tv_qiehuan, R.id.tv_zhaohui, R.id.bt_login, R.id.tv_yinsi})
