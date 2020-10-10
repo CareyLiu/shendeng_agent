@@ -34,7 +34,6 @@ import butterknife.OnClick;
 
 public class LoginYzmActivity extends BaseActivity {
 
-
     @BindView(R.id.ed_phone)
     EditText ed_phone;
     @BindView(R.id.ed_code)
@@ -95,7 +94,6 @@ public class LoginYzmActivity extends BaseActivity {
         }
     }
 
-
     /**
      * 获取短信验证码
      */
@@ -147,7 +145,6 @@ public class LoginYzmActivity extends BaseActivity {
             return;
         }
 
-        smsId = "00";
         if (TextUtils.isEmpty(smsId)) {
             Y.t("请发送验证码");
             return;
