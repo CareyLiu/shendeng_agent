@@ -1,11 +1,14 @@
 package com.shendeng.agent.ui.fragment.tuangou_base;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,6 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
+import com.flyco.dialog.listener.OnOperItemClickL;
+import com.flyco.dialog.widget.ActionSheetDialog;
 import com.google.gson.Gson;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lzy.okgo.OkGo;
@@ -76,6 +81,8 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
     LinearLayout ll_yuangong;
     @BindView(R.id.ll_qiehuan)
     LinearLayout ll_qiehuan;
+    @BindView(R.id.ll_lianxi)
+    LinearLayout ll_lianxi;
     @BindView(R.id.smartRefreshLayout)
     SmartRefreshLayout smartRefreshLayout;
     @BindView(R.id.ll_main)
@@ -251,7 +258,7 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.iv_set, R.id.ll_qianbao, R.id.ll_about, R.id.ll_dizhi, R.id.ll_yuangong, R.id.ll_qiehuan})
+    @OnClick({R.id.iv_set, R.id.ll_qianbao, R.id.ll_about, R.id.ll_dizhi, R.id.ll_yuangong, R.id.ll_qiehuan, R.id.ll_lianxi})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_qianbao:
@@ -264,7 +271,7 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
                 WodeTuihuoActivity.actionStart(getContext());
                 break;
             case R.id.ll_yuangong:
-                YuangongActivity.actionStart(getContext(),userMain.getOf_user_id(),userMain.getInst_id(),userMain.getSubsystem_id());
+                YuangongActivity.actionStart(getContext(), userMain.getOf_user_id(), userMain.getInst_id(), userMain.getSubsystem_id());
                 break;
             case R.id.ll_qiehuan:
 //                ProgressDialog progressDialog = new ProgressDialog(getActivity());//网页没加载出来时显示的dialog提示
@@ -322,6 +329,31 @@ public class BottomTuanGouWoDeFragment extends BaseFragment {
                 break;
             case R.id.iv_set:
                 SettingActivity.actionStart(getContext(), inst_owner);
+                break;
+            case R.id.ll_lianxi:
+                String[] items = {"拨打400电话 - 4000060790"};
+                final ActionSheetDialog dialog = new ActionSheetDialog(getActivity(), items, null);
+                dialog.isTitleShow(false).show();
+                dialog.setOnOperItemClickL(new OnOperItemClickL() {
+                    @Override
+                    public void onOperItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        switch (position) {
+                            case 0:
+                                Intent intent = new Intent(Intent.ACTION_DIAL);
+                                Uri data = Uri.parse("tel:" + "4000060790");
+                                intent.setData(data);
+                                startActivity(intent);
+                                dialog.dismiss();
+                                break;
+                            case 1:
+
+                                break;
+                        }
+                        dialog.dismiss();
+
+                    }
+                });
                 break;
         }
     }
