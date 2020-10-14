@@ -42,11 +42,10 @@ import rx.functions.Func2;
 import static android.text.TextUtils.isEmpty;
 
 public class FeedBackActivity extends BaseActivity {
-    private static final String tag = FeedBackActivity.class.getSimpleName();
 //    @Bind(R.id.toolbar)
 //    Toolbar toolbar;
 //    @Bind(R.id.et_feedback)
-//EditText etFeedback;
+//    EditText etFeedback;
 //    @Bind(R.id.tv_num)
 //    TextView tvNum;
 //    @Bind(R.id.tv_maxlength)
@@ -66,7 +65,6 @@ public class FeedBackActivity extends BaseActivity {
 
 
     int feedBackType = -1;
-    boolean isEnabled = false;
 
     int num = 100;
     @BindView(R.id.RadioButton1)
