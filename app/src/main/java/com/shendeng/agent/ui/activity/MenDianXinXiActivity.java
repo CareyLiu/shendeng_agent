@@ -280,9 +280,6 @@ public class MenDianXinXiActivity extends BaseActivity {
                     phone = tvPhone.getText().toString().trim();
                     getNet();
                     dialog.dismiss();
-                    UIHelper.ToastMessage(mContext, "");
-
-                    // addShangpin();
                 }
             }
 
@@ -359,14 +356,11 @@ public class MenDianXinXiActivity extends BaseActivity {
                                         kaiQiMenDian = "1";
                                         getNet();
                                     }
-                                    //UIHelper.ToastMessage(mContext, "isChecked-true");
                                 } else {
-
                                     if (firstEnter_YingYe.equals("1")) {
 
                                     } else {
                                         kaiQiMenDian = "2";
-                                        // UIHelper.ToastMessage(mContext, "isChecked-false");
                                         getNet();
                                     }
                                 }
@@ -383,14 +377,12 @@ public class MenDianXinXiActivity extends BaseActivity {
                                         shiFouYouBaoXiang = "1";
                                         getNet();
                                     }
-                                    //UIHelper.ToastMessage(mContext, "isChecked-true");
                                 } else {
 
                                     if (firstEnter_BaoXiang.equals("1")) {
 
                                     } else {
                                         shiFouYouBaoXiang = "2";
-                                        // UIHelper.ToastMessage(mContext, "isChecked-false");
                                         getNet();
                                     }
                                 }
@@ -399,7 +391,6 @@ public class MenDianXinXiActivity extends BaseActivity {
 
                         firstEnter_YingYe = "0";
                         firstEnter_BaoXiang = "0";
-
                     }
                 });
     }

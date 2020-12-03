@@ -263,17 +263,5 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/gouwuche_empty" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="暂无评论详情"
-            android:textColor="@color/text_color_6"
-            android:textSize="14sp" />
     </LinearLayout>
 </FrameLayout>

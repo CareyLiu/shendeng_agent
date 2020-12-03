@@ -150,10 +150,12 @@ public class MenDianCaiDanActivity extends BaseActivity implements TakePhoto.Tak
                                     Uri imageUri = Uri.fromFile(file);
                                     switch (position) {
                                         case 0:
-                                            takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
+//                                            takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
+                                            takePhoto.onPickFromCapture(imageUri);
                                             break;
                                         case 1:
-                                            takePhoto.onPickFromGalleryWithCrop(imageUri, getCropOptions());
+//                                            takePhoto.onPickFromGalleryWithCrop(imageUri, getCropOptions());
+                                            takePhoto.onPickFromGallery();
                                             break;
                                     }
                                     dialog.dismiss();

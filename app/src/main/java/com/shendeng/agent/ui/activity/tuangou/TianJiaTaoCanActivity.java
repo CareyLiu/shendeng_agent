@@ -599,30 +599,32 @@ public class TianJiaTaoCanActivity extends BaseActivity {
     }
 
     private void initLeimu() {
-        if (leimuModels.size()>0){
+        if (leimuModels.size() > 0) {
             List<Object> names1 = new ArrayList<>();
             List<List<Object>> names2 = new ArrayList<>();
             List<List<List<Object>>> names3 = new ArrayList<>();
             for (int i = 0; i < leimuModels.size(); i++) {
                 LeimuModel.DataBean bean = leimuModels.get(i);
                 names1.add(bean.getItem_name());
-
-                List<LeimuModel.DataBean.NextLevelBeanX> next_level = bean.getNext_level();
-                List<Object> names2Beans = new ArrayList<>();
-                List<List<Object>> names3BeansBeans = new ArrayList<>();
-                for (int j = 0; j < next_level.size(); j++) {
-                    LeimuModel.DataBean.NextLevelBeanX nextLevelBeanX = next_level.get(j);
-                    names2Beans.add(nextLevelBeanX.getItem_name());
-
-                    List<LeimuModel.DataBean.NextLevelBeanX.NextLevelBean> next_level1 = nextLevelBeanX.getNext_level();
-                    List<Object> names3Beans = new ArrayList<>();
-                    for (int k = 0; k < next_level1.size(); k++) {
-                        names3Beans.add(next_level1.get(k).getItem_name());
+                List<LeimuModel.DataBean.NextLevelBeanX> next2 = bean.getNext_level();
+                if (next2.size() > 0) {
+                    List<Object> names2Beans = new ArrayList<>();
+                    for (int j = 0; j < next2.size(); j++) {
+                        LeimuModel.DataBean.NextLevelBeanX nextLevelBeanX = next2.get(j);
+                        names2Beans.add(nextLevelBeanX.getItem_name());
+                        List<LeimuModel.DataBean.NextLevelBeanX.NextLevelBean> next3 = nextLevelBeanX.getNext_level();
+                        if (next3.size() > 0) {
+                            List<List<Object>> names3BeansBeans = new ArrayList<>();
+                            List<Object> names3Beans = new ArrayList<>();
+                            for (int k = 0; k < next3.size(); k++) {
+                                names3Beans.add(next3.get(k).getItem_name());
+                            }
+                            names3BeansBeans.add(names3Beans);
+                            names3.add(names3BeansBeans);
+                        }
                     }
-                    names3BeansBeans.add(names3Beans);
+                    names2.add(names2Beans);
                 }
-                names2.add(names2Beans);
-                names3.add(names3BeansBeans);
             }
 
             //条件选择器
@@ -632,12 +634,6 @@ public class TianJiaTaoCanActivity extends BaseActivity {
                     if (leimuModels != null && leimuModels.size() > 0) {
                         LeimuModel.DataBean dataBean = leimuModels.get(options1);
                         String is_install = dataBean.getIs_install();
-                        //if (is_install.equals("1")) {
-                        //   ll_anzhuangfuwu.setVisibility(View.VISIBLE);
-                        // } else {
-                        //    ll_anzhuangfuwu.setVisibility(View.GONE);
-                        // }
-
                         item_id_one = dataBean.getItem_id();
                         item_id_one_name = dataBean.getItem_name();
                         List<LeimuModel.DataBean.NextLevelBeanX> next_level = dataBean.getNext_level();
@@ -669,7 +665,17 @@ public class TianJiaTaoCanActivity extends BaseActivity {
                     }
                 }
             }).build();
-            leimuPicker.setPicker(names1, names2, names3);
+
+            if (names2.size() > 0) {
+                if (names3.size() > 0) {
+                    leimuPicker.setPicker(names1, names2, names3);
+                } else {
+                    leimuPicker.setPicker(names1, names2);
+                }
+            } else {
+                leimuPicker.setPicker(names1);
+            }
+
             leimuPicker.show();
         }
     }
