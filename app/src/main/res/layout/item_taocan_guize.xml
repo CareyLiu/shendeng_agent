@@ -15,19 +15,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+
             android:id="@+id/tv_taocan_ming"
-            android:layout_width="wrap_content"
+            android:layout_width="315dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
             android:includeFontPadding="false"
-            android:text="健康的减肥看电视就疯狂的世界福克斯"
+            android:text="健康的减肥看电视就疯狂的世界福克斯健康的减肥看电视就疯狂的世界福克斯"
             android:textColor="#ff000000"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
 
 
         <ImageView
