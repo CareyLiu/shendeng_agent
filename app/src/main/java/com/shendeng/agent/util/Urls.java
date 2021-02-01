@@ -1,7 +1,7 @@
 package com.shendeng.agent.util;
 
 public class Urls {
-       public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
+           public static String SERVER_URL = "https://shop.hljsdkj.com/";//基本地址
 //    public static String SERVER_URL = "https://test.hljsdkj.com/";//基本地址
 
     public static String KEY = "20180305124455yu";//全局请求key
@@ -19,7 +19,7 @@ public class Urls {
     public final static String code_04311 = "04311";//订单列表（普通）
     public final static String code_04312 = "04312";//退款订单详情
     public final static String code_04313 = "04313";//订单详情
-    public final static String code_04314 = "04314";//卖家端：修改快递费
+    public final static String code_04314 = "04314";//卖家端：修改快   递费
     public final static String code_04315 = "04315";//退款审核
     public final static String code_04316 = "04316";//发货（填写快递单）
     public final static String code_04317 = "04317";//评价买家

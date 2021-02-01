@@ -603,28 +603,27 @@ public class TianJiaTaoCanActivity extends BaseActivity {
             List<Object> names1 = new ArrayList<>();
             List<List<Object>> names2 = new ArrayList<>();
             List<List<List<Object>>> names3 = new ArrayList<>();
+
             for (int i = 0; i < leimuModels.size(); i++) {
                 LeimuModel.DataBean bean = leimuModels.get(i);
                 names1.add(bean.getItem_name());
                 List<LeimuModel.DataBean.NextLevelBeanX> next2 = bean.getNext_level();
-                if (next2.size() > 0) {
-                    List<Object> names2Beans = new ArrayList<>();
-                    for (int j = 0; j < next2.size(); j++) {
-                        LeimuModel.DataBean.NextLevelBeanX nextLevelBeanX = next2.get(j);
-                        names2Beans.add(nextLevelBeanX.getItem_name());
-                        List<LeimuModel.DataBean.NextLevelBeanX.NextLevelBean> next3 = nextLevelBeanX.getNext_level();
-                        if (next3.size() > 0) {
-                            List<List<Object>> names3BeansBeans = new ArrayList<>();
-                            List<Object> names3Beans = new ArrayList<>();
-                            for (int k = 0; k < next3.size(); k++) {
-                                names3Beans.add(next3.get(k).getItem_name());
-                            }
-                            names3BeansBeans.add(names3Beans);
-                            names3.add(names3BeansBeans);
-                        }
+                List<Object> names2Beans = new ArrayList<>();
+                List<List<Object>> names3Beans = new ArrayList<>();
+                for (int j = 0; j < next2.size(); j++) {
+                    LeimuModel.DataBean.NextLevelBeanX nextLevelBeanX = next2.get(j);
+                    names2Beans.add(nextLevelBeanX.getItem_name());
+                    List<LeimuModel.DataBean.NextLevelBeanX.NextLevelBean> next3 = nextLevelBeanX.getNext_level();
+
+                    List<Object> names3BeansZi = new ArrayList<>();
+                    for (int k = 0; k < next3.size(); k++) {
+                        names3BeansZi.add(next3.get(k).getItem_name());
                     }
-                    names2.add(names2Beans);
+                    names3Beans.add(names3BeansZi);
+
                 }
+                names2.add(names2Beans);
+                names3.add(names3Beans);
             }
 
             //条件选择器
