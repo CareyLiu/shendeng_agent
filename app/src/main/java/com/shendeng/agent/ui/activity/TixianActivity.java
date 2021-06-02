@@ -1,5 +1,6 @@
 package com.shendeng.agent.ui.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -279,6 +280,12 @@ public class TixianActivity extends BaseActivity {
                     public void onStart(Request<AppResponse<JiesuanModel.DataBean>, ? extends Request> request) {
                         super.onStart(request);
                         showProgressDialog();
+                    }
+
+                    @Override
+                    public void onError(Response<AppResponse<JiesuanModel.DataBean>> response) {
+                        super.onError(response);
+                        Y.tError(response);
                     }
                 });
     }

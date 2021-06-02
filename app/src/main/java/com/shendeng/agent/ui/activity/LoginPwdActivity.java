@@ -125,7 +125,12 @@ public class LoginPwdActivity extends BaseActivity {
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put("code", Urls.code_04336);
+        if (mod_id.equals(AppCode.mod_login_pwd) || mod_id.equals(AppCode.mod_login_pwd_zhaohui)) {
+            map.put("code", Urls.code_04336);
+        } else if (mod_id.equals(AppCode.mod_zhifu_pwd)) {
+            map.put("code", Urls.code_04337);
+        }
+
         map.put("key", Urls.KEY);
         map.put("password", pwd);
         map.put("sms_code", sms_code);
